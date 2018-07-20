@@ -2,7 +2,7 @@ import os
 import random
 import glob
 import pyglet
-from flask import Flask,render_template
+from flask import Flask,render_template, url_for
 from flask import request
 
 app = Flask(__name__)
@@ -13,7 +13,8 @@ playAudioCmd = 'mpg123 '
 @app.route('/index')
 def index():
     playAnAudioFile()
-    return render_template('index.html')
+    scriptLocation = url_for('static', filename='installScript.sh')
+    return render_template('index.html', installScript=scriptLocation)
 
 @app.route('/rules', methods=['GET'])
 def rules():
