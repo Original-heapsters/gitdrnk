@@ -17,68 +17,57 @@ def index():
 
 @app.route('/rules', methods=['GET'])
 def rules():
-    audio = staticDir + 'gang.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('rules.html')
 
 @app.route('/precommit')
 def precommit():
-    audio = staticDir + 'mlg.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/precommitmsg')
 def precommitmsg():
-    audio = staticDir + 'moo.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/commitmsg')
 def commitmsg():
-    audio = staticDir + 'wreck.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/postcommit')
 def postcommit():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/postrewrite')
 def postrewrite():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/postcheckout')
 def postcheckout():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/postmerge')
 def postmerge():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/prepush')
 def prepush():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/postrecieve')
 def postrecieve():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 @app.route('/board')
 def board():
-    audio = staticDir + 'dale.mp3'
-    os.system(playAudioCmd + audio)
+    playAnAudioFile()
     return render_template('board.html')
 
 def playAnAudioFile():
