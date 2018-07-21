@@ -23,7 +23,7 @@ officialRules = {
 'postcommit' : 'Regular drink.',
 'postrewrite' : 'Finish your current drink. You know what you did.',
 'postcheckout' : 'Everyone takes a regular drink.',
-'postmerge' : 'Everyone finishes their drink. COLLABORATE BETTER!',
+'postmerge' : 'Roll the die, everyone does the result',
 'prepush' : 'Drink for how long your push took.',
 'preautogc' : 'OOOF you just got garbage collected, take a drink.'
 }
