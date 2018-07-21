@@ -50,6 +50,7 @@ def board():
 
 @app.route('/restart')
 def restart():
+    playAnAudioFile()
     open(logFile, 'w').close()
     return render_template('index.html')
 
