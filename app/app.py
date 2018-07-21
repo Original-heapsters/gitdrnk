@@ -7,7 +7,12 @@ from flask import request
 
 app = Flask(__name__)
 staticDir = './static/'
+userInfo = {}
+logFileDir = staticDir + 'logs/'
+logFile = logFileDir + 'gametime.txt'
 playAudioCmd = 'mpg123 '
+
+os.system('mkdir -p ' + logFileDir + ' && touch '+ logFile)
 
 @app.route('/')
 @app.route('/index')
