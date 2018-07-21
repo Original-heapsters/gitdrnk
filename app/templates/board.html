@@ -4,7 +4,13 @@
 {% extends "layout.html" %}
 {% block body %}
 {% for line in logContents %}
-{{line}}
+{% if loop.index % 2 == 0 %}
+  {{line}}
+  <hr>
+{% else %}
+  {{line}}
+{% endif %}
+
 <br>
 {% endfor %}
 {% endblock %}
