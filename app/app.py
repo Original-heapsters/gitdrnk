@@ -87,62 +87,52 @@ def upload():
 @app.route('/precommit/<offender>')
 def precommit(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='precommit')
-    return 'OK'
+    return writeOffense(offender=offender, offense='precommit')
 
 @app.route('/precommitmsg/<offender>')
 def precommitmsg(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='precommitmsg')
-    return 'OK'
+    return writeOffense(offender=offender, offense='precommitmsg')
 
 @app.route('/commitmsg/<offender>')
 def commitmsg(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='commitmsg')
-    return 'OK'
+    return writeOffense(offender=offender, offense='commitmsg')
 
 @app.route('/postcommit/<offender>')
 def postcommit(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='postcommit')
-    return 'OK'
+    return writeOffense(offender=offender, offense='postcommit')
 
 @app.route('/postrewrite/<offender>')
 def postrewrite(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='postrewrite')
-    return 'OK'
+    return writeOffense(offender=offender, offense='postrewrite')
 
 @app.route('/postcheckout/<offender>')
 def postcheckout(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='postcheckout')
-    return 'OK'
+    return writeOffense(offender=offender, offense='postcheckout')
 
 @app.route('/postmerge/<offender>')
 def postmerge(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='postmerge')
-    return 'OK'
+    return writeOffense(offender=offender, offense='postmerge')
 
 @app.route('/prepush/<offender>')
 def prepush(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='prepush')
-    return 'OK'
+    return writeOffense(offender=offender, offense='prepush')
 
 @app.route('/postrecieve/<offender>')
 def postrecieve(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='postrecieve')
-    return 'OK'
+    return writeOffense(offender=offender, offense='postrecieve')
 
 @app.route('/preautogc/<offender>')
 def preautogc(offender):
     playAnAudioFile()
-    writeOffense(offender=offender, offense='preautogc')
-    return 'OK'
+    return writeOffense(offender=offender, offense='preautogc')
 
 def writeOffense(offender = None, offense = None):
     with open(logFile, 'a') as fo:
@@ -153,6 +143,8 @@ def writeOffense(offender = None, offense = None):
         punishment = '\t' + officialRules[offense] + '\n'
         fo.write(punishment)
         fo.close()
+        return punishment
+    return 'OK'
 
 def playAnAudioFile():
     files = []
