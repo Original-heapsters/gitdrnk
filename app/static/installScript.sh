@@ -1,4 +1,4 @@
-IP="localhost:8181"
+IP="192.168.86.99:8181"
 echo "#!/bin/sh" > .git/hooks/pre-commit
 echo "#!/bin/sh" > .git/hooks/pre-commit-msg
 echo "#!/bin/sh" > .git/hooks/commit-msg

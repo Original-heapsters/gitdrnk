@@ -49,6 +49,11 @@ def restart():
     open(logFile, 'w').close()
     return render_template('index.html')
 
+@app.route('/pull')
+def pull():
+    os.system('git pull origin master')
+    return render_template('index.html')
+
 
 @app.route('/precommit/<offender>')
 def precommit(offender):
