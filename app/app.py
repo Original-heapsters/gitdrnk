@@ -17,15 +17,15 @@ logFileDir = staticDir + 'logs/'
 logFile = logFileDir + 'gametime.txt'
 playAudioCmd = 'mpg123 '
 officialRules = {
-'precommit' : 'Everyone drinks!',
-'precommitmsg' : 'Take a sip',
-'commitmsg' : 'Take 3 sips',
-'postcommit' : 'Take a really small sip',
-'postrewrite' : 'Chug to your hearts content',
-'postcheckout' : 'Do some sorta exercise OR drink 1/4 of what you have',
-'postmerge' : 'Take a really big sip',
-'prepush' : 'Drink for how long your push took',
-'postrecieve' : 'Drink like a fancy person'
+'precommit' : 'Take a little sip in anticipation of your commit.',
+'precommitmsg' : 'Take another little sip to prepare for the commitmsg.',
+'commitmsg' : 'If there are no typos, dont drink. Otherwise everyone takes a regular drink and reflects on your mistake.',
+'postcommit' : 'Regular drink.',
+'postrewrite' : 'Finish your current drink. You know what you did.',
+'postcheckout' : 'Everyone takes a regular drink.',
+'postmerge' : 'Everyone finishes their drink. COLLABORATE BETTER!',
+'prepush' : 'Drink for how long your push took.',
+'preautogc' : 'OOOF you just got garbage collected, take a drink.'
 }
 
 
@@ -135,6 +135,12 @@ def prepush(offender):
 def postrecieve(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postrecieve')
+    return 'OK'
+
+@app.route('/preautogc/<offender>')
+def preautogc(offender):
+    playAnAudioFile()
+    writeOffense(offender=offender, offense='preautogc')
     return 'OK'
 
 def writeOffense(offender = None, offense = None):

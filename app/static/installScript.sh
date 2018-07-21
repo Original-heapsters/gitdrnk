@@ -18,4 +18,6 @@ echo "curl $IP/postcheckout/$USER" >> .git/hooks/post-checkout
 echo "curl $IP/postmerge/$USER" >> .git/hooks/post-merge
 echo "curl $IP/prepush/$USER" >> .git/hooks/pre-push
 echo "curl $IP/postrecieve/$USER" >> .git/hooks/post-recieve
+echo "curl $IP/preautogc/$USER" >> .git/hooks/pre-auto-gc
+
 sudo chmod +x .git/hooks/*
