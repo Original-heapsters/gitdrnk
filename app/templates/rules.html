@@ -1,47 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
-<center>
 <table>
   <tr>
     <th>Hook offense</th>
     <th>Punishment</th>
   </tr>
+
+  {% for key, punishment in rulesDefinition.items() %}
   <tr>
-    <td>pre-commit</td>
-    <td>Maria Anders</td>
+    <td>{{key}}</td>
+    <td>{{punishment}}</td>
   </tr>
-  <tr>
-    <td>pre-commit-msg</td>
-    <td>Francisco Chang</td>
-  </tr>
-  <tr>
-    <td>commit-msg</td>
-    <td>Roland Mendel</td>
-  </tr>
-  <tr>
-    <td>post-commit</td>
-    <td>Helen Bennett</td>
-  </tr>
-  <tr>
-    <td>post-rewrite</td>
-    <td>Yoshi Tannamuri</td>
-  </tr>
-  <tr>
-    <td>post-checkout</td>
-    <td>Giovanni Rovelli</td>
-  </tr>
-  <tr>
-    <td>post-merge</td>
-    <td>Giovanni Rovelli</td>
-  </tr>
-  <tr>
-    <td>pre-push</td>
-    <td>Giovanni Rovelli</td>
-  </tr>
-  <tr>
-    <td>post-recieve</td>
-    <td>Giovanni Rovelli</td>
-  </tr>
+  {% endfor %}
 </table>
-</center>
 {% endblock %}

@@ -23,15 +23,6 @@ officialRules = {
 'prepush' : 'Drink for how long your push took',
 'postrecieve' : 'Drink like a fancy person'
 }
-# officialRules["precommit"] = "Everyone drinks!"
-# officialRules["precommitmsg"] = "Take a sip"
-# officialRules["commitmsg"] = "Take 3 sips"
-# officialRules["postcommit"] = "Take a really small sip"
-# officialRules["postrewrite"] = "Chug to your hearts content"
-# rules["postcheckout"] = "Do some sorta exercise OR drink a quarter of what you have"
-# rules["postmerge"] = "Take a really big sip"
-# rules["prepush"] = "Drink for how long your push took"
-# rules["postrecieve"] = "Drink like a fancy person"
 
 
 os.system('mkdir -p ' + logFileDir + ' && touch '+ logFile)
@@ -39,14 +30,25 @@ os.system('mkdir -p ' + logFileDir + ' && touch '+ logFile)
 @app.route('/')
 @app.route('/index')
 def index():
-    playAnAudioFile()
     scriptLocation = url_for('static', filename='installScript.sh')
     return render_template('index.html', installScript=scriptLocation)
 
 @app.route('/rules', methods=['GET'])
 def rules():
-    playAnAudioFile()
     return render_template('rules.html', rulesDefinition=officialRules)
+
+@app.route('/board')
+def board():
+    content = []
+    for line in reversed(open(logFile).readlines()):
+        content.append(line)
+    return render_template('board.html', logContents=content)
+
+@app.route('/restart')
+def restart():
+    open(logFile, 'w').close()
+    return render_template('index.html')
+
 
 @app.route('/precommit/<offender>')
 def precommit(offender):
@@ -101,11 +103,6 @@ def postrecieve(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postrecieve')
     return 'OK'
-
-@app.route('/board')
-def board():
-    playAnAudioFile()
-    return render_template('board.html')
 
 def writeOffense(offender = None, offense = None):
     with open(logFile, 'a') as fo:

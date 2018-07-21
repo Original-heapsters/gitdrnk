@@ -1,3 +1,10 @@
+<head>
+   <meta http-equiv="refresh" content="2">
+</head>
 {% extends "layout.html" %}
 {% block body %}
+{% for line in logContents %}
+{{line}}
+<br>
+{% endfor %}
 {% endblock %}

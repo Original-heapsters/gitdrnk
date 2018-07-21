@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-<a href="{{ installScript }}">Get the install script<a/>
+<a href="{{ installScript }}"><button>Get the install script</button><a/>
+<br>
+<br>
+<br>
+<br>
+<a href="{{ url_for('restart') }}"><button>Restart the game</button><a/>
 {% endblock %}
