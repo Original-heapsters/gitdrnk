@@ -52,55 +52,55 @@ def rules():
 def precommit(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='precommit')
-    return 0
+    return 'OK'
 
 @app.route('/precommitmsg/<offender>')
 def precommitmsg(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='precommitmsg')
-    return 0
+    return 'OK'
 
 @app.route('/commitmsg/<offender>')
 def commitmsg(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='commitmsg')
-    return 0
+    return 'OK'
 
 @app.route('/postcommit/<offender>')
 def postcommit(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postcommit')
-    return 0
+    return 'OK'
 
 @app.route('/postrewrite/<offender>')
 def postrewrite(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postrewrite')
-    return 0
+    return 'OK'
 
 @app.route('/postcheckout/<offender>')
 def postcheckout(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postcheckout')
-    return 0
+    return 'OK'
 
 @app.route('/postmerge/<offender>')
 def postmerge(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postmerge')
-    return 0
+    return 'OK'
 
 @app.route('/prepush/<offender>')
 def prepush(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='prepush')
-    return 0
+    return 'OK'
 
 @app.route('/postrecieve/<offender>')
 def postrecieve(offender):
     playAnAudioFile()
     writeOffense(offender=offender, offense='postrecieve')
-    return 0
+    return 'OK'
 
 @app.route('/board')
 def board():
