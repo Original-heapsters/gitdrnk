@@ -2,6 +2,7 @@ import os
 import random
 import glob
 import pyglet
+from time import gmtime, strftime
 from flask import Flask,render_template, url_for
 from flask import request
 
@@ -11,6 +12,27 @@ userInfo = {}
 logFileDir = staticDir + 'logs/'
 logFile = logFileDir + 'gametime.txt'
 playAudioCmd = 'mpg123 '
+officialRules = {
+'precommit' : 'Everyone drinks!',
+'precommitmsg' : 'Take a sip',
+'commitmsg' : 'Take 3 sips',
+'postcommit' : 'Take a really small sip',
+'postrewrite' : 'Chug to your hearts content',
+'postcheckout' : 'Do some sorta exercise OR drink 1/4 of what you have',
+'postmerge' : 'Take a really big sip',
+'prepush' : 'Drink for how long your push took',
+'postrecieve' : 'Drink like a fancy person'
+}
+# officialRules["precommit"] = "Everyone drinks!"
+# officialRules["precommitmsg"] = "Take a sip"
+# officialRules["commitmsg"] = "Take 3 sips"
+# officialRules["postcommit"] = "Take a really small sip"
+# officialRules["postrewrite"] = "Chug to your hearts content"
+# rules["postcheckout"] = "Do some sorta exercise OR drink a quarter of what you have"
+# rules["postmerge"] = "Take a really big sip"
+# rules["prepush"] = "Drink for how long your push took"
+# rules["postrecieve"] = "Drink like a fancy person"
+
 
 os.system('mkdir -p ' + logFileDir + ' && touch '+ logFile)
 
@@ -24,57 +46,76 @@ def index():
 @app.route('/rules', methods=['GET'])
 def rules():
     playAnAudioFile()
-    return render_template('rules.html')
+    return render_template('rules.html', rulesDefinition=officialRules)
 
-@app.route('/precommit')
-def precommit():
+@app.route('/precommit/<offender>')
+def precommit(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='precommit')
+    return 0
 
-@app.route('/precommitmsg')
-def precommitmsg():
+@app.route('/precommitmsg/<offender>')
+def precommitmsg(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='precommitmsg')
+    return 0
 
-@app.route('/commitmsg')
-def commitmsg():
+@app.route('/commitmsg/<offender>')
+def commitmsg(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='commitmsg')
+    return 0
 
-@app.route('/postcommit')
-def postcommit():
+@app.route('/postcommit/<offender>')
+def postcommit(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='postcommit')
+    return 0
 
-@app.route('/postrewrite')
-def postrewrite():
+@app.route('/postrewrite/<offender>')
+def postrewrite(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='postrewrite')
+    return 0
 
-@app.route('/postcheckout')
-def postcheckout():
+@app.route('/postcheckout/<offender>')
+def postcheckout(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='postcheckout')
+    return 0
 
-@app.route('/postmerge')
-def postmerge():
+@app.route('/postmerge/<offender>')
+def postmerge(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='postmerge')
+    return 0
 
-@app.route('/prepush')
-def prepush():
+@app.route('/prepush/<offender>')
+def prepush(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='prepush')
+    return 0
 
-@app.route('/postrecieve')
-def postrecieve():
+@app.route('/postrecieve/<offender>')
+def postrecieve(offender):
     playAnAudioFile()
-    return render_template('board.html')
+    writeOffense(offender=offender, offense='postrecieve')
+    return 0
 
 @app.route('/board')
 def board():
     playAnAudioFile()
     return render_template('board.html')
+
+def writeOffense(offender = None, offense = None):
+    with open(logFile, 'a') as fo:
+        line = offender + ' just did a ' + offense
+        line += ' at ' + strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        line += '\n'
+        fo.write(line)
+        punishment = '\t' + officialRules[offense] + '\n'
+        fo.write(punishment)
+        fo.close()
 
 def playAnAudioFile():
     files = []
