@@ -1,4 +1,6 @@
-IP="192.168.86.99:8181"
+HOST=""
+USERNAME=""
+
 echo "#!/bin/sh" > .git/hooks/pre-commit
 echo "#!/bin/sh" > .git/hooks/pre-commit-msg
 echo "#!/bin/sh" > .git/hooks/commit-msg
@@ -19,5 +21,11 @@ echo "curl $IP/postmerge/$USER" >> .git/hooks/post-merge
 echo "curl $IP/prepush/$USER" >> .git/hooks/pre-push
 echo "curl $IP/postrecieve/$USER" >> .git/hooks/post-recieve
 echo "curl $IP/preautogc/$USER" >> .git/hooks/pre-auto-gc
+
+
+
+
+echo "curl $IP/violation?user=$USER&offense=postrecieve" >> .git/hooks/post-recieve
+echo "curl $IP/violation?user=$USER&offense=postrecieve" >> .git/hooks/post-recieve
 
 sudo chmod +x .git/hooks/*
