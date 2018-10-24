@@ -31,6 +31,7 @@ def install():
     install_script = configure_install_script(host, username, platform)
     return send_file(install_script)
 
+
 @gitdrnk.route('/rules', methods=['GET'])
 def rules():
     return render_template('rules.html', rulesDefinition=gitdrnk.config["RULE_SET"])
@@ -72,7 +73,7 @@ def upload():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(gitdrnk.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(gitdrnk.config['AUDIO_DIR'], filename))
             return redirect(url_for('upload', filename=filename))
         return render_template('upload.html')
     else:
@@ -142,21 +143,15 @@ def setup():
         host = configuration['host']
         port = configuration['port']
 
-    upload_folder = 'static'
     allowed_extensions = {'mp3'}
     audio_dir = os.path.join('static', 'assets')
-    installer = os.path.join('static', 'installScript.sh')
-    log_file_dir = os.path.join('static', 'logs')
-    log_file = os.path.join(log_file_dir, 'game_time.txt')
+    log_file = os.path.join('static/logs', 'game_time.txt')
 
     open(log_file, 'w').close()
 
     gitdrnk.config["RULE_SET"] = official_rules
-    gitdrnk.config["LOG_DIR"] = log_file_dir
     gitdrnk.config["LOG_FILE"] = log_file
-    gitdrnk.config["INSTALLER"] = installer
     gitdrnk.config["AUDIO_DIR"] = audio_dir
-    gitdrnk.config['UPLOAD_FOLDER'] = upload_folder
     gitdrnk.config["ALLOWED_EXTENSIONS"] = allowed_extensions
     gitdrnk.config["HOST"] = host
     gitdrnk.config["PORT"] = port
