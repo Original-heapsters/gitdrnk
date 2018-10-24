@@ -1,35 +1,10 @@
 import os
 import random
-import glob
-import pyglet
 from time import gmtime, strftime
 from flask import Flask,render_template, url_for, flash, request, redirect
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = './static'
-ALLOWED_EXTENSIONS = set(['mp3'])
-
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-staticDir = './static/'
-userInfo = {}
-logFileDir = staticDir + 'logs/'
-logFile = logFileDir + 'gametime.txt'
-playAudioCmd = 'mpg123 '
-officialRules = {
-'precommit' : 'Take a little sip in anticipation of your commit.',
-'precommitmsg' : 'Take another little sip to prepare for the commitmsg.',
-'commitmsg' : 'If there are no typos, dont drink. Otherwise everyone takes a regular drink and reflects on your mistake.',
-'postcommit' : 'Regular drink.',
-'postrewrite' : 'Finish your current drink. You know what you did.',
-'postcheckout' : 'Everyone takes a regular drink.',
-'postmerge' : 'Roll the die, everyone does the result',
-'prepush' : 'Drink for how long your push took.',
-'preautogc' : 'OOOF you just got garbage collected, take a drink.'
-}
-
-
-os.system('mkdir -p ' + logFileDir + ' && touch '+ logFile)
 
 @app.route('/')
 @app.route('/index')
@@ -39,19 +14,19 @@ def index():
 
 @app.route('/rules', methods=['GET'])
 def rules():
-    return render_template('rules.html', rulesDefinition=officialRules)
+    return render_template('rules.html', rulesDefinition=app.config["RULE_SET"])
 
 @app.route('/board')
 def board():
     content = []
-    for line in reversed(open(logFile).readlines()):
+    for line in reversed(open(app.config['LOG_FILE']).readlines()):
         content.append(line)
     return render_template('board.html', logContents=content)
 
 @app.route('/restart')
 def restart():
     playAnAudioFile()
-    open(logFile, 'w').close()
+    open(app.config['LOG_FILE'], 'w').close()
     return render_template('index.html')
 
 @app.route('/pull')
@@ -60,7 +35,7 @@ def pull():
     return render_template('index.html')
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -135,12 +110,12 @@ def preautogc(offender):
     return writeOffense(offender=offender, offense='preautogc')
 
 def writeOffense(offender = None, offense = None):
-    with open(logFile, 'a') as fo:
+    with open(app.config['LOG_FILE'], 'a') as fo:
         line = offender + ' just did a ' + offense
         line += ' at ' + strftime("%Y-%m-%d %H:%M:%S", gmtime())
         line += '\n'
         fo.write(line)
-        punishment = '\t' + officialRules[offense] + '\n'
+        punishment = '\t' + app.config["RULE_SET"][offense] + '\n'
         fo.write(punishment)
         fo.close()
         return punishment
@@ -148,11 +123,45 @@ def writeOffense(offender = None, offense = None):
 
 def playAnAudioFile():
     files = []
-    for file in os.listdir(staticDir):
+    for file in os.listdir(app.config['AUDIO_DIR']):
         if file.endswith(".mp3"):
-            path = os.path.join(staticDir, file)
+            path = os.path.join(app.config['AUDIO_DIR'], file)
             files.append(path)
-    os.system(playAudioCmd + random.choice(files) + ' &')
+    os.system(app.config["AUDIO_PLAYER"] + random.choice(files) + ' &')
+
+def setup():
+    upload_folder = 'static'
+    allowed_extensions = {'mp3'}
+    audio_dir = os.path.join('static', 'assets')
+    logFileDir = os.path.join('static', 'logs')
+    logFile = os.path.join(logFileDir, 'gametime.txt')
+    playAudioCmd = 'mpg123 '
+    officialRules = {
+        'precommit': 'Take a little sip in anticipation of your commit.',
+        'precommitmsg': 'Take another little sip to prepare for the commitmsg.',
+        'commitmsg': 'If there are no typos, dont drink. Otherwise everyone takes a regular drink and reflects on your mistake.',
+        'postcommit': 'Regular drink.',
+        'postrewrite': 'Finish your current drink. You know what you did.',
+        'postcheckout': 'Everyone takes a regular drink.',
+        'postmerge': 'Roll the die, everyone does the result',
+        'prepush': 'Drink for how long your push took.',
+        'preautogc': 'OOOF you just got garbage collected, take a drink.'
+    }
+
+    if not os.path.exists(logFile):
+        with open(logFile, 'w+') as f:
+            f.close()
+    app.config["RULE_SET"] = officialRules
+    app.config["LOG_DIR"] = logFileDir
+    app.config["LOG_FILE"] = logFile
+    app.config["AUDIO_DIR"] = audio_dir
+    app.config['UPLOAD_FOLDER'] = upload_folder
+    app.config["AUDIO_PLAYER"] = playAudioCmd
+    app.config["ALLOWED_EXTENSIONS"] = allowed_extensions
+
+    print("cool")
+
 
 if __name__ == '__main__':
+    setup()
     app.run(debug=True, host="0.0.0.0", port=8181)
