@@ -2,6 +2,7 @@ Click==7.0
 Flask==1.0.2
 ItsDangerous==1.0.0
 Jinja2==2.10
-MarkupSafe==1.0	1.0
+MarkupSafe==1.0
 Werkzeug==0.14.1
 python-vlc==3.0.4106
+pytest==3.9.2
