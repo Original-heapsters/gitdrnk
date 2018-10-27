@@ -3,9 +3,12 @@ import os
 # Add app and configuration module to path
 app_dir = os.path.dirname(os.path.abspath(__file__))
 configuration_dir = os.path.join(app_dir, 'configuration')
+util_dir = os.path.join(app_dir, 'util')
 
 if configuration_dir not in sys.path:
     sys.path.insert(0, configuration_dir)
+if util_dir not in sys.path:
+    sys.path.insert(0, util_dir)
 if app_dir not in sys.path:
     sys.path.insert(0, app_dir)
 
@@ -14,6 +17,7 @@ import random
 import tempfile
 
 from configuration.rules import rule_sets
+from util.user_info import get_current_os_user
 import vlc
 from time import gmtime, strftime
 from flask import Flask, render_template, url_for, flash, request, redirect, send_file, after_this_request
@@ -41,30 +45,32 @@ def info():
 @gitdrnk.route('/index')
 def index():
     script_location = url_for('static', filename='installScript.sh')
-    return render_template('index.html', installScript=script_location)
+    username = get_current_os_user()
+    return render_template('index.html', installScript=script_location, username=username)
 
 
-@gitdrnk.route('/install')
+@gitdrnk.route('/install', methods=['POST'])
 def install():
     host = request.remote_addr
     print(host)
-    user_home = os.path.expanduser('~')
-    provided_username = request.args.get('username')
+    provided_username = request.form.get('username')
     if provided_username:
         username = provided_username
     else:
-        username = os.path.split(user_home)[-1]
+        username = get_current_os_user()
     platform = request.user_agent.platform
     install_script, path_to_delete = configure_install_script(host, username, platform)
 
     @after_this_request
     def remove_file(response):
-        print('cool')
-        if not gitdrnk.config['TESTING']:
-            os.remove(path_to_delete)
+        os.remove(path_to_delete)
         return response
 
     return send_file(path_to_delete)
+
+@gitdrnk.route('/install_instructions')
+def install_instructions():
+    return render_template('install_help.html')
 
 
 @gitdrnk.route('/rules', methods=['GET'])
@@ -97,19 +103,14 @@ def pull():
 def upload():
     if request.method == 'POST':
         # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(gitdrnk.config['AUDIO_DIR'], filename))
-            return redirect(url_for('upload', filename=filename))
+        uploaded_files = request.files.getlist("files[]")
+        for file in uploaded_files:
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(gitdrnk.config['AUDIO_DIR'], filename))
         return render_template('upload.html')
     else:
         return render_template('upload.html')
@@ -126,14 +127,20 @@ def violation():
 
 
 def write_offense(offender=None, offense=None):
+    violation = {}
     with open(gitdrnk.config['LOG_FILE'], 'a') as fo:
-        line = offender + ' --> ' + offense + ' | ' + strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        violation['who'] = offender
+        violation['what'] = offense
+        violation['when'] = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        violation['punishment'] = gitdrnk.config["RULE_SET"][offense]
+        line = '\n' + offender + ' --> ' + offense + ' | ' + strftime("%Y-%m-%d %H:%M:%S", gmtime())
         punishment = '\t' + gitdrnk.config["RULE_SET"][offense]
 
         fo.writelines([line, punishment])
         fo.close()
 
-        return json.dumps({'guilty': line, 'punishment': punishment})
+
+        return json.dumps(violation, indent=4)
 
 
 def play_audio_file():
@@ -150,7 +157,7 @@ def configure_install_script(host, user, platform):
     output_script, path = tempfile.mkstemp()
     with open(output_script, 'w') as install_script:
         installer_lines = []
-        installer_lines.append('HOST=\"' + host + '\"\n')
+        installer_lines.append('HOST=\"' + host + ':' + gitdrnk.config["PORT"] + '\"\n')
         installer_lines.append('USERNAME=\"' + user + '\"\n')
         for offense, _ in gitdrnk.config['RULE_SET'].items():
             if platform == 'windows':
@@ -160,7 +167,7 @@ def configure_install_script(host, user, platform):
                 installer_lines.append('echo \"#!/bin/sh\" > .git/hooks/' + offense + '\n')
 
             installer_lines.append(
-                'echo \"curl $HOST/violation?user=$USERNAME&offense=' + offense + '\" >> .git/hooks/' + offense + '\n')
+                'echo \"curl \\\"$HOST/violation?user=$USERNAME&offense=' + offense + '\\\"\" >> .git/hooks/' + offense + '\n')
 
         if platform != 'windows':
             installer_lines.append('sudo chmod +x .git/hooks/*\n')

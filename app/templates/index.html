@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-<a href="{{ installScript }}">Get the install script<a/>
+<form action="/install" method="post">
+  Desired Username:<br>
+  <input type="text" name="username" value="{{ username }}">
+  <br>
+  <br><br>
+  <input type="submit" value="Get Installer">
+</form>
+<a href="{{ url_for('install_instructions') }}"><button>How to install</button><a/>
 <br>
 <br>
 <br>
