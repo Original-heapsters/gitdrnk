@@ -199,7 +199,8 @@ def setup():
 
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
-    open(log_file, 'w').close()
+    if not os.path.exists(log_file):
+        open(log_file, 'w').close()
 
     gitdrnk.config["RULE_SET"] = official_rules
     gitdrnk.config["LOG_FILE"] = log_file
