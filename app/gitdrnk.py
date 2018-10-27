@@ -1,4 +1,14 @@
+import sys
 import os
+# Add app and configuration module to path
+app_dir = os.path.dirname(os.path.abspath(__file__))
+configuration_dir = os.path.join(app_dir, 'configuration')
+
+if configuration_dir not in sys.path:
+    sys.path.insert(0, configuration_dir)
+if app_dir not in sys.path:
+    sys.path.insert(0, app_dir)
+
 import json
 import random
 import tempfile
@@ -163,6 +173,9 @@ def configure_install_script(host, user, platform):
 
 def setup():
     working_dir = os.path.dirname(os.path.abspath(__file__))
+    if working_dir not in sys.path:
+        sys.path.insert(0, working_dir)
+    print (sys.path)
     config_file = os.path.join(working_dir, os.path.join('configuration', 'default.json'))
 
     with open(config_file, 'r') as config_file:
