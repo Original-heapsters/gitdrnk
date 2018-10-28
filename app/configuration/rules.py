@@ -7,7 +7,7 @@ rule_sets = {
         'post-commit': 'Regular drink.',
         'post-rewrite': 'Finish your current drink. You know what you did.',
         'post-checkout': 'Everyone takes a regular drink.',
-        'post-merge': 'Pick someone and both of you drink',
+        'post-merge': 'Take a sip BBBOOOIIII or girl',
         'pre-push': 'Drink for how long your push took.',
         'pre-auto-gc': 'OOOF you just got garbage collected, take a drink.',
         'test':'You just ran a test. If youre the first one, everyone else drinks, otherwise you drink'
