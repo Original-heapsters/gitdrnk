@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitdrnkdeployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: gitdrnk
+    spec:
+      containers:
+        - name: gitdrnk
+          image: sellnat77/gitdrnk
+          ports:
+            - containerPort: 5000
