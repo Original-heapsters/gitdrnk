@@ -1,9 +1,8 @@
-FROM ubuntu:latest
+FROM python:3.6-alpine
 MAINTAINER Russell Tan
-RUN apt-get update -y
-RUN apt-get install -y python-pip python-dev build-essential
-COPY . /app
+COPY ./app /app
+COPY ./requirements.txt /app
 WORKDIR /app
 RUN pip install -r requirements.txt
-ENTRYPOINT ["python"]
-CMD ["app/gitdrnk.py"]
+EXPOSE 5000
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000","wsgi:gitdrnk"]
