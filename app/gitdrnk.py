@@ -16,14 +16,20 @@ import json
 import random
 import tempfile
 
+from tinydb import TinyDB, Query
+
 from configuration.rules import rule_sets
 from util.user_info import get_current_os_user
 import vlc
 from time import gmtime, strftime
 from flask import Flask, render_template, url_for, flash, request, redirect, send_file, after_this_request
 from werkzeug.utils import secure_filename
+from models import game
 
 gitdrnk = Flask(__name__)
+game_db = TinyDB('games_db.json')
+player_db = TinyDB('players_db.json')
+activity_db = TinyDB('activities_db.json')
 
 
 @gitdrnk.route('/health_check')
@@ -31,13 +37,34 @@ def health_check():
     return json.dumps({200: 'OK'})
 
 
-@gitdrnk.route('/game/create')
+@gitdrnk.route('/game/create', methods=['POST'])
 def create_game():
-    return json.dumps({200: 'CREATE_GAME'})
+    id = request.form.get('id', default=None)
+    title = request.form.get('title', default=None)
+    if  id and title:
+        new_game = game.game(id=id, title=title)
+        print(new_game)
+        game_db.insert(new_game.__dict__)
+        return json.dumps(new_game.__dict__)
+    return json.dumps({501: 'Game not created!'})
 
-@gitdrnk.route('/game/join')
+@gitdrnk.route('/game/join', methods=['POST'])
 def join_game():
-    return json.dumps({200: 'JOIN_GAME'})
+    id = request.form.get('id', default=None)
+    playerName = request.form.get('name', default=None)
+    if id and playerName:
+        Game = Query()
+        found_game = game.from_json(game_db.search(Game.id == id)[0])
+        if found_game.players:
+            if playerName not in found_game.players:
+                found_game.players.append(playerName)
+        else:
+            found_game.players = [playerName]
+        game_db.update({'players': found_game.players}, Game.id == id)
+        joinGame = game_db.search(Game.id == id)
+        return json.dumps(joinGame)
+    return json.dumps({501: 'Game not joined!'})
+
 
 @gitdrnk.route('/game/activity')
 def game_activity():
