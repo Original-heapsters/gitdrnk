@@ -31,6 +31,39 @@ def health_check():
     return json.dumps({200: 'OK'})
 
 
+@gitdrnk.route('/game/create')
+def create_game():
+    return json.dumps({200: 'CREATE_GAME'})
+
+@gitdrnk.route('/game/join')
+def join_game():
+    return json.dumps({200: 'JOIN_GAME'})
+
+@gitdrnk.route('/game/activity')
+def game_activity():
+    return json.dumps({200: 'GAME_LOG'})
+
+@gitdrnk.route('/player/activity')
+def player_activity():
+    return json.dumps({200: 'PLAYER_LOG'})
+
+@gitdrnk.route('/player', methods=['GET', 'POST'])
+def player_config():
+    if request.method == 'GET':
+        return json.dumps({200: 'PLAYER_INFO'})
+    else:
+        return json.dumps({200: 'PLAYER_EDIT'})
+
+@gitdrnk.route('/rules', methods=['GET', 'POST'])
+def rule_definitions():
+    if request.method == 'GET':
+        return json.dumps({200: 'VIEW_RULES'})
+    else:
+        return json.dumps({200: 'EDIT_RULES'})
+
+
+
+
 @gitdrnk.route('/info')
 def info():
     server_info = {'version': '0.01',
