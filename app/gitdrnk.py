@@ -17,6 +17,7 @@ import random
 import tempfile
 
 from tinydb import TinyDB, Query
+from util import db_helper
 
 from configuration.rules import rule_sets
 from util.user_info import get_current_os_user
@@ -24,7 +25,7 @@ import vlc
 from time import gmtime, strftime
 from flask import Flask, render_template, url_for, flash, request, redirect, send_file, after_this_request
 from werkzeug.utils import secure_filename
-from models import game
+from models import game, player
 
 gitdrnk = Flask(__name__)
 game_db = TinyDB('games_db.json')
@@ -53,16 +54,11 @@ def join_game():
     id = request.form.get('id', default=None)
     playerName = request.form.get('name', default=None)
     if id and playerName:
-        Game = Query()
-        found_game = game.from_json(game_db.search(Game.id == id)[0])
-        if found_game.players:
-            if playerName not in found_game.players:
-                found_game.players.append(playerName)
-        else:
-            found_game.players = [playerName]
-        game_db.update({'players': found_game.players}, Game.id == id)
-        joinGame = game_db.search(Game.id == id)
-        return json.dumps(joinGame)
+        found_player = db_helper.get_player(playerName, player_db)
+        if found_player:
+            db_helper.add_player_to_game(player_obj=found_player, game_id=id, db=game_db)
+            joinGame = game_db.search(Game.id == id)
+            return json.dumps(joinGame)
     return json.dumps({501: 'Game not joined!'})
 
 
@@ -77,9 +73,23 @@ def player_activity():
 @gitdrnk.route('/player', methods=['GET', 'POST'])
 def player_config():
     if request.method == 'GET':
-        return json.dumps({200: 'PLAYER_INFO'})
+        name = request.args.get('name', default=None)
+        if name:
+            player = db_helper.get_player(name, player_db)
+            if player:
+                return json.dumps(player.__dict__)
+        return json.dumps({200: 'Player not found'})
     else:
-        return json.dumps({200: 'PLAYER_EDIT'})
+        name = request.form.get('name', default=None)
+        if name:
+            found_player = db_helper.get_player(name, player_db)
+            if found_player:
+                return json.dumps(found_player.__dict__)
+            else:
+                new_player = player(name=name, activity=[])
+                db_helper.add_player(new_player, player_db)
+                return json.dumps(new_player.__dict__)
+        return json.dumps({200: 'Player not editted'})
 
 @gitdrnk.route('/rules', methods=['GET', 'POST'])
 def rule_definitions():
