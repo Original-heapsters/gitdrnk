@@ -50,7 +50,7 @@ def create_game():
 
 @gitdrnk.route('/game/join', methods=['POST'])
 def join_game():
-    id = request.form.get('id', default=None)
+    user_id = request.form.get('user_id', default=None)
     playerName = request.form.get('name', default=None)
     if id and playerName:
         Game = Query()
