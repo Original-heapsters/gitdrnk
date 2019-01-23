@@ -1,3 +1,5 @@
+import json
+
 class player(object):
 
     def __init__(self, name='', activity=[]):
@@ -6,11 +8,10 @@ class player(object):
         print('Initialized Player')
 
     def __repr__(self):
-        output = 'Player Name: ' + self.name
-        output += '\nActivity: '
-        for activity in self.activity:
-            output += '\n\t' + activity
-        return output
+        return {
+        'name': self.name,
+        'activity': self.activity
+        }
 
-def from_json(json):
+def from_document(json):
     return player(json['name'], json['activity'])

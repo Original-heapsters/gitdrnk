@@ -17,15 +17,13 @@ class game(object):
         print('Initialized Game')
 
     def __repr__(self):
-        output = 'GAME:'
-        output += '\nUSERID: ' + str(self.user_id)
-        output += '\nTITLE: ' + str(self.title)
-        output += '\nHOST: ' + str(self.host)
-        output += '\nREPO: ' + str(self.repo)
-        output += '\nPLAYERS:'
-        for player in self.players:
-            output += '\n\t' + str(player.name)
-        return output
+        return {
+        'user_id': self.user_id,
+        'title': self.title,
+        'host': self.host,
+        'repo': self.repo,
+        'players': self.players
+        }
 
-def from_json(json):
+def from_document(json):
     return game(json['user_id'], json['title'], json['host'], json['repo'], json['players'])

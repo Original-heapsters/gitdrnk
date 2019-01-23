@@ -26,7 +26,7 @@ import vlc
 from time import gmtime, strftime
 from flask import Flask, render_template, url_for, flash, request, redirect, send_file, after_this_request
 from werkzeug.utils import secure_filename
-from models import game
+from models import game, player
 
 gitdrnk = Flask(__name__)
 
@@ -43,7 +43,7 @@ def create_game():
     title = request.form.get('title', default=None)
     if title:
         new_game = game.game(user_id=user_id, title=title)
-        key = {'key':user_id}
+        key = {'user_id':user_id}
         mongo.db.games.update(key, new_game.__dict__, upsert=True)
         return json.dumps(new_game.__dict__, default=json_util.default)
     return json.dumps({501: 'Game not created!'})
@@ -53,17 +53,28 @@ def join_game():
     user_id = request.form.get('user_id', default=None)
     playerName = request.form.get('name', default=None)
     if id and playerName:
-        Game = Query()
-        found_game = game.from_json(game_db.search(Game.id == id)[0])
+        found_game = game.from_document(mongo.db.games.find_one({'user_id': user_id}))
+        found_player = player.from_document(mongo.db.players.find_one({'name': playerName}))
         if found_game.players:
-            if playerName not in found_game.players:
-                found_game.players.append(playerName)
+            names = [name['name'] for name in found_game.players]
+            if found_player.name not in names:
+                found_game.players.append(found_player.__dict__)
         else:
-            found_game.players = [playerName]
-        game_db.update({'players': found_game.players}, Game.id == id)
-        joinGame = game_db.search(Game.id == id)
-        return json.dumps(joinGame)
+            found_game.players = [found_player.__dict__]
+        key = {'user_id': user_id}
+        mongo.db.games.update(key, found_game.__dict__)
+        return json.dumps(found_game.__dict__, default=json_util.default)
     return json.dumps({501: 'Game not joined!'})
+
+@gitdrnk.route('/game/all', methods=['GET'])
+def all_games():
+    game_cursor = mongo.db.games.find()
+    games = []
+    for doc in game_cursor:
+        tmp = game.from_document(doc)
+        print(tmp)
+        games.append(tmp.__dict__)
+    return json.dumps(games)
 
 
 @gitdrnk.route('/game/activity')
@@ -74,12 +85,28 @@ def game_activity():
 def player_activity():
     return json.dumps({200: 'PLAYER_LOG'})
 
+@gitdrnk.route('/player/all')
+def all_players():
+    player_cursor = mongo.db.players.find()
+    players = []
+    for doc in player_cursor:
+        players.append(doc)
+    return json.dumps(players, default=json_util.default)
+
+
 @gitdrnk.route('/player', methods=['GET', 'POST'])
 def player_config():
     if request.method == 'GET':
-        return json.dumps({200: 'PLAYER_INFO'})
+        name = request.args.get('username', default=None)
+        key = {'name': name}
+        found_player = player.from_document(mongo.db.players.find_one(key))
+        return json.dumps(found_player, default=json_util.default)
     else:
-        return json.dumps({200: 'PLAYER_EDIT'})
+        name = request.form.get('username', default=None)
+        new_player = player.player(name=name)
+        key = {'name': name}
+        mongo.db.players.update(key, new_player.__dict__, upsert=True)
+        return json.dumps(new_player.__dict__, default=json_util.default)
 
 @gitdrnk.route('/rules', methods=['GET', 'POST'])
 def rule_definitions():
@@ -274,6 +301,8 @@ def setup():
 
 setup()
 mongo = PyMongo(gitdrnk)
+mongo.db.players.remove()
+mongo.db.games.remove()
 
 if __name__ == '__main__':
     setup()
