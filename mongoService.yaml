@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: databaseservice
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 5017
+      # Port to forward to inside the pod
+      targetPort: 27017
+      # Port accessible outside cluster
+      nodePort: 30017
+  type: LoadBalancer

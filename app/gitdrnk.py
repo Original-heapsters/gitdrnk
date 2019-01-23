@@ -13,10 +13,12 @@ if app_dir not in sys.path:
     sys.path.insert(0, app_dir)
 
 import json
+from bson import json_util
+import uuid
 import random
 import tempfile
 
-from tinydb import TinyDB, Query
+from flask_pymongo import PyMongo
 
 from configuration.rules import rule_sets
 from util.user_info import get_current_os_user
@@ -27,10 +29,6 @@ from werkzeug.utils import secure_filename
 from models import game
 
 gitdrnk = Flask(__name__)
-game_db = TinyDB('games_db.json')
-player_db = TinyDB('players_db.json')
-activity_db = TinyDB('activities_db.json')
-
 
 @gitdrnk.route('/health_check')
 def health_check():
@@ -39,13 +37,15 @@ def health_check():
 
 @gitdrnk.route('/game/create', methods=['POST'])
 def create_game():
-    id = request.form.get('id', default=None)
+    user_id = request.form.get('user_id', default=None)
+    if not user_id: user_id = uuid.uuid4().hex
+
     title = request.form.get('title', default=None)
-    if  id and title:
-        new_game = game.game(id=id, title=title)
-        print(new_game)
-        game_db.insert(new_game.__dict__)
-        return json.dumps(new_game.__dict__)
+    if title:
+        new_game = game.game(user_id=user_id, title=title)
+        key = {'key':user_id}
+        mongo.db.games.update(key, new_game.__dict__, upsert=True)
+        return json.dumps(new_game.__dict__, default=json_util.default)
     return json.dumps({501: 'Game not created!'})
 
 @gitdrnk.route('/game/join', methods=['POST'])
@@ -251,6 +251,7 @@ def setup():
         official_rules = rule_sets[rule_set]
         host = configuration['host']
         port = configuration['port']
+        db = configuration['mongo_uri']
 
     allowed_extensions = {'mp3'}
     audio_dir = os.path.join(working_dir, os.path.join('static', 'assets'))
@@ -268,9 +269,11 @@ def setup():
     gitdrnk.config["ALLOWED_EXTENSIONS"] = allowed_extensions
     gitdrnk.config["HOST"] = host
     gitdrnk.config["PORT"] = port
+    gitdrnk.config["MONGO_URI"] = db
 
 
 setup()
+mongo = PyMongo(gitdrnk)
 
 if __name__ == '__main__':
     setup()

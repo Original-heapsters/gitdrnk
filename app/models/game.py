@@ -1,15 +1,15 @@
 import json
 class game(object):
-    def __init__(self, id="", title=""):
-        self.id = id
+    def __init__(self, user_id='', title=''):
+        self.user_id = user_id
         self.title = title
         self.host = None
         self.repo = None
         self.players = []
         print('Initialized Game')
 
-    def __init__(self, id="", title="", host="", repo="", players=[]):
-        self.id = id
+    def __init__(self, user_id='', title='', host='', repo='', players=[]):
+        self.user_id = user_id
         self.title = title
         self.host = host
         self.repo = repo
@@ -17,7 +17,8 @@ class game(object):
         print('Initialized Game')
 
     def __repr__(self):
-        output = 'ID: ' + str(self.id[:6])
+        output = 'GAME:'
+        output += '\nUSERID: ' + str(self.user_id)
         output += '\nTITLE: ' + str(self.title)
         output += '\nHOST: ' + str(self.host)
         output += '\nREPO: ' + str(self.repo)
@@ -27,4 +28,4 @@ class game(object):
         return output
 
 def from_json(json):
-    return game(json['id'], json['title'], json['host'], json['repo'], json['players'])
+    return game(json['user_id'], json['title'], json['host'], json['repo'], json['players'])
