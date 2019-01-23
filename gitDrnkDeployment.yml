@@ -11,6 +11,7 @@ spec:
     spec:
       containers:
         - name: gitdrnk
-          image: sellnat77/gitdrnk
+          image: sellnat77/gitdrnk:test3
           ports:
             - containerPort: 5000
+          imagePullPolicy: Always

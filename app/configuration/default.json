@@ -3,5 +3,5 @@
   "rule_set":"default",
   "host":"0.0.0.0",
   "port":"5000",
-  "mongo_uri":"mongodb://localhost:5017/gitdrnk"
+  "mongo_uri":"mongodb://10.110.41.145:5017/gitdrnk"
 }
