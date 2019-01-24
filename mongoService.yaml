@@ -11,6 +11,4 @@ spec:
       port: 5017
       # Port to forward to inside the pod
       targetPort: 27017
-      # Port accessible outside cluster
-      nodePort: 30017
-  type: LoadBalancer
+  type: ClusterIP

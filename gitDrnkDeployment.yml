@@ -13,10 +13,10 @@ spec:
         - name: gitdrnk
           image: sellnat77/gitdrnk:v2
           env:
-            - name: "MONGO_URI"
-              value: "unknown"
-            - name: "GUNICORN_WORKERS"
-              value: 2
+            - name: DB
+              value: "mongodb://databaseservice:5017/gitdrnk"
+            - name: GUNICORN_WORKERS
+              value: "2"
           ports:
             - containerPort: 5000
           imagePullPolicy: Always

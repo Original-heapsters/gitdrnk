@@ -6,4 +6,4 @@ WORKDIR /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 EXPOSE 5000
-ENTRYPOINT ["usr/local/bingunicorn", "--config", "gunicorn.conf", "-b", ":5000" "wsgi"]
+CMD [ "gunicorn", "-c", "gunicorn.conf", "-b", ":5000", "wsgi:app" ]
