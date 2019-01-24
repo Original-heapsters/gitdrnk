@@ -12,6 +12,11 @@ spec:
       containers:
         - name: gitdrnk
           image: sellnat77/gitdrnk:v2
+          env:
+            - name: "MONGO_URI"
+              value: "unknown"
+            - name: "GUNICORN_WORKERS"
+              value: 2
           ports:
             - containerPort: 5000
           imagePullPolicy: Always
