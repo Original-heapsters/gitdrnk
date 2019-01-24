@@ -1,5 +1,5 @@
 import pytest
-from app.gitdrnk import gitdrnk
+from v1.gitdrnk import gitdrnk
 
 
 @pytest.fixture

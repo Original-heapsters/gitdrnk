@@ -1,5 +1,5 @@
-from tinydb import TinyDB, Query
-from models import game, player
+from tinydb import Query
+from v1.models import player, game
 
 
 def get_game(id=None, db=None):

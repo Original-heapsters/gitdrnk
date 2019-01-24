@@ -20,13 +20,13 @@ import tempfile
 
 from flask_pymongo import PyMongo
 
-from configuration.rules import rule_sets
-from util.user_info import get_current_os_user
+from v1.configuration.rules import rule_sets
+from v1.util.user_info import get_current_os_user
 import vlc
 from time import gmtime, strftime
 from flask import Flask, render_template, url_for, flash, request, redirect, send_file, after_this_request
 from werkzeug.utils import secure_filename
-from models import game, player
+from v1.models import player, game
 
 gitdrnk = Flask(__name__)
 

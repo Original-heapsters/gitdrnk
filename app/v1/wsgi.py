@@ -1,4 +1,4 @@
-from gitdrnk import gitdrnk
+from v1.gitdrnk import gitdrnk
 
 def create_app():
     gitdrnk.setup()
