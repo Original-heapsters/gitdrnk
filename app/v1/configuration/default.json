@@ -1,7 +1,0 @@
-{
-  "play_audio_command":"mpg123",
-  "rule_set":"default",
-  "host":"0.0.0.0",
-  "port":"5000",
-  "mongo_uri":"mongodb://localhost:5017/gitdrnk"
-}

@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontenddeployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: gitdrnk_react
+    spec:
+      containers:
+        - name: gitdrnk_react
+          image: sellnat77/gitdrnk_react:prod
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
