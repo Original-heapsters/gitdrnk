@@ -11,6 +11,4 @@ spec:
       port: 5001
       # Port to forward to inside the pod
       targetPort: 5000
-      # Port accessible outside cluster
-      nodePort: 30001
   type: LoadBalancer

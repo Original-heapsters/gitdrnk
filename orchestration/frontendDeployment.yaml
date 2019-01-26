@@ -11,10 +11,10 @@ spec:
     spec:
       containers:
         - name: gitdrnk-react
-          image: sellnat77/gitdrnk_react:prod
+          image: sellnat77/gitdrnk_react
           env:
             - name: REACT_APP_GITDRNK_SVC
-              value: "http://gitdrnkservice:5001"
+              value: "http://10.110.210.65:5001"
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
