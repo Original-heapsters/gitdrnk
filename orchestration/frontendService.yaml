@@ -4,7 +4,7 @@ metadata:
   name: frontendservice
 spec:
   selector:
-    app: gitdrnk_react
+    app: gitdrnk-react
   ports:
     - protocol: "TCP"
       # Port accessible inside cluster
