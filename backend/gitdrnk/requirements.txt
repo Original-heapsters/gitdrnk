@@ -3,6 +3,7 @@ attrs==18.2.0
 Click==7.0
 coverage==4.5.1
 Flask==1.0.2
+Flask-Cors==3.0.7
 Flask-PyMongo==2.2.0
 gunicorn==19.9.0
 itsdangerous==1.1.0

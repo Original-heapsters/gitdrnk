@@ -3,11 +3,13 @@ from flask_pymongo import PyMongo
 from Database.Client import Encoder
 from Database.Client import Helper
 from flask import Flask, request, jsonify, url_for
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = os.environ.get('DB')
 app.config['VERSION'] = "1.0.0"
 app.json_encoder = Encoder.JSONEncoder
+CORS(app)
 mongo = PyMongo(app).db
 
 

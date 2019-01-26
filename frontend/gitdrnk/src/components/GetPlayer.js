@@ -4,30 +4,27 @@ class GetPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {players:[]}
+    this.state = {playerList: []}
   }
 
   handleSubmit(e) {
-    alert(process.env.REACT_APP_GITDRNK_SVC);
-    var playerEndpoint = process.env.REACT_APP_GITDRNK_SVC + '/players/all'
+    const playerEndpoint = process.env.REACT_APP_GITDRNK_SVC + '/players/all';
     fetch(playerEndpoint)
       .then(response => response.json())
-      .then(players => this.setState({ players }));
-    // alert('The value is: ' + this.input.value);
+      .then(players => this.setState({ playerList: players }));
     e.preventDefault();
   }
 
   render() {
-    const{ players } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <input type="submit" value="Get All Users" />
         </form>
         <ul>
-          {players.map(player =>
-            <li>
-              <p> player.username</p>
+          {this.state.playerList.map(player =>
+            <li key={player._id}>
+              <p> {player.username}</p>
             </li>
           )}
         </ul>
