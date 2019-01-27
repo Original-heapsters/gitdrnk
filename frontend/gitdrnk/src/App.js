@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Square from './components/Square';
 import GetPlayer from './components/GetPlayer';
 import GetGame from './components/GetGame';
 import CreateGame from './components/CreateGame';
@@ -11,12 +10,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
-        <GetPlayer />
-        <CreatePlayer style="background-color:red;"/>
-        <GetGame style="background-color:green;"/>
-        <CreateGame style="background-color:pink;"/>
-
+        <GetPlayer/>
+        <CreatePlayer/>
+        <GetGame/>
+        <CreateGame/>
       </div>
     );
   }
