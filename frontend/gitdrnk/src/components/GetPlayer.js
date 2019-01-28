@@ -17,7 +17,6 @@ class GetPlayer extends React.Component {
   }
 
   getPlayerTable(){
-    console.log("what");
     if (this.state.playerList.length > 0) {
       return (
         <table>
@@ -40,7 +39,6 @@ class GetPlayer extends React.Component {
 
   render() {
     const playerTable = this.getPlayerTable();
-    console.log(playerTable);
 
     return (
       <div className="GetPlayer">
