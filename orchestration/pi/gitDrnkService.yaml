@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitdrnkservice
+spec:
+  selector:
+    app: gitdrnk
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 5001
+      # Port to forward to inside the pod
+      targetPort: 5000
+      # Port visible to outside world
+      nodePort: 30002
+  type: LoadBalancer

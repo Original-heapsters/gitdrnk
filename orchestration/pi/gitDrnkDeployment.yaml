@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitdrnkdeployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gitdrnk
+    spec:
+      containers:
+        - name: gitdrnk
+          image: sellnat77/gitdrnk:pi
+          env:
+            - name: DB
+              value: "mongodb://databaseservice:5017/gitdrnk"
+            - name: GUNICORN_WORKERS
+              value: "2"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
