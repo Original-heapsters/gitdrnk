@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-alpine-python:3.7.2
+FROM python:3.6-alpine
 MAINTAINER Russell Tan
 COPY ./gitdrnk /app
 COPY ./gitdrnk/requirements.txt /app
