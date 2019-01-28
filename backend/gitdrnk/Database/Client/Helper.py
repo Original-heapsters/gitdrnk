@@ -56,6 +56,11 @@ def get_players_by_username(db, username):
     items = db.find(key)
     return list(items)
 
+def get_actions_by_username(db, username):
+    key = {"player_id": username}
+    items = db.find(key)
+    return list(items)
+
 def get_player_by_git_username(db, username):
     key = {"git_username": username}
     item = db.find_one(key)

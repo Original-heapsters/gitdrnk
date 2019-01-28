@@ -108,6 +108,8 @@ def get_player():
 
     if username is not None:
         found_player = Helper.get_player_by_username(mongo.players, username)
+        actions = Helper.get_actions_by_username(mongo.actions, username)
+        found_player["actions"] = actions
         return jsonify(found_player), 200
 
     return jsonify({"ok": False, "message": "Missing username!"}), 400
@@ -139,9 +141,6 @@ def client_payload_received():
     action = client_proc.process_payload(payload=data)
     Helper.add_action(mongo.actions, action)
     return jsonify(action)
-
-    # Helper.add_action(mongo.actions, action_id)
-    # return jsonify(data)
 
 @app.route("/web_hook", methods=["POST"])
 def server_payload_received():
@@ -196,7 +195,7 @@ def site_map():
 
         methods = ','.join(rule.methods)
         url = url_for(rule.endpoint, **options)
-        line = urllib.parse.unquote("{:25s} {:20s} {}".format(rule.endpoint, methods, url))
+        line = urllib.parse.unquote("{:25s} {:25s} {}".format(rule.endpoint, methods, url))
         output.append(line)
 
     return jsonify(sorted(output))
