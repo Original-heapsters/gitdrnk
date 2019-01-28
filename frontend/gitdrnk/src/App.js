@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import GetPlayer from './components/GetPlayer';
 import GetGame from './components/GetGame';
 import CreateGame from './components/CreateGame';
 import CreatePlayer from './components/CreatePlayer';
+import Rules from './components/Rules';
 
 class App extends Component {
   render() {
@@ -14,6 +14,7 @@ class App extends Component {
         <CreatePlayer/>
         <GetGame/>
         <CreateGame/>
+        <Rules />
       </div>
     );
   }

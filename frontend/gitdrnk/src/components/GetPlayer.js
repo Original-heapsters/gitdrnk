@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import './Styles/GetPlayer.css';
+import React from 'react';
 
 class GetPlayer extends React.Component {
   constructor(props) {
@@ -15,19 +16,38 @@ class GetPlayer extends React.Component {
     e.preventDefault();
   }
 
+  getPlayerTable(){
+    console.log("what");
+    if (this.state.playerList.length > 0) {
+      return (
+        <table>
+        <tbody>
+          <tr>
+            <th>Username</th>
+            <th>Git Username</th>
+          </tr>
+          {this.state.playerList.map(player =>
+            <tr key={player._id}>
+              <td>{player.username}</td>
+              <td>{player.git_username}</td>
+            </tr>
+          )}
+          </tbody>
+        </table>
+      );
+    }
+  }
+
   render() {
+    const playerTable = this.getPlayerTable();
+    console.log(playerTable);
+
     return (
-      <div>
+      <div className="GetPlayer">
         <form onSubmit={this.handleSubmit}>
           <input type="submit" value="Get All Users" />
         </form>
-        <ul>
-          {this.state.playerList.map(player =>
-            <li key={player._id}>
-              <p> {player.username}</p>
-            </li>
-          )}
-        </ul>
+        {playerTable}
       </div>
     );
   }

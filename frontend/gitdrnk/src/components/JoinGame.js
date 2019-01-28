@@ -1,3 +1,4 @@
+import './Styles/JoinGame.css';
 import React, { Component } from 'react';
 
 class JoinGame extends React.Component {
@@ -30,7 +31,7 @@ class JoinGame extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="JoinGame">
         <form onSubmit={this.handleSubmit}>
           <label>
             Username:

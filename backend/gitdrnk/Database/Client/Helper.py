@@ -1,9 +1,116 @@
 ############### Basic CRUD ###############
 
 
+seed_players = [
+{"username": "chuck",
+"git_username": "testa"},
+{"username": "sammy",
+"git_username": "SamSwagGit"},
+{"username": "xxXxCryBabyxXxx",
+"git_username": "johnny"},
+{"username": "420Kiilah69",
+"git_username": "RebeccaGit"},
+{"username": "PoopyFingers",
+"git_username": "RandNum"},
+{"username": "SWAG",
+"git_username": "SwG"},
+{"username": "InstaH0",
+"git_username": "snappers"},
+{"username": "Ants",
+"git_username": "InMyEyes"},
+{"username": "Wow",
+"git_username": "soCoolBoi"},
+{"username": "goodBoi",
+"git_username": "Snek"}
+]
+
+seed_actions = [
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"1",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"11",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"111",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"1111",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"InstaH0",
+"action":"pre-commit",
+"action_id":"11111",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"111111",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"1111111",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"InstaH0",
+"action":"pre-commit",
+"action_id":"11111111",
+"date":"2019-01-01 13:05:32"},
+{"player_id":"chuck",
+"action":"pre-commit",
+"action_id":"111111111",
+"date":"2019-01-01 13:05:32"}
+]
+
+seed_games = [
+{"game_id":"CleanGame",
+"players":["chuck","InstaH0","soCoolBoi"]},
+{"game_id":"DrunkGame",
+"players":["Ants","goodBoi","PoopyFingers"]},
+{"game_id":"DeathBall",
+"players":["420Kiilah69","InstaH0","soCoolBoi"]},
+{"game_id":"the great equalizer",
+"players":["xxXxCryBabyxXxx","InstaH0","420Kiilah69"]},
+{"game_id":"huuh",
+"players":["chuck","420Kiilah69","soCoolBoi"]}
+]
+
+seed_rules = [
+{"game_id":"DrunkGame",
+"rules":{
+"pre-commit":"Drink a little",
+"post-commit": "Drink a lot"
+}},
+{"game_id":"CleanGame",
+"rules":{
+"pre-commit":"Drink a little",
+"post-commit": "Drink a lot"
+}},{"game_id":"DeathBall",
+"rules":{
+"pre-commit":"Drink a little",
+"post-commit": "Drink a lot"
+}},
+{"game_id":"the great equalizer",
+"rules":{
+"pre-commit":"Drink a little",
+"post-commit": "Drink a lot"
+}},
+{"game_id":"huuh",
+"rules":{
+"pre-commit":"Drink a little",
+"post-commit": "Drink a lot"
+}}
+]
+
+
 def create_game(db, game_id):
     key = {"game_id": game_id}
     db.update(key, key, upsert=True)
+
+def create_game(db, game_id, game):
+    key = {"game_id": game_id}
+    db.update(key, game, upsert=True)
 
 
 def get_game(db, game_id):
@@ -84,6 +191,23 @@ def get_all_rules(db):
     items = db.find()
     return list(items)
 
+def seed_players_db(db):
+    for player in seed_players:
+        create_player(db, player["username"], player)
+
+def seed_games_db(db):
+    for game in seed_games:
+        create_game(db, game["game_id"], game)
+
+def seed_actions_db(db):
+    for action in seed_actions:
+        add_action(db, action)
+
+def seed_rules_db(db):
+    for rule in seed_rules:
+        update_ruleset(db, rule["game_id"], rule)
+
+
 
 def update_player(self):
     pass
@@ -99,5 +223,4 @@ def get_action(self):
 
 def update_action(self):
     pass
-
 ############### Basic CRUD ###############

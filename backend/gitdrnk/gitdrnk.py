@@ -200,6 +200,14 @@ def site_map():
 
     return jsonify(sorted(output))
 
+@app.route("/seed_db")
+def seed_db():
+    Helper.seed_players_db(mongo.players)
+    Helper.seed_games_db(mongo.games)
+    Helper.seed_actions_db(mongo.actions)
+    Helper.seed_rules_db(mongo.rules)
+    return "Done"
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000", debug=True)

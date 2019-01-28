@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import './Styles/CreateGame.css';
+import React from 'react';
 
 class CreateGame extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class CreateGame extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="CreateGame">
         <form onSubmit={this.handleSubmit}>
           <label>
             Game ID:
