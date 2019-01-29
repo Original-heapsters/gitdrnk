@@ -1,0 +1,8 @@
+FROM balenalib/raspberrypi3-alpine-python:3.7.2
+MAINTAINER Russell Tan
+COPY ./gitdrnk /app
+COPY ./gitdrnk/requirements.txt /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+EXPOSE 5000
+CMD [ "gunicorn", "-c", "gunicorn.conf", "-b", ":5000", "wsgi:app" ]

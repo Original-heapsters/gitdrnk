@@ -14,3 +14,5 @@ spec:
       # Port accessible outside cluster
       nodePort: 30003
   type: LoadBalancer
+  externalIPs:
+    - 192.168.86.100

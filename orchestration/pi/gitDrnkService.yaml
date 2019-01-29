@@ -13,4 +13,6 @@ spec:
       targetPort: 5000
       # Port visible to outside world
       nodePort: 30002
+  externalIPs:
+    - 192.168.86.100
   type: LoadBalancer
