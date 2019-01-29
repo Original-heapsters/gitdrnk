@@ -1,4 +1,6 @@
 app/static/logs/*
+frontend/Dockerfile
+backend/Dockerfile
 
 
 # Byte-compiled / optimized / DLL files
