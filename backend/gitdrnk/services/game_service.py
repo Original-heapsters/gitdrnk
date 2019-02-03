@@ -35,8 +35,10 @@ def join_game(data, db):
             Helper.add_player_to_game(db.games, game_id, player)
             found_game = Helper.get_game(db.games, game_id)
 
-            resp = found_game
             code = 200
+            resp["ok"] = True
+            resp["message"] = "Success"
+            resp["game"] = found_game
         else:
             code = 400
             resp["message"] = username + " could not be found in the player database"
@@ -59,7 +61,9 @@ def all_games(db):
 
     if len(found_games) > 0:
         code = 200
-        resp = found_games
+        resp["ok"] = True
+        resp["message"] = "Success"
+        resp["games"] = found_games
     else:
         code = 200
         resp["ok"] = True
@@ -79,12 +83,16 @@ def get_rules(data, db):
     if game_id is not None:
         rules = Helper.get_rules_for_game(db.rules, game_id)
         code = 200
-        resp = rules
+        resp["ok"] = True
+        resp["message"] = "Success"
+        resp["rules"] = rules
 
     else:
         rulesets = Helper.get_all_rules(db.rules)
         code = 200
-        resp = rulesets
+        resp["ok"] = True
+        resp["message"] = "Success"
+        resp["rules"] = rulesets
 
     return resp, code
 

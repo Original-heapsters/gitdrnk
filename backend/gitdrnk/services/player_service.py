@@ -44,7 +44,9 @@ def get_player(data, db):
         actions = Helper.get_actions_by_username(db.actions, username)
         found_player["actions"] = actions
         code = 200
-        resp = found_player
+        resp["ok"] = True
+        resp["message"] = "Success"
+        resp["players"] = found_player
     else:
         code = 400
         resp["message"] = "Missing username"
@@ -59,7 +61,9 @@ def get_all_players(db):
 
     if len(found_players) > 0:
         code = 200
-        resp = found_players
+        resp["ok"] = True
+        resp["message"] = "Success"
+        resp["players"] = found_players
     else:
         code = 200
         resp["ok"] = True
