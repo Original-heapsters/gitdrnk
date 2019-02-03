@@ -1,12 +1,24 @@
 import os
 import uuid
 from datetime import datetime
-from flask_pymongo import PyMongo
+
+
+# Utility imports
 from Database.Client import Encoder
 from Database.Client import Helper
 from HookProcessing import Client as cHook
+
+
+
+# Service imports
+from services.nuke_service import nuke
+from services.game_service import *
+
+
+# Framework imports
 from flask import Flask, request, jsonify, url_for, render_template
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 app = Flask(__name__)
@@ -39,45 +51,22 @@ def version():
 
 @app.route("/nukeeverything", methods=['GET'])
 def nuke_everything():
-    mongo.players.remove()
-    mongo.games.remove()
-    mongo.actions.remove()
-    mongo.rules.remove()
-
-    return "I hope you know what you just did"
+    resp, code = nuke(mongo)
+    return jsonify(resp), code
 
 
 @app.route("/game/new", methods=["POST"])
-def new_game():
+def game_new():
     data = request.get_json()
-    game_id = data.get("game_id", None)
-    existing_games = Helper.get_games_by_id(mongo.games, game_id)
-    if len(existing_games) > 0:
-        return jsonify({"ok": False, "message": "Game with that id already exists!", "game_id": game_id}), 400
-
-    if game_id is not None:
-        Helper.create_game(mongo.games, game_id)
-        response = {"ok": True, "message": "Game created successfully!"}
-        return jsonify(response), 200
-    else:
-        return jsonify({"ok": False, "message": "Missing game_id!"}), 400
+    resp, code = new_game(data, mongo)
+    return jsonify(resp), code
 
 
 @app.route("/game/join", methods=["POST"])
-def join_game():
+def game_join():
     data = request.get_json()
-
-    game_id = data.get("game_id", None)
-    username = data.get("username", None)
-
-    if game_id is not None and username is not None:
-        player = Helper.get_player_by_username(mongo.players, username)
-        if player is not None:
-            Helper.add_player_to_game(mongo.games, game_id, player)
-            found_game = Helper.get_game(mongo.games, game_id)
-            return jsonify(found_game), 200
-
-    return jsonify({"ok": False, "message": "Missing game_id!"}), 400
+    resp, code = join_game(data, mongo)
+    return jsonify(resp), code
 
 
 @app.route("/games/all", methods=["GET"])

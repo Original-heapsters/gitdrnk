@@ -108,9 +108,9 @@ def create_game(db, game_id):
     key = {"game_id": game_id}
     db.update(key, key, upsert=True)
 
-def create_game(db, game_id, game):
-    key = {"game_id": game_id}
-    db.update(key, game, upsert=True)
+# def create_game(db, game_id, game):
+#     key = {"game_id": game_id}
+#     db.update(key, game, upsert=True)
 
 
 def get_game(db, game_id):
