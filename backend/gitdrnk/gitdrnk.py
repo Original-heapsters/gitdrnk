@@ -5,7 +5,6 @@ from datetime import datetime
 
 # Utility imports
 from Database.Client import Encoder
-from Database.Client import Helper
 from HookProcessing import Client as cHook
 
 
@@ -14,6 +13,7 @@ from HookProcessing import Client as cHook
 from services.util_service import *
 from services.game_service import *
 from services.player_service import *
+from services.action_service import *
 
 
 # Framework imports
@@ -42,7 +42,7 @@ def index():
 
 @app.route("/health", methods=['GET'])
 def health():
-    return "Health Check"
+    return "Pass", 200
 
 
 @app.route("/version", methods=['GET'])
@@ -103,34 +103,31 @@ def players_all ():
     return jsonify(resp), code
 
 @app.route("/actions/all", methods=["GET"])
-def get_all_actions():
-    found_actions = Helper.get_all_actions(mongo.actions)
-    return jsonify(found_actions), 200
+def actions_all():
+    resp, code = get_all_actions(mongo)
+    return jsonify(resp), code
 
-
-@app.route("/payload", methods=["POST"])
-def payload_received():
-    data = request.get_json()
-    print(data)
-    return jsonify(data)
 
 @app.route("/client_hook", methods=["POST"])
 def client_payload_received():
-    data = request.get_json()
-    git_user = data["username"]
-    player = Helper.get_player_by_git_username(mongo.players, git_user)
-    client_proc = cHook.Client(player)
-    action = client_proc.process_payload(payload=data)
-    Helper.add_action(mongo.actions, action)
-    notify_room(action, 'default_room')
-    return jsonify(action)
+    # TODO Payload from client git-hook
+    # data = request.get_json()
+    # git_user = data["username"]
+    # player = Helper.get_player_by_git_username(mongo.players, git_user)
+    # client_proc = cHook.Client(player)
+    # action = client_proc.process_payload(payload=data)
+    # Helper.add_action(mongo.actions, action)
+    # notify_room(action, 'default_room')
+    return "pass", 200
 
 @app.route("/web_hook", methods=["POST"])
 def server_payload_received():
-    data = request.get_json()
-    print(data)
-    notify_room(data, 'default_room')
-    return jsonify(data)
+    # TODO Payload from server webhook
+    # data = request.get_json()
+    # print(data)
+    # notify_room(data, 'default_room')
+    # return jsonify(data)
+    return "pass", 200
 
 @app.route("/help/client_hooks/<platform>", methods=["GET"])
 def sample_client_hooks(platform="unix"):
@@ -138,9 +135,6 @@ def sample_client_hooks(platform="unix"):
         return app.send_static_file('sample_client_hooks_unix.md')
     else:
         return app.send_static_file('sample_client_hooks_win.md')
-
-
-
 
 
 @socketio.on('connect')
