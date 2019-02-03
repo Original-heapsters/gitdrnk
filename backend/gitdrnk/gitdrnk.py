@@ -27,7 +27,7 @@ dbPath = os.environ.get('DB')
 if dbPath is None or dbPath == "":
     dbPath = "mongodb://localhost:27017/gitdrnk"
 app.config['MONGO_URI'] = dbPath
-app.config['VERSION'] = "1.0.2"
+app.config['VERSION'] = "1.0.3"
 app.json_encoder = Encoder.JSONEncoder
 CORS(app)
 socketio = SocketIO(app)
