@@ -5,7 +5,7 @@ from Database.Client import Helper
 from HookProcessing import Client as cHook
 from flask import Flask, request, jsonify, url_for, render_template
 from flask_cors import CORS
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 app = Flask(__name__)
 dbPath = os.environ.get('DB')
@@ -142,12 +142,14 @@ def client_payload_received():
     client_proc = cHook.Client(player)
     action = client_proc.process_payload(payload=data)
     Helper.add_action(mongo.actions, action)
+    notify_room(action, 'default_room')
     return jsonify(action)
 
 @app.route("/web_hook", methods=["POST"])
 def server_payload_received():
     data = request.get_json()
     print(data)
+    notify_room(data, 'default_room')
     return jsonify(data)
 
 @app.route("/help/client_hooks/<platform>", methods=["GET"])
@@ -187,10 +189,35 @@ def rules():
 
 @socketio.on('connect')
 def git_event():
-    eventJson = {"id": "eventId_1",
+    eventJson = {"type": "eventId_1",
     "message": "new message"}
     print("Got an event")
     emit("gitevent", eventJson)
+
+
+@socketio.on('join')
+def on_join(data):
+    print("Trying to join")
+    username = data['username']
+    game = data['game']
+    join_room(game)
+    print(username + " has entered the room: " + game)
+    # send(username + ' has entered the room.', room=game)
+    event = {"type":"join","user": username, "game": game}
+    notify_room(event, game)
+
+@socketio.on('leave')
+def on_leave(data):
+    username = data['username']
+    game = data['game']
+    leave_room(game)
+    print(username + " has left the room: " + game)
+    # send(username + ' has left the room.', room=game)
+    event = {"type":"leave","user": username, "game": game}
+    notify_room(event, game)
+
+def notify_room(event_json, room_id):
+    emit('gitdrnkevent', event_json,room=room_id)
 
 @app.route("/socket_test")
 def socket_test():
