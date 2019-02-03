@@ -14,7 +14,7 @@ spec:
           image: sellnat77/gitdrnk_react
           env:
             - name: REACT_APP_GITDRNK_SVC
-              value: "http://192.168.99.104:30002"
+              value: "http://192.168.99.106:30002"
           ports:
             - containerPort: 3000
           imagePullPolicy: Always

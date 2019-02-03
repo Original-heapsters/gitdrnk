@@ -3,8 +3,9 @@ from flask_pymongo import PyMongo
 from Database.Client import Encoder
 from Database.Client import Helper
 from HookProcessing import Client as cHook
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, url_for, render_template
 from flask_cors import CORS
+from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
 dbPath = os.environ.get('DB')
@@ -14,6 +15,7 @@ app.config['MONGO_URI'] = dbPath
 app.config['VERSION'] = "1.0.2"
 app.json_encoder = Encoder.JSONEncoder
 CORS(app)
+socketio = SocketIO(app)
 mongo = PyMongo(app).db
 
 
@@ -180,6 +182,20 @@ def rules():
             Helper.update_ruleset(mongo.rules, game_id, rules)
             return jsonify({"ok": True, "message": "Rules updated successfully!"}), 200
         return jsonify({"ok": False, "message": "Missing game_id or ruleset!"}), 400
+
+
+
+@socketio.on('connect')
+def git_event():
+    eventJson = {"id": "eventId_1",
+    "message": "new message"}
+    print("Got an event")
+    emit("gitevent", eventJson)
+
+@app.route("/socket_test")
+def socket_test():
+    return render_template('socket_test.html')
+
 
 
 

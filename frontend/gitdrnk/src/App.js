@@ -10,11 +10,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <GetPlayer/>
-        <CreatePlayer/>
-        <GetGame/>
-        <CreateGame/>
-        <Rules />
+      <table>
+      <tr>
+        <td><GetPlayer/></td>
+        <td><CreatePlayer/></td>
+        <td><GetGame/></td>
+        <td><CreateGame/></td>
+        <td><Rules /></td>
+        </tr>
+        </table>
       </div>
     );
   }
