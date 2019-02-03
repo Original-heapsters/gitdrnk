@@ -108,9 +108,9 @@ def create_game(db, game_id):
     key = {"game_id": game_id}
     db.update(key, key, upsert=True)
 
-# def create_game(db, game_id, game):
-#     key = {"game_id": game_id}
-#     db.update(key, game, upsert=True)
+def create_game_from_seed(db, game_id, game):
+    key = {"game_id": game_id}
+    db.update(key, game, upsert=True)
 
 
 def get_game(db, game_id):
@@ -198,7 +198,7 @@ def seed_players_db(db):
 
 def seed_games_db(db):
     for game in seed_games:
-        create_game(db, game["game_id"], game)
+        create_game_from_seed(db, game["game_id"], game)
 
 def seed_actions_db(db):
     for action in seed_actions:
