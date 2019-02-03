@@ -11,12 +11,13 @@ from HookProcessing import Client as cHook
 
 
 # Service imports
-from services.nuke_service import nuke
+from services.util_service import *
 from services.game_service import *
+from services.player_service import *
 
 
 # Framework imports
-from flask import Flask, request, jsonify, url_for, render_template
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
@@ -46,12 +47,8 @@ def health():
 
 @app.route("/version", methods=['GET'])
 def version():
-    return app.config["VERSION"]
-
-
-@app.route("/nukeeverything", methods=['GET'])
-def nuke_everything():
-    resp, code = nuke(mongo)
+    code = 200
+    resp = {"ok": True, "version": app.config["VERSION"]}
     return jsonify(resp), code
 
 
@@ -70,48 +67,40 @@ def game_join():
 
 
 @app.route("/games/all", methods=["GET"])
-def all_games():
-    found_games = Helper.get_all_games(mongo.games)
-    return jsonify(found_games), 200
+def games_all():
+    resp, code = all_games(mongo)
+    return jsonify(resp), code
+
+@app.route("/game/rules", methods=["GET", "POST"])
+def rules():
+    if request.method == "GET":
+        data = request.get_json()
+        resp, code = get_rules(data, db)
+    else:
+        data = request.get_json()
+        resp, code = set_rules(data, mongo)
+
+    return jsonify(resp), code
 
 
 @app.route("/player/new", methods=["POST"])
 def add_player():
     data = request.get_json()
-
-    username = data.get("username", None)
-    git_username = data.get("git_username", None)
-    existing_users = Helper.get_players_by_username(mongo.players, username)
-    if len(existing_users) > 0:
-        return jsonify({"ok": False, "message": "username exists!"}), 400
-
-    if username is not None:
-        new_user = {"username": username, "git_username": git_username}
-        Helper.create_player(mongo.players, username, new_user)
-        response = {"ok": True, "message": "Player created successfully!"}
-        return jsonify(response), 200
-    else:
-        return jsonify({"ok": False, "message": "Missing username!"}), 400
+    resp, code = new_player(data, db)
+    return jsonify(resp), code
 
 
 @app.route("/player", methods=["GET"])
-def get_player():
+def player_get():
     data = request.get_json()
-    username = data.get("username", None)
-
-    if username is not None:
-        found_player = Helper.get_player_by_username(mongo.players, username)
-        actions = Helper.get_actions_by_username(mongo.actions, username)
-        found_player["actions"] = actions
-        return jsonify(found_player), 200
-
-    return jsonify({"ok": False, "message": "Missing username!"}), 400
+    resp, code = get_player(data, mongo)
+    return jsonify(resp), code
 
 
 @app.route("/players/all", methods=["GET"])
-def get_all_players():
-    found_players = Helper.get_all_players(mongo.players)
-    return jsonify(found_players), 200
+def players_all ():
+    resp, code = get_all_players(mongo)
+    return jsonify(resp), code
 
 @app.route("/actions/all", methods=["GET"])
 def get_all_actions():
@@ -151,30 +140,6 @@ def sample_client_hooks(platform="unix"):
         return app.send_static_file('sample_client_hooks_win.md')
 
 
-@app.route("/game/rules", methods=["GET", "POST"])
-def rules():
-    if request.method == "GET":
-        data = request.get_json()
-        game_id = None
-        if data:
-            game_id = data.get("game_id", None)
-
-        if game_id is not None:
-            rules = Helper.get_rules_for_game(mongo.rules, game_id)
-            return jsonify(rules), 200
-        else:
-            rulesets = Helper.get_all_rules(mongo.rules)
-            print(str(rulesets))
-            return jsonify(rulesets), 200
-    else:
-        data = request.get_json()
-        game_id = data.get("game_id", None)
-        rules = data.get("ruleset", None)
-        if game_id is not None and rules is not None:
-            rules["game_id"] = game_id
-            Helper.update_ruleset(mongo.rules, game_id, rules)
-            return jsonify({"ok": True, "message": "Rules updated successfully!"}), 200
-        return jsonify({"ok": False, "message": "Missing game_id or ruleset!"}), 400
 
 
 
@@ -217,32 +182,22 @@ def socket_test():
     return render_template('socket_test.html')
 
 
-
-
 @app.route("/site-map")
 def site_map():
-    import urllib
-    output = []
-    for rule in app.url_map.iter_rules():
+    resp, code = get_sitemap(app.url_map)
+    return jsonify(resp), code
 
-        options = {}
-        for arg in rule.arguments:
-            options[arg] = "[{0}]".format(arg)
-
-        methods = ','.join(rule.methods)
-        url = url_for(rule.endpoint, **options)
-        line = urllib.parse.unquote("{:25s} {:25s} {}".format(rule.endpoint, methods, url))
-        output.append(line)
-
-    return jsonify(sorted(output))
 
 @app.route("/seed_db")
-def seed_db():
-    Helper.seed_players_db(mongo.players)
-    Helper.seed_games_db(mongo.games)
-    Helper.seed_actions_db(mongo.actions)
-    Helper.seed_rules_db(mongo.rules)
-    return "Done"
+def seed():
+    resp, code = seed_db(mongo)
+    return jsonify(resp), code
+
+@app.route("/nukeeverything", methods=['GET'])
+def nuke_everything():
+    resp, code = nuke(mongo)
+    return jsonify(resp), code
+
 
 
 if __name__ == "__main__":

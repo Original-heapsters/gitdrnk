@@ -141,6 +141,7 @@ def add_action(db, action):
 
 def update_ruleset(db, game_id, rules):
     key = {"game_id": game_id}
+    rules["game_id"] = game_id
     db.update(key, rules, upsert=True)
 
 def create_player(db, username, user):
