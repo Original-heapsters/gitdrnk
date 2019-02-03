@@ -1,4 +1,6 @@
 import os
+import uuid
+from datetime import datetime
 from flask_pymongo import PyMongo
 from Database.Client import Encoder
 from Database.Client import Helper
@@ -217,6 +219,8 @@ def on_leave(data):
     notify_room(event, game)
 
 def notify_room(event_json, room_id):
+    event_json["id"] = str(uuid.uuid4())
+    event_json["date"] = str(datetime.now())
     emit('gitdrnkevent', event_json,room=room_id)
 
 @app.route("/socket_test")

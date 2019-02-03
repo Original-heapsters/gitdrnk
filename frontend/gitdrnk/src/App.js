@@ -5,6 +5,7 @@ import GetGame from './components/GetGame';
 import CreateGame from './components/CreateGame';
 import CreatePlayer from './components/CreatePlayer';
 import Rules from './components/Rules';
+import WatchGame from './components/WatchGame';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
         <td><GetGame/></td>
         <td><CreateGame/></td>
         <td><Rules /></td>
+        <td><WatchGame /></td>
         </tr>
         </table>
       </div>
