@@ -15,6 +15,9 @@ from services.game_service import *
 from services.player_service import *
 from services.action_service import *
 
+# Socket imports
+from sockets.chat_socket import *
+
 
 # Framework imports
 from flask import Flask, request, jsonify, render_template
@@ -155,6 +158,14 @@ def on_join(data):
     # send(username + ' has entered the room.', room=game)
     event = {"type":"join","user": username, "game": game}
     notify_room(event, game)
+
+@socketio.on('join_chat')
+def on_join_chat(data):
+    join_chat(data)
+
+@socketio.on('send_chat')
+def on_send_chat(data):
+    send_chat_message(data)
 
 @socketio.on('leave')
 def on_leave(data):
