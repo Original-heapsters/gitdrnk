@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: gitdrnk
-          image: sellnat77/gitdrnk:latest
+          image: sellnat77/gitdrnk:1.0.4
           env:
             - name: DB
               value: "mongodb://databaseservice:5017/gitdrnk"
