@@ -7,29 +7,52 @@ import CreatePlayer from './components/CreatePlayer';
 import Rules from './components/Rules';
 import WatchGame from './components/WatchGame';
 import Chat from './components/Chat';
+import Header from './components/Header';
+import PlayerList from './components/PlayerList';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
-        <table>
-          <tbody>
-            <tr>
-              <td><GetPlayer/></td>
-              <td><CreatePlayer/></td>
-              <td><GetGame/></td>
-              <td><CreateGame/></td>
-              <td><Rules /></td>
-              <td><WatchGame /></td>
-              </tr>
-            <tr>
-              <td><Chat/></td>
-            </tr>
-          </tbody>
-        </table>
+      <Header/>
+      <PlayerList/>
+      <Chat/>
+      <Rules/>
+
       </div>
     );
   }
 }
 
 export default App;
+
+
+
+
+
+/*
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+  // <table>
+  //   <tbody>
+  //     <tr>
+  //       <td><GetPlayer/></td>
+  //       <td><CreatePlayer/></td>
+  //       <td><GetGame/></td>
+  //       <td><CreateGame/></td>
+  //       <td><Rules /></td>
+  //       <td><WatchGame /></td>
+  //       </tr>
+  //   </tbody>
+  // </table>
+  */

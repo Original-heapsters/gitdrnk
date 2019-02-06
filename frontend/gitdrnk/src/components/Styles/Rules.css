@@ -1,6 +1,7 @@
 .Rules {
-  width: 200px;
-  padding: 25px;
-  margin: 25px;
-  border: 1px solid green;
+  float: left;
+  width: 20vw;
+  height: 90vh;
+
+  background: #FE38;
 }

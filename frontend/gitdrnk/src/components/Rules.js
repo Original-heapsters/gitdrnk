@@ -4,7 +4,6 @@ import React from 'react';
 class Rules extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {ruleSet:[]}
   }
 
@@ -44,13 +43,9 @@ class Rules extends React.Component {
   }
 
   render() {
-    const ruleDefinition = this.getRules();
     return (
       <div className="Rules">
-        <form onSubmit={this.handleSubmit}>
-          <input type="submit" value="Get All Games" />
-        </form>
-        {ruleDefinition}
+
       </div>
     );
   }
