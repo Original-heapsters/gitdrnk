@@ -1,0 +1,10 @@
+.message-list {
+  /* width: 12em; */
+    height: 80vh;
+    line-height: 2em;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    overflow: scroll;
+    overflow-x: hidden;
+}

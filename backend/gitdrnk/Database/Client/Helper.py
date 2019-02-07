@@ -84,6 +84,66 @@ seed_rules = [
                 "key": "pre-commit",
                 "rule": "Drink a little"
             },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+{
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
             {
                 "key": "post-commit",
                 "rule": "Drink a lot"
@@ -169,6 +229,24 @@ def get_games_by_id(db, game_id):
 def get_all_games(db):
     items = db.find()
     return list(items)
+
+def get_chat_log(db, game_id):
+    key = {"game_id": game_id}
+    game_chat = db.find_one(key)
+    print(game_chat["chat"])
+    return game_chat["chat"]
+    # return list(items)
+
+def add_chat_message(db, game_id, chatObj):
+    key = {"game_id": game_id}
+    game_transcript = db.find_one(key)
+    print(game_transcript)
+    if not game_transcript:
+        db.update(key, {"game_id": game_id, "chat":[]}, upsert=True)
+
+    query = {"$addToSet": {"chat": chatObj}}
+    db.update(key, query)
+
 
 
 def add_player_to_game(db, game_id, username):

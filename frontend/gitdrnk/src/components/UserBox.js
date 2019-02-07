@@ -4,9 +4,10 @@ import React from 'react';
 class UserBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: this.props.username, gitUsername: this.props.gitUsername }
+    this.state = {username: this.props.username, gitUsername: this.props.gitUsername, gameId: this.props.gameId }
     this.handleChange = this.handleChange.bind(this)
     this.handleGitUNameChange = this.handleGitUNameChange.bind(this)
+    this.handleGameChange = this.handleGameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -22,12 +23,15 @@ class UserBox extends React.Component {
     })
   }
 
+  handleGameChange(e) {
+    this.setState({
+      gameId: e.target.value
+    })
+  }
+
   handleSubmit(e) {
     e.preventDefault()
-    this.setState({
-      username: '',
-      gitUsername: ''
-    })
+    this.props.updateSession(this.state.username, this.state.gitUsername, this.state.gameId);
   }
 
 
@@ -47,6 +51,11 @@ class UserBox extends React.Component {
               value={this.state.gitUsername}
               placeholder="Enter your git username"
               type="text" />
+              <input
+                onChange={this.handleGameChange}
+                value={this.state.gameId}
+                placeholder="Enter the gameId"
+                type="text" />
               <input type="submit" value="submit"/>
         </form>
 

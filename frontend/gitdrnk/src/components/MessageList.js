@@ -2,10 +2,6 @@ import './Styles/MessageList.css';
 import React from 'react';
 
 class MessageList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="MessageList">

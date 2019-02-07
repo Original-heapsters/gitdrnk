@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from Database.Client import Helper
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 
@@ -14,11 +15,21 @@ def join_chat(data):
         event = {"type": "join", "username": username, "gameId": game}
         notify_room(event, game)
 
-def send_chat_message(data):
+def send_chat_message(data, db):
     print("Message being processed")
     username = data['username']
     game = data['gameId']
     message = data['message']
+
+
+    chatObj = {
+        "username":username,
+        "gameId": game,
+        "message": message,
+        "date": str(datetime.now())
+    }
+    Helper.add_chat_message(db.chats, game, chatObj)
+
 
     if username and game and message:
         event = {"type": "message", "username": username, "gameId": game, "message": message}
@@ -30,6 +41,7 @@ def notify_room(event_json, game_id):
         print("Event json or game id was null")
         return
 
-    event_json["_id"] = str(uuid.uuid4())
-    event_json["date"] = str(datetime.now())
+    if "_id" not in event_json and "date" not in event_json:
+        event_json["_id"] = str(uuid.uuid4())
+        event_json["date"] = str(datetime.now())
     emit('gitdrnk_chat', event_json, room=game_id)

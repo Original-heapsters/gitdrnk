@@ -68,6 +68,15 @@ def game_join():
     resp, code = join_game(data, mongo)
     return jsonify(resp), code
 
+@app.route("/game/chat", methods=["GET"])
+def game_chat():
+    if request.method == "GET":
+        game_id = request.args.get("game_id", None)
+        if game_id:
+            resp, code = get_chat_log(mongo, game_id)
+        return jsonify(resp), code
+
+
 
 @app.route("/games/all", methods=["GET"])
 def games_all():
@@ -165,7 +174,7 @@ def on_join_chat(data):
 
 @socketio.on('send_chat')
 def on_send_chat(data):
-    send_chat_message(data)
+    send_chat_message(data, mongo)
 
 @socketio.on('leave')
 def on_leave(data):

@@ -71,6 +71,19 @@ def all_games(db):
 
     return resp, code
 
+def get_chat_log(db, game_id):
+    code = 200
+    resp = {"ok": True, "message": "No chat logs found"}
+    transcript = Helper.get_chat_log(db.chats, game_id);
+    if len(transcript) > 0:
+        code = 200
+        resp["ok"] = True
+        resp["message"] = "Success"
+        resp["transcript"] = transcript
+
+    return resp, code
+
+
 
 
 def get_rules(game_id, db):
