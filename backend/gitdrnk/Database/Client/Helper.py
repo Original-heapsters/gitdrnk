@@ -77,30 +77,71 @@ seed_games = [
 ]
 
 seed_rules = [
-{"game_id":"DrunkGame",
-"rules":{
-"pre-commit":"Drink a little",
-"post-commit": "Drink a lot"
-}},
-{"game_id":"CleanGame",
-"rules":{
-"pre-commit":"Drink a little",
-"post-commit": "Drink a lot"
-}},{"game_id":"DeathBall",
-"rules":{
-"pre-commit":"Drink a little",
-"post-commit": "Drink a lot"
-}},
-{"game_id":"the great equalizer",
-"rules":{
-"pre-commit":"Drink a little",
-"post-commit": "Drink a lot"
-}},
-{"game_id":"huuh",
-"rules":{
-"pre-commit":"Drink a little",
-"post-commit": "Drink a lot"
-}}
+{
+        "game_id": "DeathBall",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Drink a lot"
+            }
+        ]
+},
+{
+        "game_id": "DrunkGame",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Drink a lot"
+            }
+        ]
+},
+{
+        "game_id": "CleanGame",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Drink a lot"
+            }
+        ]
+},
+{
+        "game_id": "the great equalizer",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Drink a lot"
+            }
+        ]
+},
+{
+        "game_id": "huuh",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Drink a lot"
+            }
+        ]
+}
 ]
 
 

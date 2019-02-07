@@ -4,48 +4,32 @@ import React from 'react';
 class Rules extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {ruleSet:[]}
+    this.state = { gameId: this.props.sessionInfo.gameId,
+      ruleSet:[]}
   }
 
-  handleSubmit(e) {
-    const ruleEndpoint = process.env.REACT_APP_GITDRNK_SVC + '/game/rules';
-
+  componentDidMount() {
+    const ruleEndpoint = process.env.REACT_APP_GITDRNK_SVC + '/game/rules?game_id=' + this.state.gameId;
     fetch(ruleEndpoint)
       .then(response => response.json())
-      .then(rules => this.setState({ ruleSet: rules }));
-    e.preventDefault();
+      .then(rules => this.setState({ ruleSet: rules.rules.definition }));
   }
 
-  getRules(){
-    this.state.ruleSet.map(ruleset =>
-    console.log(ruleset.rules));
-    if (this.state.ruleSet.length > 0 ) {
-      return (
-        <table>
-          <tbody>
-            <tr>
-              <th>Rule</th>
-              <th>Effect</th>
-            </tr>
-            {this.state.ruleSet.map(ruleset =>
-              ruleset.map( (key, value) =>
-                <tr key={key}>
-                  <td>{key}</td>
-                  <td>{value}</td>
-                </tr>
-              )
-              )
-            }
-          </tbody>
-        </table>
-      );
-    }
-  }
 
   render() {
     return (
       <div className="Rules">
-
+      <ul>
+        {this.state.ruleSet.map(ruleObj => {
+          return (
+           <li key={ruleObj.key}>
+             <div>
+               {ruleObj.key} | {ruleObj.rule}
+             </div>
+           </li>
+         )
+       })}
+     </ul>
       </div>
     );
   }

@@ -4,7 +4,7 @@ import React from 'react';
 class UserBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: "420Kiilah69 ", gitUsername: "RebeccaGit" }
+    this.state = {username: this.props.username, gitUsername: this.props.gitUsername }
     this.handleChange = this.handleChange.bind(this)
     this.handleGitUNameChange = this.handleGitUNameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)

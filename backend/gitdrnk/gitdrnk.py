@@ -77,8 +77,8 @@ def games_all():
 @app.route("/game/rules", methods=["GET", "POST"])
 def rules():
     if request.method == "GET":
-        data = request.get_json()
-        resp, code = get_rules(data, db)
+        data = request.args.get("game_id", None)
+        resp, code = get_rules(data, mongo)
     else:
         data = request.get_json()
         resp, code = set_rules(data, mongo)

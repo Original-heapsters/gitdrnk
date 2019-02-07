@@ -73,12 +73,12 @@ def all_games(db):
 
 
 
-def get_rules(data, db):
+def get_rules(game_id, db):
     code = 503
     resp = {"ok": False, "message": "Internal server error"}
-    game_id = None
-    if data:
-        game_id = data.get("game_id", None)
+    game = None
+    if game_id:
+        game = game_id
 
     if game_id is not None:
         rules = Helper.get_rules_for_game(db.rules, game_id)

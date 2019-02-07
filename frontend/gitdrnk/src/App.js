@@ -11,14 +11,25 @@ import Header from './components/Header';
 import PlayerList from './components/PlayerList';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    var sessionInfo = {
+      gameId: "DeathBall",
+      username:"420Kiilah69",
+      gitUName:"RebeccaGit"
+    }
+    this.state = {
+      session: sessionInfo
+    }
+  }
 
   render() {
     return (
       <div className="App">
-      <Header/>
-      <PlayerList/>
+      <Header sessionInfo={this.state.session}/>
+      <PlayerList sessionInfo={this.state.session}/>
       <Chat/>
-      <Rules/>
+      <Rules sessionInfo={this.state.session}/>
 
       </div>
     );
