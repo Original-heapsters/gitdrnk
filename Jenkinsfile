@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building stuff...'
+                echo 'Building gitdrnk backend...'
+                ls
             }
         }
         stage('Test') {
