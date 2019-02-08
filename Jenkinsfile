@@ -16,7 +16,7 @@ node {
            includes: 'frontend/dockerfiles/Dockerfile_reg',
            targetLocation: "frontend/Dockerfile"
          )])
-        app = docker.build("sellnat77/gitdrnk_react","-f ${WORKSPACE}/frontend")
+        app = docker.build("sellnat77/gitdrnk_react","-f ${WORKSPACE}/frontend/Dockerfile .")
     }
 
     stage('Test image') {
