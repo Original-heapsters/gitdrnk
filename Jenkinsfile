@@ -13,7 +13,7 @@ node {
          fileOperations([fileCopyOperation(
            excludes: '',
            flattenFiles: false,
-           includes: "${WORKSPACE}/frontend/dockerfiles/*_reg",
+           includes: '${WORKSPACE}/frontend/dockerfiles/*_reg',
            targetLocation: "${WORKSPACE}/frontend/Dockerfile"
          )])
         app = docker.build("sellnat77/gitdrnk_react","${WORKSPACE}/frontend")
