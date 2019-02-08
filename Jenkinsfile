@@ -5,7 +5,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building gitdrnk backend...'
-                ls
+                fileOperations([fileCopyOperation(
+                  excludes: '',
+                  flattenFiles: false,
+                  includes: "${WORKSPACE}/backend/dockerfiles/Dockerfile_reg",
+                  targetLocation: "${WORKSPACE}/backend/Dockerfile"
+                )]).
+                return docker.build("sellnat77/gitdrnk", "-f backend/Dockerfile .")
             }
         }
         stage('Test') {
