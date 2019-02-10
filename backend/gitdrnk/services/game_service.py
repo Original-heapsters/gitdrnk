@@ -74,7 +74,7 @@ def all_games(db):
 def get_chat_log(db, game_id):
     code = 200
     resp = {"ok": True, "message": "No chat logs found"}
-    transcript = Helper.get_chat_log(db.chats, game_id);
+    transcript = Helper.get_chat_log(db.chats, game_id)
     if len(transcript) > 0:
         code = 200
         resp["ok"] = True

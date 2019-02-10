@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from Database.Client import Helper
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
+from flask_socketio import emit, join_room
 
 
 def join_chat(data):

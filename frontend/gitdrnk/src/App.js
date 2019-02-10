@@ -19,10 +19,24 @@ class App extends Component {
       session: sessionInfo,
       players: [],
       chat: [],
+      actions:[],
       rules: []
     }
     this.updateSession = this.updateSession.bind(this);
+    this.handleNewChat = this.handleNewChat.bind(this);
+    this.handleNewAction = this.handleNewAction.bind(this);
 
+  }
+
+  handleNewChat(err, message) {
+    console.log("HUH");
+    this.setState({ chat: this.state.chat.concat(message)});
+  }
+
+  handleNewAction(err, action) {
+    console.log("WHAT");
+    this.setState({ actions: this.state.actions.concat(action)});
+    console.log(this.state.actions);
   }
 
   updateSession(uName, gUName, gId){
@@ -41,8 +55,10 @@ class App extends Component {
     });
 
     getChatLog(this.state.session.gameId, (err, chatLog) => {
-      this.setState({chat: chatLog});
-      joinChat(this.state.session.gameId, this.state.session.username, (err, message ) => this.setState({ chat: this.state.chat.concat(message)}));
+      if (chatLog && chatLog.length > 0){
+        this.setState({chat: chatLog});
+      }
+      joinChat(this.state.session.gameId, this.state.session.username, this.handleNewChat, this.handleNewAction);
     });
 
     getRules(this.state.session.gameId, (err, ruleset) => {

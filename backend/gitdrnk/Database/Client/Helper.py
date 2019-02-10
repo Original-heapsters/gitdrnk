@@ -230,12 +230,23 @@ def get_all_games(db):
     items = db.find()
     return list(items)
 
+
 def get_chat_log(db, game_id):
     key = {"game_id": game_id}
     game_chat = db.find_one(key)
-    print(game_chat["chat"])
-    return game_chat["chat"]
-    # return list(items)
+    if game_chat:
+        print(game_chat)
+        return game_chat["chat"]
+    else:
+        return []
+
+
+def get_action_log(db, game_id):
+    key = {"game_id": game_id}
+    game_actions = db.find_one(key)
+    print(game_actions["actions"])
+    return game_actions["actions"]
+
 
 def add_chat_message(db, game_id, chatObj):
     key = {"game_id": game_id}
@@ -245,6 +256,16 @@ def add_chat_message(db, game_id, chatObj):
         db.update(key, {"game_id": game_id, "chat":[]}, upsert=True)
 
     query = {"$addToSet": {"chat": chatObj}}
+    db.update(key, query)
+
+def add_action_message(db, game_id, chatObj):
+    key = {"game_id": game_id}
+    game_transcript = db.find_one(key)
+    print(game_transcript)
+    if not game_transcript:
+        db.update(key, {"game_id": game_id, "actions":[]}, upsert=True)
+
+    query = {"$addToSet": {"actions": chatObj}}
     db.update(key, query)
 
 

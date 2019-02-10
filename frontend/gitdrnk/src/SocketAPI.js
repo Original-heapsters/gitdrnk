@@ -3,12 +3,12 @@ const socket = openSocket(process.env.REACT_APP_GITDRNK_SVC);
 
 function joinGame(gameId, username, cb) {
   socket.emit('join', {'game': gameId, 'username': username});
-  socket.on('gitdrnk_hook', event => cb(null, event));
 }
 
-function joinChat(gameId, username, cb){
+function joinChat(gameId, username, chat_cb, action_cb){
   socket.emit('join_chat', {'gameId': gameId, 'username': username});
-  socket.on('gitdrnk_chat', message => cb(null, message));
+  socket.on('gitdrnk_action', action => action_cb(null, action));
+  socket.on('gitdrnk_chat', message => chat_cb(null, message));
 }
 
 function sendChatMessage(gameId, username, message){
