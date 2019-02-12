@@ -1,9 +1,7 @@
 amqp==2.4.1
 atomicwrites==1.2.1
 attrs==18.2.0
-cffi==1.11.5
 Click==7.0
-colorama==0.4.0
 coverage==4.5.1
 Flask==1.0.2
 Flask-Cors==3.0.7
@@ -19,12 +17,12 @@ MarkupSafe==1.0
 more-itertools==4.3.0
 pluggy==0.8.0
 py==1.7.0
-pycparser==2.19
 pymongo==3.7.2
 pytest==3.9.2
 pytest-cov==2.6.0
 python-engineio==3.3.0
 python-socketio==3.1.2
+python-vlc==3.0.4106
 six==1.11.0
 vine==1.2.0
 Werkzeug==0.14.1
