@@ -17,4 +17,6 @@ def notify_room(event_json, game_id):
         event_json["_id"] = str(uuid.uuid4())
         event_json["date"] = str(datetime.now())
 
-    socketio.emit('gitdrnk_action', event_json, namespace=game_id)
+    print("Sending " + str(event_json))
+
+    socketio.emit('gitdrnk_action', event_json)#, namespace=game_id)

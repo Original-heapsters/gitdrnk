@@ -29,14 +29,18 @@ class App extends Component {
   }
 
   handleNewChat(err, message) {
-    console.log("HUH");
+    console.log("HUH" + message._id);
     this.setState({ chat: this.state.chat.concat(message)});
   }
 
   handleNewAction(err, action) {
-    console.log("WHAT");
+    if (action.game_id !== this.state.session.gameId){
+      return;
+    }
     this.setState({ actions: this.state.actions.concat(action)});
     console.log(this.state.actions);
+    var audio = new Audio(action.audio);
+    audio.play();
   }
 
   updateSession(uName, gUName, gId){
@@ -47,7 +51,11 @@ class App extends Component {
     }
     this.setState(
       {
-        session: newSession
+        session: newSession,
+        players: [],
+        chat: [],
+        actions:[],
+        rules: []
       }
     );
     getPlayers((err, playerList)=> {

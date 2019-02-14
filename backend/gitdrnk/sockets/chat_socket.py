@@ -23,6 +23,7 @@ def send_chat_message(data, db):
 
 
     chatObj = {
+        "_id": str(uuid.uuid4()),
         "username":username,
         "gameId": game,
         "message": message,
@@ -44,4 +45,6 @@ def notify_room(event_json, game_id):
     if "_id" not in event_json and "date" not in event_json:
         event_json["_id"] = str(uuid.uuid4())
         event_json["date"] = str(datetime.now())
+
+    print("Sending " + str(event_json))
     emit('gitdrnk_chat', event_json, room=game_id)

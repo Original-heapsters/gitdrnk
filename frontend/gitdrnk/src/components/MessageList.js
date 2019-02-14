@@ -5,20 +5,15 @@ class MessageList extends React.Component {
   render() {
     return (
       <div className="MessageList">
-      <ul className="message-list">
-        {this.props.messages.map(message => {
-          return (
-           <li key={message._id}>
-             <div>
-               {message.type} {message.username} @ {message.date}
-             </div>
-             <div>
-               {message.message}
-             </div>
-           </li>
-         )
-       })}
-     </ul>
+        <ul className="message-list">
+          {this.props.messages.map(messageItem => {
+            return(
+             <li key={messageItem._id}>
+                 {messageItem.type} {messageItem.username} @ {messageItem.date}    {messageItem.message}
+             </li>
+           )
+         })}
+       </ul>
       </div>
     );
   }
