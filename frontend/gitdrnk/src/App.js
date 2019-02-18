@@ -4,7 +4,7 @@ import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header';
 import PlayerList from './components/PlayerList';
-import {getPlayers, getChatLog, getRules} from './util/APIHelper';
+import {getPlayers, getGames, getChatLog, getRules} from './util/APIHelper';
 import { joinChat } from './SocketAPI.js';
 
 class App extends Component {
@@ -20,12 +20,20 @@ class App extends Component {
       players: [],
       chat: [],
       actions:[],
-      rules: []
+      rules: [],
+      games: []
     }
     this.updateSession = this.updateSession.bind(this);
     this.handleNewChat = this.handleNewChat.bind(this);
     this.handleNewAction = this.handleNewAction.bind(this);
+    this.changeGame = this.changeGame.bind(this);
 
+  }
+
+  componentWillMount(){
+    getGames((err, gameList)=> {
+      this.setState({games: gameList})
+    });
   }
 
   handleNewChat(err, message) {
@@ -41,6 +49,23 @@ class App extends Component {
     console.log(this.state.actions);
     var audio = new Audio(action.audio);
     audio.play();
+  }
+
+  changeGame(gameSelected){
+    var newSession = {
+      gameId: gameSelected,
+      username:this.state.session.username,
+      gitUName:this.state.session.gitUName
+    }
+    this.setState(
+      {
+        session: newSession,
+        players: [],
+        chat: [],
+        actions:[],
+        rules: []
+      }
+    );
   }
 
   updateSession(uName, gUName, gId){
@@ -79,7 +104,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <Header sessionInfo={this.state.session} updateSession={this.updateSession}/>
+      <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame}/>
       <PlayerList playerList={this.state.players}/>
       <Chat sessionInfo={this.state.session} chat={this.state.chat}/>
       <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>

@@ -7,6 +7,13 @@ function getPlayers(cb){
     .then(players => cb(null, players.players));
 }
 
+function getGames(cb){
+  const allGamesEndpoint = apiEndpoint + '/games/all';
+  fetch(allGamesEndpoint)
+  .then(response => response.json())
+  .then(games => cb(null, games.games));
+}
+
 function getChatLog(gameId, cb){
   // Get previous messages
   const chatLogEndpoint = apiEndpoint + '/game/chat?game_id=' + gameId;
@@ -25,4 +32,4 @@ function getRules(gameId, cb){
     .then(rules => cb( null, rules.rules.definition));
 }
 
-export { getPlayers, getChatLog, getRules }
+export { getPlayers, getChatLog, getRules, getGames }
