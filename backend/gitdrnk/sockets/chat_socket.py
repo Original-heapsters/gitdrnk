@@ -1,7 +1,9 @@
 import uuid
 from datetime import datetime
-from Database.Client import Helper
+
 from flask_socketio import emit, join_room
+
+from Database.Client import Helper
 
 
 def join_chat(data):
@@ -15,22 +17,21 @@ def join_chat(data):
         event = {"type": "join", "username": username, "gameId": game}
         notify_room(event, game)
 
+
 def send_chat_message(data, db):
     print("Message being processed")
     username = data['username']
     game = data['gameId']
     message = data['message']
 
-
     chatObj = {
         "_id": str(uuid.uuid4()),
-        "username":username,
+        "username": username,
         "gameId": game,
         "message": message,
         "date": str(datetime.now())
     }
     Helper.add_chat_message(db.chats, game, chatObj)
-
 
     if username and game and message:
         event = {"type": "message", "username": username, "gameId": game, "message": message}
