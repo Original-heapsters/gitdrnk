@@ -1,6 +1,8 @@
 import uuid
 from datetime import datetime
+
 from gitdrnk import socketio
+
 
 def send_action_message(data):
     print("action being processed")
@@ -19,4 +21,4 @@ def notify_room(event_json, game_id):
 
     print("Sending " + str(event_json))
 
-    socketio.emit('gitdrnk_action', event_json)#, namespace=game_id)
+    socketio.emit('gitdrnk_action', event_json)  # , namespace=game_id)

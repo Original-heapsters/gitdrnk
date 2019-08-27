@@ -1,6 +1,9 @@
 import urllib
+
 from flask import url_for
+
 from Database.Client import Helper
+
 
 def nuke(db):
     db.players.remove()
@@ -13,6 +16,7 @@ def nuke(db):
     code = 200
     return response, code
 
+
 def seed_db(db):
     Helper.seed_players_db(db.players)
     Helper.seed_games_db(db.games)
@@ -22,6 +26,7 @@ def seed_db(db):
     response = {"ok": True, "message": "All databases seeded"}
     code = 200
     return response, code
+
 
 def get_sitemap(url_map):
     code = 200

@@ -1,6 +1,9 @@
-from Util.AudioUtil import *
 import uuid
+
 from flask import url_for
+
+from Util.AudioUtil import *
+
 
 class Client(object):
     def __init__(self, player, game, audio_path="", host_url=""):
@@ -34,7 +37,7 @@ class Client(object):
         action_obj = {
             "game_id": self.game_id,
             "action_id": self.action_id,
-            "action":self.action,
+            "action": self.action,
             "username": self.player_id,
             "git_username": self.player_git_id,
             "date": self.date,

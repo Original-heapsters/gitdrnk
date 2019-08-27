@@ -1,14 +1,11 @@
 import os
-import uuid
-from datetime import datetime
 
+from gevent import monkey
 
 # Utility imports
 from Database.Client import Encoder
-from gevent import monkey
+
 monkey.patch_all()
-
-
 
 # Service imports
 from services.util_service import *
@@ -21,12 +18,11 @@ from services.client_hook_service import *
 from sockets.chat_socket import *
 from sockets.action_socket import *
 
-
 # Framework imports
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_pymongo import PyMongo
-from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_socketio import SocketIO, emit, leave_room
 
 app = Flask(__name__)
 dbPath = os.environ.get('DB')
@@ -34,7 +30,7 @@ if dbPath is None or dbPath == "":
     dbPath = "mongodb://localhost:27017/gitdrnk"
 app.config['MONGO_URI'] = dbPath
 app.config['MONGO_CHAT_URI'] = dbPath
-app.config['AUDIO_DIR'] = os.path.join(os.getcwd(),"static","audio")
+app.config['AUDIO_DIR'] = os.path.join(os.getcwd(), "static", "audio")
 app.config['VERSION'] = "1.0.4"
 app.json_encoder = Encoder.JSONEncoder
 CORS(app)
@@ -77,6 +73,7 @@ def game_join():
 
 @app.route("/game/chat", methods=["GET"])
 def game_chat():
+    global code, resp
     if request.method == "GET":
         game_id = request.args.get("game_id", None)
         if game_id:
@@ -118,7 +115,7 @@ def player_get():
 
 
 @app.route("/players/all", methods=["GET"])
-def players_all ():
+def players_all():
     resp, code = get_all_players(mongo)
     return jsonify(resp), code
 
@@ -181,7 +178,7 @@ def on_leave(data):
     leave_room(game)
     print(username + " has left the room: " + game)
     # send(username + ' has left the room.', room=game)
-    event = {"type":"leave","user": username, "game": game}
+    event = {"type": "leave", "user": username, "game": game}
     notify_room(event, game)
 
 

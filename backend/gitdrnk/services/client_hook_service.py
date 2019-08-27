@@ -2,10 +2,10 @@ from Database.Client import Helper
 from HookProcessing import Client as cHook
 from sockets.action_socket import *
 
+
 def handle_client_hook(player_db, action_db, data, audio_dir, request_origin):
     code = 503
     resp = {"ok": False, "message": "Internal server error"}
-
 
     git_user = data.get("git_username", None)
     if not git_user:
@@ -22,6 +22,5 @@ def handle_client_hook(player_db, action_db, data, audio_dir, request_origin):
             resp["message"] = "Success"
             resp["action"] = action
             send_action_message(action)
-
 
     return resp, code

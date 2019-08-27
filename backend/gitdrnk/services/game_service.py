@@ -1,7 +1,7 @@
 from Database.Client import Helper
 
+
 def new_game(data, db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
 
     game_id = data.get("game_id", None)
@@ -22,8 +22,8 @@ def new_game(data, db):
 
     return resp, code
 
+
 def join_game(data, db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
 
     game_id = data.get("game_id", None)
@@ -55,7 +55,6 @@ def join_game(data, db):
 
 
 def all_games(db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
     found_games = Helper.get_all_games(db.games)
 
@@ -71,6 +70,7 @@ def all_games(db):
 
     return resp, code
 
+
 def get_chat_log(db, game_id):
     code = 200
     resp = {"ok": True, "message": "No chat logs found"}
@@ -85,14 +85,10 @@ def get_chat_log(db, game_id):
     return resp, code
 
 
-
-
 def get_rules(game_id, db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
-    game = None
     if game_id:
-        game = game_id
+        pass
 
     if game_id is not None:
         rules = Helper.get_rules_for_game(db.rules, game_id)
@@ -110,8 +106,8 @@ def get_rules(game_id, db):
 
     return resp, code
 
+
 def set_rules(data, db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
     game_id = data.get("game_id", None)
     rules = data.get("ruleset", None)
