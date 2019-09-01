@@ -1,7 +1,7 @@
 from Database.Client import Helper
 
+
 def new_player(data, db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
 
     username = data.get("username", None)
@@ -34,8 +34,8 @@ def new_player(data, db):
 
     return resp, code
 
+
 def get_player(data, db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
     username = data.get("username", None)
 
@@ -51,10 +51,10 @@ def get_player(data, db):
         code = 400
         resp["message"] = "Missing username"
 
-    return resp,code
+    return resp, code
+
 
 def get_all_players(db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
 
     found_players = Helper.get_all_players(db.players)
@@ -68,6 +68,5 @@ def get_all_players(db):
         code = 200
         resp["ok"] = True
         resp["message"] = "No games found"
-
 
     return resp, code

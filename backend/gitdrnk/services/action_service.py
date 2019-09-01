@@ -1,7 +1,7 @@
 from Database.Client import Helper
 
+
 def get_all_actions(db):
-    code = 503
     resp = {"ok": False, "message": "Internal server error"}
     found_actions = Helper.get_all_actions(db.actions)
 
@@ -15,4 +15,4 @@ def get_all_actions(db):
         resp["ok"] = True
         resp["message"] = "No actions found"
 
-    return resp,code
+    return resp, code
