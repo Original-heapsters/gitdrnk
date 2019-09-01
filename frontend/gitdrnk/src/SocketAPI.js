@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-const socket = openSocket(process.env.REACT_APP_GITDRNK_SVC);
+const socket = openSocket(process.env.REACT_APP_GITDRNK_SVC|| "http://localhost:5000");
 
 function joinGame(gameId, username, cb) {
   socket.emit('join', {'game': gameId, 'username': username});

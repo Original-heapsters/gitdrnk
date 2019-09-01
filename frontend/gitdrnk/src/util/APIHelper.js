@@ -1,4 +1,4 @@
-const apiEndpoint = process.env.REACT_APP_GITDRNK_SVC;
+const apiEndpoint = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000";
 
 function getPlayers(cb){
   const playerEndpoint = apiEndpoint + '/players/all';
