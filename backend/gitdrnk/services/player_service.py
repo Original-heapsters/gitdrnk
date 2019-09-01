@@ -54,10 +54,10 @@ def get_player(data, db):
     return resp, code
 
 
-def get_all_players(db):
+def get_all(db):
     resp = {"ok": False, "message": "Internal server error"}
 
-    found_players = Helper.get_all_players(db.players)
+    found_players = Helper.get_all(db.players)
 
     if len(found_players) > 0:
         code = 200

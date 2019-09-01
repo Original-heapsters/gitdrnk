@@ -72,8 +72,10 @@ seed_games = [
      "players": ["420Kiilah69", "InstaH0", "soCoolBoi"]},
     {"game_id": "the great equalizer",
      "players": ["xxXxCryBabyxXxx", "InstaH0", "420Kiilah69"]},
+    {"game_id": "DB_Test",
+     "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
     {"game_id": "huuh",
-     "players": ["chuck", "420Kiilah69", "soCoolBoi"]}
+      "players": ["chuck", "420Kiilah69", "soCoolBoi"]}
 ]
 
 seed_rules = [
@@ -204,16 +206,17 @@ seed_rules = [
     }
 ]
 
+# Create fucntions
 
-def create_game(db, game_id):
-    key = {"game_id": game_id}
-    db.update(key, key, upsert=True)
-
-
-def create_game_from_seed(db, game_id, game):
-    key = {"game_id": game_id}
-    db.update(key, game, upsert=True)
-
+def create(db, item_id, obj = None):
+    key = {"game_id": item_id}
+    if obj != None:
+        # used to create game from seed
+        db.update(key, obj, upsert=True)
+        print("new game with obj")
+    else:
+        db.update(key, key, upsert=True)
+        print("new game with no obj")
 
 def get_game(db, game_id):
     key = {"game_id": game_id}
@@ -326,22 +329,14 @@ def get_rules_for_game(db, game_id):
     item = db.find_one(key)
     return item
 
-
-def get_all_players(db):
+# Get function
+def get_all(db):
     items = db.find()
     return list(items)
 
 
-def get_all_actions(db):
-    items = db.find()
-    return list(items)
 
-
-def get_all_rules(db):
-    items = db.find()
-    return list(items)
-
-
+# Seed functions
 def seed_players_db(db):
     for player in seed_players:
         create_player(db, player["username"], player)
@@ -349,7 +344,7 @@ def seed_players_db(db):
 
 def seed_games_db(db):
     for game in seed_games:
-        create_game_from_seed(db, game["game_id"], game)
+        create(db, game["game_id"], game)
 
 
 def seed_actions_db(db):
@@ -362,7 +357,7 @@ def seed_rules_db(db):
         update_ruleset(db, rule["game_id"], rule)
 
 
-def update_player():
+def update(type):
     pass
 
 
@@ -374,6 +369,5 @@ def get_action():
     pass
 
 
-def update_action():
-    pass
+
 ############### Basic CRUD ###############
