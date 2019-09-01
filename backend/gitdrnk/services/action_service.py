@@ -3,7 +3,7 @@ from Database.Client import Helper
 
 def get_all_actions(db):
     resp = {"ok": False, "message": "Internal server error"}
-    found_actions = Helper.get_all_actions(db.actions)
+    found_actions = Helper.get_all(db.actions)
 
     if len(found_actions) > 0:
         code = 200

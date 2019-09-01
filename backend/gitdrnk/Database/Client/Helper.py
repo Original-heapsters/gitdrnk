@@ -326,22 +326,14 @@ def get_rules_for_game(db, game_id):
     item = db.find_one(key)
     return item
 
-
-def get_all_players(db):
+# Get function
+def get_all(db):
     items = db.find()
     return list(items)
 
 
-def get_all_actions(db):
-    items = db.find()
-    return list(items)
 
-
-def get_all_rules(db):
-    items = db.find()
-    return list(items)
-
-
+# Seed function
 def seed_players_db(db):
     for player in seed_players:
         create_player(db, player["username"], player)
@@ -362,7 +354,7 @@ def seed_rules_db(db):
         update_ruleset(db, rule["game_id"], rule)
 
 
-def update_player():
+def update(type):
     pass
 
 
@@ -374,6 +366,5 @@ def get_action():
     pass
 
 
-def update_action():
-    pass
+
 ############### Basic CRUD ###############

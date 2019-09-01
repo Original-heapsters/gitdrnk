@@ -98,7 +98,7 @@ def get_rules(game_id, db):
         resp["rules"] = rules
 
     else:
-        rulesets = Helper.get_all_rules(db.rules)
+        rulesets = Helper.get_all(db.rules)
         code = 200
         resp["ok"] = True
         resp["message"] = "Success"
