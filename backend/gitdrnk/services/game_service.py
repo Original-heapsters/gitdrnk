@@ -15,7 +15,7 @@ def new_game(data, db):
         code = 400
         resp["message"] = "A game with game_id already exists"
     else:
-        Helper.create_game(db.games, game_id)
+        Helper.create(db.games, game_id)
         code = 200
         resp["ok"] = True
         resp["message"] = "Game created successfully"
