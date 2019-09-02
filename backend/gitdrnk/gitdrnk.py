@@ -66,8 +66,13 @@ def game_new():
 @app.route("/game/join", methods=["POST"])
 def game_join():
     data = request.get_json()
-    print("joining?")
     resp, code = join_game(data, mongo)
+    return jsonify(resp), code
+
+@app.route("/game/leave", methods=["POST"])
+def game_leave():
+    data = request.get_json()
+    resp, code = leave_game(data, mongo)
     return jsonify(resp), code
 
 
@@ -120,11 +125,20 @@ def players_all():
     return jsonify(resp), code
 
 
+@app.route("/actions/action_log", methods=["GET"])
+def game_actions():
+    global code, resp
+    if request.method == "GET":
+        game_id = request.args.get("game_id", None)
+        if game_id:
+            resp, code = get_action_log(mongo, game_id)
+        return jsonify(resp), code
+    return jsonify({"ok": False, "message": "Internal server error"}), 503
+
 @app.route("/actions/all", methods=["GET"])
 def actions_all():
     resp, code = get_all(mongo)
     return jsonify(resp), code
-
 
 @app.route("/client_hook", methods=["POST"])
 def client_payload_received():
@@ -189,6 +203,10 @@ def git_event():
 @socketio.on('join_chat')
 def on_join_chat(data):
     join_chat(data)
+
+@socketio.on('leave_chat')
+def on_leave_chat(data):
+    leave_chat(data)
 
 
 @socketio.on('send_chat')

@@ -11,7 +11,13 @@ function joinChat(gameId, username, chat_cb, action_cb){
   socket.on('gitdrnk_chat', message => chat_cb(null, message));
 }
 
+function leaveChat(gameId, username){
+  socket.emit('leave_chat', {'gameId': gameId, 'username': username});
+  socket.removeListener('gitdrnk_chat');
+  socket.removeListener('gitdrnk_action');
+}
+
 function sendChatMessage(gameId, username, message){
   socket.emit('send_chat', {'gameId': gameId, 'username': username, 'message': message});
 }
-export { joinGame, joinChat, sendChatMessage }
+export { joinGame, joinChat, leaveChat, sendChatMessage }

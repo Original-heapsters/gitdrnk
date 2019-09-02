@@ -1,6 +1,3 @@
-############### Basic CRUD ###############
-
-
 seed_players = [
     {"username": "chuck",
      "git_username": "testa"},
@@ -27,40 +24,49 @@ seed_players = [
 seed_actions = [
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "1",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "1",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "11",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "11",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "111",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "1111",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "1111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "InstaH0",
      "action": "pre-commit",
-     "action_id": "11111",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "11111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "111111",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "111111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "1111111",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "1111111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "InstaH0",
      "action": "pre-commit",
-     "action_id": "11111111",
-     "date": "2019-01-01 13:05:32"},
+     "_id": "11111111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"},
     {"player_id": "chuck",
      "action": "pre-commit",
-     "action_id": "111111111",
-     "date": "2019-01-01 13:05:32"}
+     "_id": "111111111",
+     "date": "2019-01-01 13:05:32",
+     "game_id":"huuh"}
 ]
 
 seed_games = [
@@ -203,74 +209,54 @@ seed_rules = [
                 "rule": "Drink a lot"
             }
         ]
+    },
+    {
+        "game_id": "DB_Test",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Drink a little"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Drink a lot"
+            }
+        ]
     }
 ]
 
-# Create fucntions
-
-def create(db, item_id, obj = None):
-    key = {"game_id": item_id}
+# Create functions
+def create(db, key_name, key_id, obj=None):
+    key = {key_name: key_id}
     if obj != None:
-        # used to create game from seed
+        # used to create from seed
         db.update(key, obj, upsert=True)
-        print("new game with obj")
     else:
         db.update(key, key, upsert=True)
-        print("new game with no obj")
-
-def get_game(db, game_id):
-    key = {"game_id": game_id}
-    item = db.find_one(key)
-    return item
 
 
-def get_games_by_id(db, game_id):
-    key = {"game_id": game_id}
-    items = db.find(key)
-    return list(items)
-
-
-def get_all_games(db):
+# Read
+def get_all(db):
     items = db.find()
     return list(items)
 
-
-def get_chat_log(db, game_id):
-    key = {"game_id": game_id}
-    game_chat = db.find_one(key)
-    if game_chat:
-        print(game_chat)
-        return game_chat["chat"]
+def get_by_key(db, key_name, key):
+    key = {key_name: key}
+    return_obj = db.find_one(key)
+    if return_obj:
+        print(return_obj)
+        return return_obj
     else:
         return []
 
+# Update
+def upsert_data(db,key_name, key_id, obj, dest):
+    key = {key_name: key_id}
+    collection_source = get_by_key(db, key_name, key_id)
+    if not collection_source:
+        db.update(key, {key_name: key_id, dest: []}, upsert=True)
 
-def get_action_log(db, game_id):
-    key = {"game_id": game_id}
-    game_actions = db.find_one(key)
-    print(game_actions["actions"])
-    return game_actions["actions"]
-
-
-def add_chat_message(db, game_id, chatObj):
-    key = {"game_id": game_id}
-    game_transcript = db.find_one(key)
-    print(game_transcript)
-    if not game_transcript:
-        db.update(key, {"game_id": game_id, "chat": []}, upsert=True)
-
-    query = {"$addToSet": {"chat": chatObj}}
-    db.update(key, query)
-
-
-def add_action_message(db, game_id, chatObj):
-    key = {"game_id": game_id}
-    game_transcript = db.find_one(key)
-    print(game_transcript)
-    if not game_transcript:
-        db.update(key, {"game_id": game_id, "actions": []}, upsert=True)
-
-    query = {"$addToSet": {"actions": chatObj}}
+    query = {"$addToSet": {dest: obj}}
     db.update(key, query)
 
 
@@ -279,95 +265,28 @@ def add_player_to_game(db, game_id, username):
     query = {"$addToSet": {"players": username}}
     db.update(key, query)
 
-
-def add_action(db, action):
-    key = {"action_id": action["action_id"]}
-    db.update(key, action, upsert=True)
-
-
 def update_ruleset(db, game_id, rules):
     key = {"game_id": game_id}
     rules["game_id"] = game_id
     db.update(key, rules, upsert=True)
 
-
-def create_player(db, username, user):
-    key = {"username": username}
-    db.update(key, user, upsert=True)
-
-
-def get_player():
-    pass
-
-
-def get_player_by_username(db, username):
-    key = {"username": username}
-    item = db.find_one(key)
-    return item
-
-
-def get_players_by_username(db, username):
-    key = {"username": username}
-    items = db.find(key)
-    return list(items)
-
-
-def get_actions_by_username(db, username):
-    key = {"player_id": username}
-    items = db.find(key)
-    return list(items)
-
-
-def get_player_by_git_username(db, username):
-    key = {"git_username": username}
-    item = db.find_one(key)
-    return item
-
-
-def get_rules_for_game(db, game_id):
-    key = {"game_id": game_id}
-    item = db.find_one(key)
-    return item
-
-# Get function
-def get_all(db):
-    items = db.find()
-    return list(items)
-
-
-
 # Seed functions
 def seed_players_db(db):
     for player in seed_players:
-        create_player(db, player["username"], player)
+        create(db, "username", player["username"], player)
 
 
 def seed_games_db(db):
     for game in seed_games:
-        create(db, game["game_id"], game)
+        create(db, "game_id", game["game_id"], game)
 
 
 def seed_actions_db(db):
+    return
     for action in seed_actions:
-        add_action(db, action)
+        add_action_message(db, "", action)
 
 
 def seed_rules_db(db):
     for rule in seed_rules:
         update_ruleset(db, rule["game_id"], rule)
-
-
-def update(type):
-    pass
-
-
-def create_action():
-    pass
-
-
-def get_action():
-    pass
-
-
-
-############### Basic CRUD ###############

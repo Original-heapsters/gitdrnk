@@ -12,12 +12,12 @@ def new_player(data, db):
         resp["message"] = "Missing username"
         return resp, code
 
-    existing_users = Helper.get_players_by_username(db.players, username)
+    existing_users = Helper.get_by_key(db.players, "username", username)
     if len(existing_users) > 0:
         user = existing_users[0]
         if user["git_username"] != git_username:
             new_user = {"username": username, "git_username": git_username}
-            Helper.create_player(db.players, username, new_user)
+            Helper.create(db.players, "username", username, new_user)
             code = 200
             resp["ok"] = True
             resp["message"] = "Player updated successfully"
@@ -27,7 +27,7 @@ def new_player(data, db):
             resp["message"] = "Player already exists, no changes"
     else:
         new_user = {"username": username, "git_username": git_username}
-        Helper.create_player(mongo.players, username, new_user)
+        Helper.create(mongo.players, "username", username, new_user)
         code = 200
         resp["ok"] = True
         resp["message"] = "Player created successfully"
@@ -40,8 +40,9 @@ def get_player(data, db):
     username = data.get("username", None)
 
     if username is not None:
-        found_player = Helper.get_player_by_username(db.players, username)
-        actions = Helper.get_actions_by_username(db.actions, username)
+        found_player = Helper.get_by_key(db.players, "username", username)
+
+        actions = Helper.get_all(db.actions)
         found_player["actions"] = actions
         code = 200
         resp["ok"] = True

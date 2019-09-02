@@ -17,6 +17,17 @@ def join_chat(data):
         event = {"type": "join", "username": username, "gameId": game}
         notify_room(event, game)
 
+def leave_chat(data):
+    print("Trying to leave")
+    username = data['username']
+    game = data['gameId']
+
+    if username and game:
+        leave_room(game)
+        print(username + " has left the room: " + game)
+        event = {"type": "leave", "username": username, "gameId": game}
+        notify_room(event, game)
+
 
 def send_chat_message(data, db):
     print("Message being processed")
@@ -31,7 +42,7 @@ def send_chat_message(data, db):
         "message": message,
         "date": str(datetime.now())
     }
-    Helper.add_chat_message(db.chats, game, chatObj)
+    Helper.upsert_data(db.chats, "game_id", game, chatObj, "chat")
 
     if username and game and message:
         event = {"type": "message", "username": username, "gameId": game, "message": message}

@@ -14,12 +14,12 @@ class Client(object):
         self.player_id = None
         self.player_git_id = None
         self.action = None
-        self.action_id = None
+        self._id = None
         self.date = None
         print("Client hook")
 
     def process_payload(self, payload):
-        self.action_id = str(uuid.uuid4())
+        self._id = str(uuid.uuid4())
         print("\n\n_________________\n\n")
         print(self.player)
         print(self.player["git_username"])
@@ -36,7 +36,7 @@ class Client(object):
         audio_path = url_for('static', filename="audio/" + audio_file)
         action_obj = {
             "game_id": self.game_id,
-            "action_id": self.action_id,
+            "_id": self._id,
             "action": self.action,
             "username": self.player_id,
             "git_username": self.player_git_id,

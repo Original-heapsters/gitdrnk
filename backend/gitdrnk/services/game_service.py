@@ -10,7 +10,7 @@ def new_game(data, db):
         resp["message"] = "Missing game_id"
         return resp, code
 
-    existing_games = Helper.get_games_by_id(db.games, game_id)
+    existing_games = Helper.get_by_key(db.games, "game_id", game_id)
     if len(existing_games) > 0:
         code = 400
         resp["message"] = "A game with game_id already exists"
@@ -30,10 +30,10 @@ def join_game(data, db):
     username = data.get("username", None)
 
     if game_id is not None and username is not None:
-        player = Helper.get_player_by_username(db.players, username)
+        player = Helper.get_by_key(db.players, "username", username)
         if player is not None:
             Helper.add_player_to_game(db.games, game_id, player)
-            found_game = Helper.get_game(db.games, game_id)
+            found_game = Helper.get_by_key(db.games, "game_id", game_id)
 
             code = 200
             resp["ok"] = True
@@ -56,7 +56,7 @@ def join_game(data, db):
 
 def all_games(db):
     resp = {"ok": False, "message": "Internal server error"}
-    found_games = Helper.get_all_games(db.games)
+    found_games = Helper.get_all(db.games)
 
     if len(found_games) > 0:
         code = 200
@@ -74,13 +74,30 @@ def all_games(db):
 def get_chat_log(db, game_id):
     code = 200
     resp = {"ok": True, "message": "No chat logs found"}
-    transcript = Helper.get_chat_log(db.chats, game_id)
-    print(transcript)
-    if len(transcript) > 0:
-        code = 200
-        resp["ok"] = True
-        resp["message"] = "Success"
-        resp["transcript"] = transcript
+    chat_obj = Helper.get_by_key(db.chats, "game_id", game_id)
+    if chat_obj:
+        transcript = chat_obj["chat"]
+        print(transcript)
+        if len(transcript) > 0:
+            code = 200
+            resp["ok"] = True
+            resp["message"] = "Success"
+            resp["transcript"] = transcript
+
+    return resp, code
+
+def get_action_log(db, game_id):
+    code = 200
+    resp = {"ok": True, "message": "No action logs found"}
+    action_obj = Helper.get_by_key(db.actions, "game_id", game_id)
+    if action_obj:
+        action_log = action_obj["actions"]
+        print(action_log)
+        if len(action_log) > 0:
+            code = 200
+            resp["ok"] = True
+            resp["message"] = "Success"
+            resp["action_log"] = action_log
 
     return resp, code
 
@@ -91,7 +108,7 @@ def get_rules(game_id, db):
         pass
 
     if game_id is not None:
-        rules = Helper.get_rules_for_game(db.rules, game_id)
+        rules = Helper.get_by_key(db.rules, "game_id", game_id)
         code = 200
         resp["ok"] = True
         resp["message"] = "Success"

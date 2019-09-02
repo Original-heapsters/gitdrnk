@@ -25,6 +25,14 @@ function getChatLog(gameId, cb){
   // joinChat(this.state.gameId, this.state.playerUsername, (err, message ) => this.setState({ messages: this.state.messages.concat(message)}));
 }
 
+function getActionLog(gameId, cb){
+  // Get previous messages
+  const actionLogEndpoint = apiEndpoint + '/actions/action_log?game_id=' + gameId;
+  fetch(actionLogEndpoint)
+    .then(response => response.json())
+    .then(actions => cb( null, actions.action_log));
+}
+
 function getRules(gameId, cb){
   const ruleEndpoint = apiEndpoint + '/game/rules?game_id=' + gameId;
   fetch(ruleEndpoint)
@@ -32,4 +40,4 @@ function getRules(gameId, cb){
     .then(rules => cb( null, rules.rules.definition));
 }
 
-export { getPlayers, getChatLog, getRules, getGames }
+export { getPlayers, getChatLog, getRules, getGames, getActionLog }
