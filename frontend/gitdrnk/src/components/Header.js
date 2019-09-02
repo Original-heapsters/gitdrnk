@@ -13,6 +13,7 @@ class Header extends React.Component {
     e.preventDefault();
     var selectedGame = e.target.value;
     this.props.updateSelectedGame(selectedGame);
+    console.log("Udated selected game to " + selectedGame);
   }
 
   render() {

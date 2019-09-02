@@ -106,7 +106,7 @@ class App extends Component {
       <div className="App">
       <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame}/>
       <PlayerList playerList={this.state.players}/>
-      <Chat sessionInfo={this.state.session} chat={this.state.chat}/>
+      <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
       <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
       </div>
     );

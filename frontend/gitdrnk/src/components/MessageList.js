@@ -2,6 +2,16 @@ import './Styles/MessageList.css';
 import React from 'react';
 
 class MessageList extends React.Component {
+  organizeChat(){
+    this.props.messages.map(messageItem => {
+      return(
+       <li key={messageItem._id}>
+           {messageItem.type} {messageItem.username} @ {messageItem.date}    {messageItem.message}
+       </li>
+     )
+   })
+  }
+
   render() {
     return (
       <div className="MessageList">

@@ -31,7 +31,7 @@ if dbPath is None or dbPath == "":
 app.config['MONGO_URI'] = dbPath
 app.config['MONGO_CHAT_URI'] = dbPath
 app.config['AUDIO_DIR'] = os.path.join(os.getcwd(), "static", "audio")
-app.config['VERSION'] = "1.0.4"
+app.config['VERSION'] = "1.0.5"
 app.json_encoder = Encoder.JSONEncoder
 CORS(app)
 socketio = SocketIO(app, message_queue=app.config['MONGO_CHAT_URI'])
@@ -154,6 +154,31 @@ def sample_client_hooks(platform="unix"):
         return app.send_static_file('sample_client_hooks_win.md')
 
 
+@app.route("/socket_test")
+def socket_test():
+    return render_template('socket_test.html')
+
+
+@app.route("/site-map")
+def site_map():
+    resp, code = get_sitemap(app.url_map)
+    return jsonify(resp), code
+
+
+@app.route("/seed_db")
+def seed():
+    resp, code = seed_db(mongo)
+    return jsonify(resp), code
+
+
+@app.route("/nukeeverything", methods=['GET'])
+def nuke_everything():
+    resp, code = nuke(mongo)
+    return jsonify(resp), code
+
+
+
+####### Socket functionality
 @socketio.on('connect')
 def git_event():
     event_json = {"type": "eventId_1", "message": "new message"}
@@ -187,28 +212,7 @@ def notify_room(event_json, room_id):
     event_json["date"] = str(datetime.now())
     emit('gitdrnkevent', event_json, room=room_id)
 
-
-@app.route("/socket_test")
-def socket_test():
-    return render_template('socket_test.html')
-
-
-@app.route("/site-map")
-def site_map():
-    resp, code = get_sitemap(app.url_map)
-    return jsonify(resp), code
-
-
-@app.route("/seed_db")
-def seed():
-    resp, code = seed_db(mongo)
-    return jsonify(resp), code
-
-
-@app.route("/nukeeverything", methods=['GET'])
-def nuke_everything():
-    resp, code = nuke(mongo)
-    return jsonify(resp), code
+####### Socket functionality
 
 
 if __name__ == "__main__":
