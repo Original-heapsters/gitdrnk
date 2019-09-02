@@ -116,13 +116,13 @@ def player_get():
 
 @app.route("/players/all", methods=["GET"])
 def players_all():
-    resp, code = get_all_players(mongo)
+    resp, code = get_all(mongo)
     return jsonify(resp), code
 
 
 @app.route("/actions/all", methods=["GET"])
 def actions_all():
-    resp, code = get_all_actions(mongo)
+    resp, code = get_all(mongo)
     return jsonify(resp), code
 
 
