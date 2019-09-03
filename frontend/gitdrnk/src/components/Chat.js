@@ -19,7 +19,7 @@ class Chat extends React.Component {
     return (
       <div className="Chat">
       <Title/>
-      <MessageList messages={this.props.chat}/>
+      <MessageList messages={this.props.chat} actions={this.props.actions}/>
       <SendMessageForm sendMessage={this.sendMessage}/>
       </div>
     );

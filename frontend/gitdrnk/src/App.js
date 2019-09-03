@@ -4,14 +4,14 @@ import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header';
 import PlayerList from './components/PlayerList';
-import {getPlayers, getGames, getChatLog, getRules} from './util/APIHelper';
-import { joinChat } from './SocketAPI.js';
+import {getPlayers, getGames, getChatLog, getActionLog, getRules} from './util/APIHelper';
+import { joinChat, leaveChat } from './SocketAPI.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
     var sessionInfo = {
-      gameId: "huuh",
+      gameId: "",
       username:"420Kiilah69",
       gitUName:"RebeccaGit"
     }
@@ -32,13 +32,21 @@ class App extends Component {
 
   componentWillMount(){
     getGames((err, gameList)=> {
-      this.setState({games: gameList})
+      var init_games = {
+        gameId: gameList[0].game_id,
+        username: this.state.session.username,
+        gitUname: this.state.session.gitUname,
+      };
+      this.setState({
+        session: init_games,
+        games: gameList
+      });
     });
   }
 
   handleNewChat(err, message) {
-    console.log("HUH" + message._id);
     this.setState({ chat: this.state.chat.concat(message)});
+    console.log(this.state.chat);
   }
 
   handleNewAction(err, action) {
@@ -60,6 +68,7 @@ class App extends Component {
     this.setState(
       {
         session: newSession,
+        games: [],
         players: [],
         chat: [],
         actions:[],
@@ -68,36 +77,59 @@ class App extends Component {
     );
   }
 
-  updateSession(uName, gUName, gId){
+  updateSession(uName, gUName, gId, leave=false){
     var newSession = {
       gameId: gId,
       username:uName,
       gitUName:gUName
     }
+    console.log(newSession);
     this.setState(
       {
         session: newSession,
+        games: [],
         players: [],
         chat: [],
         actions:[],
         rules: []
       }
     );
+
+    if (leave){
+      leaveChat(gId, uName);
+      getGames((err, gameList)=> {
+        var init_games = {
+          gameId: gameList[0].game_id,
+          username: this.state.session.username,
+          gitUname: this.state.session.gitUname,
+        };
+        this.setState({
+          session: init_games,
+          games: gameList
+        });
+      });
+      return;
+    }
     getPlayers((err, playerList)=> {
       this.setState({players: playerList})
     });
 
-    getChatLog(this.state.session.gameId, (err, chatLog) => {
+    getRules(gId, (err, ruleset) => {
+      this.setState({rules: ruleset});
+    });
+
+    getActionLog(gId, (err, actionLog) => {
+      if (actionLog && actionLog.length > 0){
+        this.setState({actions: actionLog});
+      }
+    });
+
+    getChatLog(gId, (err, chatLog) => {
       if (chatLog && chatLog.length > 0){
         this.setState({chat: chatLog});
       }
       joinChat(this.state.session.gameId, this.state.session.username, this.handleNewChat, this.handleNewAction);
     });
-
-    getRules(this.state.session.gameId, (err, ruleset) => {
-      this.setState({rules: ruleset});
-    });
-
 
   }
 
@@ -106,7 +138,7 @@ class App extends Component {
       <div className="App">
       <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame}/>
       <PlayerList playerList={this.state.players}/>
-      <Chat sessionInfo={this.state.session} chat={this.state.chat}/>
+      <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
       <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
       </div>
     );
@@ -114,33 +146,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
-
-/*
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-  // <table>
-  //   <tbody>
-  //     <tr>
-  //       <td><GetPlayer/></td>
-  //       <td><CreatePlayer/></td>
-  //       <td><GetGame/></td>
-  //       <td><CreateGame/></td>
-  //       <td><Rules /></td>
-  //       <td><WatchGame /></td>
-  //       </tr>
-  //   </tbody>
-  // </table>
-  */

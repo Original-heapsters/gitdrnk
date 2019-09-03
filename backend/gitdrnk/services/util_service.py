@@ -11,6 +11,7 @@ def nuke(db):
     db.actions.remove()
     db.rules.remove()
     db.chats.remove()
+    db.chat.remove()
 
     response = {"ok": True, "message": "All databases cleared"}
     code = 200
