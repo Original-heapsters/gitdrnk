@@ -27,10 +27,10 @@ def join_game(data, db):
     resp = {"ok": False, "message": "Internal server error"}
 
     game_id = data.get("game_id", None)
-    username = data.get("username", None)
+    email = data.get("email", None)
 
-    if game_id is not None and username is not None:
-        player = Helper.get_by_key(db.players, "username", username)
+    if game_id is not None and email is not None:
+        player = Helper.get_by_key(db.players, "email", email)
         if player is not None:
             Helper.add_player_to_game(db.games, game_id, player)
             found_game = Helper.get_by_key(db.games, "game_id", game_id)
@@ -41,14 +41,14 @@ def join_game(data, db):
             resp["game"] = found_game
         else:
             code = 400
-            resp["message"] = username + " could not be found in the player database"
+            resp["message"] = email + " could not be found in the player database"
     else:
         code = 400
         error = "Missing: "
         if not game_id:
             error += "game_id"
-        if not username:
-            error += "username"
+        if not email:
+            error += "email"
         resp["message"] = error
 
     return resp, code

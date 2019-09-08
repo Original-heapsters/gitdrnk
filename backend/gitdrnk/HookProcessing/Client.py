@@ -9,9 +9,6 @@ class Client(object):
         self.audio_path = audio_path
         self.player = player
         self.game_id = game
-        self.player_id = None
-        self.player_git_id = None
-        self.player_profile = None
         self.action = None
         self.consequence = None
         self._id = None
@@ -22,11 +19,8 @@ class Client(object):
         self._id = str(uuid.uuid4())
         print("\n\n_________________\n\n")
         print(self.player)
-        print(self.player["git_username"])
+        #print(self.player["git_username"])
         print("processing")
-        self.player_id = self.player["username"]
-        self.player_git_id = self.player["git_username"]
-        self.player_profile = self.player["profile_picture"]
         self.action = payload["action"]
         self.consequence = self.get_consequence(payload["action"], rule_def["definition"])
         self.date = payload["date"]
@@ -45,9 +39,10 @@ class Client(object):
             "_id": self._id,
             "action": self.action,
             "consequence": self.consequence,
-            "username": self.player_id,
-            "git_username": self.player_git_id,
-            "profile_picture": self.player_profile,
+            "username": self.player.get("username", self.player["email"]),
+            "email": self.player["email"],
+            "git_username": self.player.get("git_username",self.player["email"]),
+            "profile_picture": self.player.get("profile_picture",""),
             "date": self.date,
             "audio": audio_path[1:]
         }

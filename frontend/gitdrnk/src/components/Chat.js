@@ -12,7 +12,7 @@ class Chat extends React.Component {
   }
 
   sendMessage(message){
-    sendChatMessage(this.props.sessionInfo.gameId, this.props.sessionInfo.username, message);
+    sendChatMessage(this.props.sessionInfo.gameId, this.props.sessionInfo.email, message);
   }
 
   render() {

@@ -10,7 +10,7 @@ class Header extends React.Component {
         <div className="Header-right">
           <UserBox
           username={this.props.sessionInfo.username}
-          gitUsername={this.props.sessionInfo.gitUName}
+          email={this.props.sessionInfo.email}
           gameId={this.props.sessionInfo.gameId}
           gameList={this.props.gameList}
           updateSession={this.props.updateSession}/>

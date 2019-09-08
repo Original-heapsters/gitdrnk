@@ -144,7 +144,7 @@ def actions_all():
 def client_payload_received():
     data = request.get_json()
     path_to_assets = app.config['AUDIO_DIR']
-    resp, code = handle_client_hook(mongo.players, mongo.rules, mongo.actions, data, path_to_assets)
+    resp, code = handle_client_hook(mongo, data, path_to_assets)
 
     return jsonify(resp), code
 

@@ -9,16 +9,16 @@ default_profile = "https://p7.hiclipart.com/preview/981/645/182/united-states-co
 
 def join_chat(data, db):
     print("Trying to join")
-    username = data['username']
+    email = data['email']
     game = data['gameId']
 
-    if username and game:
+    if email and game:
         join_room(game)
-        print(username + " has entered the room: " + game)
-        player = Helper.get_by_key(db.players, "username", username)
+        print(email + " has entered the room: " + game)
+        player = Helper.get_by_key(db.players, "email", email)
         joinObj = {
             "_id": str(uuid.uuid4()),
-            "username": player.get("username", username),
+            "username": player.get("username", email),
             "profile_picture": player.get("profile_picture", default_profile),
             "gameId": game,
             "type": "join",
@@ -30,16 +30,16 @@ def join_chat(data, db):
 
 def leave_chat(data, db):
     print("Trying to leave")
-    username = data['username']
+    email = data['email']
     game = data['gameId']
 
-    if username and game:
+    if email and game:
         leave_room(game)
-        print(username + " has left the room: " + game)
-        player = Helper.get_by_key(db.players, "username", username)
+        print(email + " has left the room: " + game)
+        player = Helper.get_by_key(db.players, "email", email)
         leaveObj = {
             "_id": str(uuid.uuid4()),
-            "username": player.get("username", username),
+            "username": player.get("username", email),
             "profile_picture": player.get("profile_picture", default_profile),
             "gameId": game,
             "type": "leave",
@@ -52,14 +52,14 @@ def leave_chat(data, db):
 
 def send_chat_message(data, db):
     print("Message being processed")
-    username = data['username']
+    email = data['email']
     game = data['gameId']
     message = data['message']
-    player = Helper.get_by_key(db.players, "username", username)
+    player = Helper.get_by_key(db.players, "email", email)
 
     chatObj = {
         "_id": str(uuid.uuid4()),
-        "username": username,
+        "username": player.get("username", email),
         "profile_picture": player.get("profile_picture", default_profile),
         "gameId": game,
         "message": message,
@@ -67,9 +67,9 @@ def send_chat_message(data, db):
     }
     Helper.upsert_data(db.chats, "game_id", game, chatObj, "chat")
 
-    if username and game and message:
+    if email and game and message:
         event = {"type": "message",
-        "username": username,
+        "username": player.get("username", email),
         "profile_picture": player.get("profile_picture", default_profile),
         "gameId": game,
         "message": message}

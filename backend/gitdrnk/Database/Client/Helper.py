@@ -2,52 +2,68 @@ seed_players = [
     {
     "username": "chuck",
     "git_username": "testa",
+    "email": "chuck@email.com",
     "profile_picture":"https://i.kym-cdn.com/entries/icons/original/000/006/987/Nope.png"
     },
     {
     "username": "sammy",
     "git_username": "SamSwagGit",
+    "email": "sammy@email.com",
     "profile_picture":"https://triathlon-images.imgix.net/athlete_thumbs/sam_ward_NZL.jpg?w=350&h=350&fit=facearea&facepad=2&auto=format"
     },
     {
     "username": "xxXxCryBabyxXxx",
     "git_username": "johnny",
+    "email": "johnny@email.com",
     "profile_picture":"https://scontent-lax3-2.xx.fbcdn.net/v/t1.0-9/15109514_377515022584270_3181286180362234311_n.png?_nc_cat=104&_nc_oc=AQlrtwl5fgYBMGgFeJKmYPWU7GuZufp3Xfj1obJVAEqVi32qjN_FPzSV8GklmlsxvLo&_nc_ht=scontent-lax3-2.xx&oh=460e1a3d2f5f3407a254c584c1206b58&oe=5DC8E722"
     },
     {
     "username": "420Kiilah69",
     "git_username": "RebeccaGit",
+    "email": "rebecca@email.com",
     "profile_picture":"http://www.guitarknowledgenet.com/media_files/8c17f3ba82b594a652996209a07ccf47ac9d64e2_6.jpg"
     },
     {
     "username": "PoopyFingers",
     "git_username": "RandNum",
+    "email": "poop@email.com",
     "profile_picture":"https://i.pinimg.com/564x/4c/f5/2d/4cf52de49bd0dee47cafca0d29061799.jpg"
     },
     {
     "username": "SWAG",
     "git_username": "SwG",
+    "email": "swag@email.com",
     "profile_picture":"https://fbgirlshideprofile.files.wordpress.com/2015/05/1904826.jpg"
     },
     {
     "username": "InstaH0",
     "git_username": "snappers",
+    "email": "snap@insta.com",
     "profile_picture":"https://fbgirlshideprofile.files.wordpress.com/2015/05/2107828.jpg"
     },
     {
     "username": "Ants",
     "git_username": "InMyEyes",
+    "email": "ants@email.com",
     "profile_picture":"https://scontent-ort2-1.cdninstagram.com/vp/8a68211f84dfb5fa0f71bd3fb6b27cdb/5DF7DB33/t51.2885-15/e35/s1080x1080/67384600_341077736780599_3245993630815998883_n.jpg?_nc_ht=scontent-ort2-1.cdninstagram.com"
     },
     {
     "username": "Wow",
     "git_username": "soCoolBoi",
+    "email": "cool@email.com",
     "profile_picture":"https://pbs.twimg.com/profile_images/1120445334/sexy_boy_400x400.jpg"
     },
     {
     "username": "goodBoi",
     "git_username": "Snek",
+    "email": "snake@email.com",
     "profile_picture":"https://pics.me.me/bayside-bayside-6-bays-bayside-6-jayside-bayside-6-bayside-61330867.png"
+    },
+    {
+    "username": "russell",
+    "git_username": "sellnat77",
+    "email": "sell_nat@yahoo.com",
+    "profile_picture":"https://avatars3.githubusercontent.com/u/3691245?v=4"
     }
 ]
 

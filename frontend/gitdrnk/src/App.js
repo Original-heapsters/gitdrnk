@@ -13,7 +13,7 @@ class App extends Component {
     var sessionInfo = {
       gameId: "",
       username:"420Kiilah69",
-      gitUName:"RebeccaGit"
+      email:"rebecca@email.com"
     }
     this.state = {
       server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
@@ -36,7 +36,7 @@ class App extends Component {
       var init_games = {
         gameId: gameList[0].game_id,
         username: this.state.session.username,
-        gitUname: this.state.session.gitUname,
+        email: this.state.session.email,
       };
       this.setState({
         session: init_games,
@@ -62,7 +62,7 @@ class App extends Component {
     var newSession = {
       gameId: gameSelected,
       username:this.state.session.username,
-      gitUName:this.state.session.gitUName
+      email:this.state.session.email
     }
     this.setState(
       {
@@ -76,11 +76,11 @@ class App extends Component {
     );
   }
 
-  updateSession(uName, gUName, gId, leave=false){
+  updateSession(uName, email, gId, leave=false){
     var newSession = {
       gameId: gId,
       username:uName,
-      gitUName:gUName
+      email:email
     }
     this.setState(
       {
@@ -94,12 +94,12 @@ class App extends Component {
     );
 
     if (leave){
-      leaveChat(gId, uName);
+      leaveChat(gId, email);
       getGames((err, gameList)=> {
         var init_games = {
           gameId: gameList[0].game_id,
           username: this.state.session.username,
-          gitUname: this.state.session.gitUname,
+          email: this.state.session.email,
         };
         this.setState({
           session: init_games,
@@ -126,7 +126,7 @@ class App extends Component {
       if (chatLog && chatLog.length > 0){
         this.setState({chat: chatLog});
       }
-      joinChat(this.state.session.gameId, this.state.session.username, this.handleNewChat, this.handleNewAction);
+      joinChat(this.state.session.gameId, this.state.session.email, this.handleNewChat, this.handleNewAction);
     });
 
   }
