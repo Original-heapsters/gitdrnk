@@ -1,4 +1,4 @@
-import './Styles/SendMessageForm.css';
+import './Styles/SendMessageForm.scss';
 import React from 'react';
 
 class SendMessageForm extends React.Component {
@@ -27,15 +27,17 @@ class SendMessageForm extends React.Component {
 
   render() {
     return (
-      <div className="SendMessageForm">
+      <div>
         <form
           onSubmit={this.handleSubmit}
-          className="send-message-form">
+          className="SendMessageForm">
               <input
+                className="SendMessageForm__field"
                 onChange={this.handleChange}
                 value={this.state.message}
                 placeholder="Type your message and hit ENTER"
                 type="text" />
+                <button type="submit" className="btn btn--primary btn--inside uppercase">Send</button>
         </form>
       </div>
     );

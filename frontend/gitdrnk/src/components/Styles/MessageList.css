@@ -1,10 +1,12 @@
 .message-list {
-  /* width: 12em; */
-    height: 80vh;
+    height: 70vh;
     line-height: 2em;
-    border: 1px solid #ccc;
     overflow: scroll;
     overflow-x: hidden;
-    padding-left: 0pt;
-    text-align: left;
+    list-style-type: none;
+    padding: 0pt;
+}
+
+.message-list::-webkit-scrollbar{
+    width: 0;
 }
