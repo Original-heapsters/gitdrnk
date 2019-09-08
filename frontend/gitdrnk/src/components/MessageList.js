@@ -21,7 +21,6 @@ const MessageList = ({messages, actions}) => {
             return left<right ? -1 : left>right ? 1 : 0;
           })
           .map(messageItem => {
-            console.log(messageItem);
             var msgObj;
              if (messageItem.message){
               msgObj = <ChatMessage key={messageItem._id} messageObj={messageItem}/>;
