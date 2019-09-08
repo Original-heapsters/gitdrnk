@@ -41,7 +41,7 @@ class UserBox extends React.Component {
   }
 
   leaveRoom() {
-    this.props.updateSession(this.state.username, this.state.gitUsername, this.state.gameId, true);
+    this.props.updateSession(this.state.username, this.state.gitUsername, this.props.gameId, true);
     this.setState({gameId:null});
   }
 

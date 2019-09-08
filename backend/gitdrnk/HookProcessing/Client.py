@@ -11,6 +11,7 @@ class Client(object):
         self.game_id = game
         self.player_id = None
         self.player_git_id = None
+        self.player_profile = None
         self.action = None
         self.consequence = None
         self._id = None
@@ -25,6 +26,7 @@ class Client(object):
         print("processing")
         self.player_id = self.player["username"]
         self.player_git_id = self.player["git_username"]
+        self.player_profile = self.player["profile_picture"]
         self.action = payload["action"]
         self.consequence = self.get_consequence(payload["action"], rule_def["definition"])
         self.date = payload["date"]
@@ -33,7 +35,6 @@ class Client(object):
 
     def get_consequence(self, action, rule_list):
         rule = next(filter(lambda x:x["key"]==action, rule_list), None)
-        print("\n\n\n\n\n\n\n\n\n\n\n\nFound " + rule["rule"])
         return rule["rule"]
 
     def get_action(self):
@@ -46,6 +47,7 @@ class Client(object):
             "consequence": self.consequence,
             "username": self.player_id,
             "git_username": self.player_git_id,
+            "profile_picture": self.player_profile,
             "date": self.date,
             "audio": audio_path[1:]
         }

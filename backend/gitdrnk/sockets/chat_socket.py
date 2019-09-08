@@ -5,6 +5,7 @@ from flask_socketio import emit, join_room, leave_room
 
 from Database.Client import Helper
 
+default_profile = "https://p7.hiclipart.com/preview/981/645/182/united-states-computer-icons-desktop-wallpaper-clip-art-free-high-quality-person-icon.jpg"
 
 def join_chat(data, db):
     print("Trying to join")
@@ -14,9 +15,11 @@ def join_chat(data, db):
     if username and game:
         join_room(game)
         print(username + " has entered the room: " + game)
+        player = Helper.get_by_key(db.players, "username", username)
         joinObj = {
             "_id": str(uuid.uuid4()),
-            "username": username,
+            "username": player.get("username", username),
+            "profile_picture": player.get("profile_picture", default_profile),
             "gameId": game,
             "type": "join",
             "action": "join",
@@ -33,9 +36,11 @@ def leave_chat(data, db):
     if username and game:
         leave_room(game)
         print(username + " has left the room: " + game)
+        player = Helper.get_by_key(db.players, "username", username)
         leaveObj = {
             "_id": str(uuid.uuid4()),
-            "username": username,
+            "username": player.get("username", username),
+            "profile_picture": player.get("profile_picture", default_profile),
             "gameId": game,
             "type": "leave",
             "action": "leave",
@@ -50,10 +55,12 @@ def send_chat_message(data, db):
     username = data['username']
     game = data['gameId']
     message = data['message']
+    player = Helper.get_by_key(db.players, "username", username)
 
     chatObj = {
         "_id": str(uuid.uuid4()),
         "username": username,
+        "profile_picture": player.get("profile_picture", default_profile),
         "gameId": game,
         "message": message,
         "date": str(datetime.now())
@@ -61,7 +68,11 @@ def send_chat_message(data, db):
     Helper.upsert_data(db.chats, "game_id", game, chatObj, "chat")
 
     if username and game and message:
-        event = {"type": "message", "username": username, "gameId": game, "message": message}
+        event = {"type": "message",
+        "username": username,
+        "profile_picture": player.get("profile_picture", default_profile),
+        "gameId": game,
+        "message": message}
         notify_room(event, game)
 
 

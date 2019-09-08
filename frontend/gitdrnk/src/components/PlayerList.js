@@ -1,20 +1,17 @@
 import './Styles/PlayerList.css';
 import React from 'react';
+import PlayerCard from './PlayerCard.js'
 
 const PlayerList = ({playerList}) => {
   return (
     <div className="PlayerList">
-    <ul>
-      {playerList.map(player => {
-        return (
-         <li key={player._id}>
-           <div>
-             {player.username} aka {player.git_username}
-           </div>
-         </li>
-       )
-     })}
-   </ul>
+      <ul className="player-list">
+        {playerList.map(player => {
+          return (
+            <PlayerCard key={player._id} player={player} />
+         )
+       })}
+     </ul>
     </div>
   );
 }

@@ -16,6 +16,7 @@ class App extends Component {
       gitUName:"RebeccaGit"
     }
     this.state = {
+      server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
       session: sessionInfo,
       players: [],
       chat: [],
@@ -46,8 +47,6 @@ class App extends Component {
 
   handleNewChat(err, message) {
     this.setState({ chat: this.state.chat.concat(message)});
-    console.log(this.state.chat);
-
   }
 
   handleNewAction(err, action) {
@@ -55,9 +54,7 @@ class App extends Component {
       return;
     }
     this.setState({ actions: this.state.actions.concat(action)});
-    console.log(this.state.actions);
-    var server = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000";
-    var audio = new Audio(server + "/" + action.audio);
+    var audio = new Audio(this.state.server + "/" + action.audio);
     audio.play();
   }
 
@@ -85,7 +82,6 @@ class App extends Component {
       username:uName,
       gitUName:gUName
     }
-    console.log(newSession);
     this.setState(
       {
         session: newSession,

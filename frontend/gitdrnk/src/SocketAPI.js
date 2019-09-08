@@ -12,6 +12,8 @@ function joinChat(gameId, username, chat_cb, action_cb){
 }
 
 function leaveChat(gameId, username){
+  console.log(gameId);
+  console.log(username);
   socket.emit('leave_chat', {'gameId': gameId, 'username': username});
   socket.removeListener('gitdrnk_chat');
   socket.removeListener('gitdrnk_action');
