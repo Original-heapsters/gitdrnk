@@ -1,42 +1,40 @@
 import './Styles/MessageList.css';
-import React from 'react';
+import React,  { useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage.js';
 import ActionMessage from './ActionMessage.js';
 
-class MessageList extends React.Component {
-  organizeChat(){
-    this.props.messages.map(messageItem => {
-      return(
-       <li key={messageItem._id}>
-           {messageItem.type} {messageItem.username} @ {messageItem.date}    {messageItem.message}
-       </li>
-     )
-   })
-  }
+const MessageList = ({messages, actions}) => {
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(scrollToBottom, [messages]);
 
-  render() {
-    return (
-      <div className="MessageList">
-        <ul className="message-list">
-          {this.props.messages
-            .concat(this.props.actions)
-            .sort((a,b) => {
-              var left = new Date(a.date);
-              var right = new Date(b.date);
-              return left<right ? -1 : left>right ? 1 : 0;
-            })
-            .map(messageItem => {
-               if (messageItem.message){
-                return(<ChatMessage messageObj={messageItem}/>);
-               } else {
-                return (<ActionMessage messageObj={messageItem}/>);
-               }
-             })
-           }
-       </ul>
-      </div>
-    );
-  }
+  return (
+    <div className="MessageList">
+      <ul className="message-list">
+        {messages
+          .concat(actions)
+          .sort((a,b) => {
+            var left = new Date(a.date);
+            var right = new Date(b.date);
+            return left<right ? -1 : left>right ? 1 : 0;
+          })
+          .map(messageItem => {
+            console.log(messageItem);
+            var msgObj;
+             if (messageItem.message){
+              msgObj = <ChatMessage key={messageItem._id} messageObj={messageItem}/>;
+             } else {
+              msgObj = <ActionMessage key={messageItem._id} messageObj={messageItem}/>;
+             }
+             return msgObj
+           })
+         }
+         <div ref={messagesEndRef} />
+     </ul>
+    </div>
+  );
 }
 
 export default MessageList;

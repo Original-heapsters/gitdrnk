@@ -30,7 +30,7 @@ class App extends Component {
 
   }
 
-  componentWillMount(){
+  componentDidMount(){
     getGames((err, gameList)=> {
       var init_games = {
         gameId: gameList[0].game_id,
@@ -47,6 +47,7 @@ class App extends Component {
   handleNewChat(err, message) {
     this.setState({ chat: this.state.chat.concat(message)});
     console.log(this.state.chat);
+
   }
 
   handleNewAction(err, action) {
@@ -55,7 +56,8 @@ class App extends Component {
     }
     this.setState({ actions: this.state.actions.concat(action)});
     console.log(this.state.actions);
-    var audio = new Audio(action.audio);
+    var server = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000";
+    var audio = new Audio(server + "/" + action.audio);
     audio.play();
   }
 

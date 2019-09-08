@@ -1,3 +1,4 @@
+sudo: required
 services:
   - docker
 matrix:
@@ -7,21 +8,19 @@ matrix:
       python:
         - "3.6"
       before_install:
-        - cd backend/gitdrnk
+        - cd backend
       install:
-        - pip install --upgrade pip
-        - pip install -r requirements.txt
+        - docker build -t originalheapsters/gitdrnk_flask:0.0.0$TRAVIS_BUILD_NUMBER .
       script:
-        - echo $TRAVIS_BUILD_NUMBER
+        - bash dockerpush.sh
 
     - language: node_js
       cache: npm
       node_js:
         - "stable"
       before_install:
-        - cd frontend/gitdrnk
+        - cd frontend
       install:
-        - npm install
+        - docker build -t originalheapsters/gitdrnk_react:0.0.0$TRAVIS_BUILD_NUMBER .
       script:
-        - npm test
-        - npm run build
+        - bash dockerpush.sh

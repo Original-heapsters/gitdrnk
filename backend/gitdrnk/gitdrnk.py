@@ -34,7 +34,7 @@ app.config['AUDIO_DIR'] = os.path.join(os.getcwd(), "static", "audio")
 app.config['VERSION'] = "1.0.5"
 app.json_encoder = Encoder.JSONEncoder
 CORS(app)
-socketio = SocketIO(app, message_queue=app.config['MONGO_CHAT_URI'])
+socketio = SocketIO(app, message_queue=app.config['MONGO_CHAT_URI'], cors_allowed_origins='*')
 mongo = PyMongo(app).db
 
 
@@ -144,8 +144,7 @@ def actions_all():
 def client_payload_received():
     data = request.get_json()
     path_to_assets = app.config['AUDIO_DIR']
-    origin = request.host_url
-    resp, code = handle_client_hook(mongo.players, mongo.actions, data, path_to_assets, origin)
+    resp, code = handle_client_hook(mongo.players, mongo.rules, mongo.actions, data, path_to_assets)
 
     return jsonify(resp), code
 
@@ -202,11 +201,11 @@ def git_event():
 
 @socketio.on('join_chat')
 def on_join_chat(data):
-    join_chat(data)
+    join_chat(data, mongo)
 
 @socketio.on('leave_chat')
 def on_leave_chat(data):
-    leave_chat(data)
+    leave_chat(data, mongo)
 
 
 @socketio.on('send_chat')

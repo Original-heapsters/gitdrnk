@@ -1,12 +1,12 @@
 import uuid
 from datetime import datetime
 
-from flask_socketio import emit, join_room
+from flask_socketio import emit, join_room, leave_room
 
 from Database.Client import Helper
 
 
-def join_chat(data):
+def join_chat(data, db):
     print("Trying to join")
     username = data['username']
     game = data['gameId']
@@ -14,10 +14,18 @@ def join_chat(data):
     if username and game:
         join_room(game)
         print(username + " has entered the room: " + game)
-        event = {"type": "join", "username": username, "gameId": game}
-        notify_room(event, game)
+        joinObj = {
+            "_id": str(uuid.uuid4()),
+            "username": username,
+            "gameId": game,
+            "type": "join",
+            "action": "join",
+            "date": str(datetime.now())
+        }
+        Helper.upsert_data(db.actions, "game_id", game, joinObj, "actions")
+        notify_room(joinObj, game)
 
-def leave_chat(data):
+def leave_chat(data, db):
     print("Trying to leave")
     username = data['username']
     game = data['gameId']
@@ -25,8 +33,16 @@ def leave_chat(data):
     if username and game:
         leave_room(game)
         print(username + " has left the room: " + game)
-        event = {"type": "leave", "username": username, "gameId": game}
-        notify_room(event, game)
+        leaveObj = {
+            "_id": str(uuid.uuid4()),
+            "username": username,
+            "gameId": game,
+            "type": "leave",
+            "action": "leave",
+            "date": str(datetime.now())
+        }
+        Helper.upsert_data(db.actions, "game_id", game, leaveObj, "actions")
+        notify_room(leaveObj, game)
 
 
 def send_chat_message(data, db):

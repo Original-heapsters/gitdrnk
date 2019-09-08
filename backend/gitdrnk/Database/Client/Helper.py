@@ -202,11 +202,95 @@ seed_rules = [
         "definition": [
             {
                 "key": "pre-commit",
-                "rule": "Drink a little"
+                "rule": "Take a sip"
             },
             {
                 "key": "post-commit",
-                "rule": "Drink a lot"
+                "rule": "Take a shot"
+            },
+            {
+                "key": "applypatch-msg",
+                "rule": "Finish drink"
+            },
+            {
+                "key": "pre-applypatch",
+                "rule": "Take 2 shots"
+            },
+            {
+                "key": "post-applypatch",
+                "rule": "Take a sip"
+            },
+            {
+                "key": "prepare-commit-msg",
+                "rule": "TBD"
+            },
+            {
+                "key": "commit-msg",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-rebase",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-checkout",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-merge",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-push",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-receive",
+                "rule": "TBD"
+            },
+            {
+                "key": "update",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-receive",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-update",
+                "rule": "TBD"
+            },
+            {
+                "key": "push-to-checkout",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-auto-gc",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-rewrite",
+                "rule": "TBD"
+            },
+            {
+                "key": "rebase",
+                "rule": "TBD"
+            },
+            {
+                "key": "sendemail-validate",
+                "rule": "TBD"
+            },
+            {
+                "key": "fsmonitor-watchman",
+                "rule": "TBD"
+            },
+            {
+                "key": "p4-pre-submit",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-index-change",
+                "rule": "TBD"
             }
         ]
     },
