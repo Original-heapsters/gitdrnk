@@ -16,6 +16,7 @@ class App extends Component {
       gitUName:"RebeccaGit"
     }
     this.state = {
+      server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
       session: sessionInfo,
       players: [],
       chat: [],
@@ -53,8 +54,7 @@ class App extends Component {
       return;
     }
     this.setState({ actions: this.state.actions.concat(action)});
-    var server = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000";
-    var audio = new Audio(server + "/" + action.audio);
+    var audio = new Audio(this.state.server + "/" + action.audio);
     audio.play();
   }
 
