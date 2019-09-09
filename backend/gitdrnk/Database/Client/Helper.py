@@ -58,12 +58,6 @@ seed_players = [
     "git_username": "Snek",
     "email": "snake@email.com",
     "profile_picture":"https://pics.me.me/bayside-bayside-6-bays-bayside-6-jayside-bayside-6-bayside-61330867.png"
-    },
-    {
-    "username": "russell",
-    "git_username": "sellnat77",
-    "email": "sell_nat@yahoo.com",
-    "profile_picture":"https://avatars3.githubusercontent.com/u/3691245?v=4"
     }
 ]
 
@@ -464,14 +458,20 @@ def get_by_key(db, key_name, key):
         return {}
 
 # Update
-def upsert_data(db,key_name, key_id, obj, dest):
+def upsert_data(db,key_name, key_id, obj, dest, upsert=True):
     key = {key_name: key_id}
     collection_source = get_by_key(db, key_name, key_id)
     if not collection_source:
-        db.update(key, {key_name: key_id, dest: []}, upsert=True)
+        db.update(key, {key_name: key_id, dest: []}, upsert=upsert)
 
     query = {"$addToSet": {dest: obj}}
     db.update(key, query)
+
+def update_data(db,key_name, key_id, obj):
+    key = {key_name: key_id}
+    query = {"$set": obj}
+    db.update_one(key, query)
+
 
 
 def add_player_to_game(db, game_id, username):

@@ -62,7 +62,7 @@ class UserBox extends React.Component {
             placeholder="Enter your git email"
             type="text" />
           <select onChange={this.handleGameChange}>
-            {this.props.gameList.map(game => {
+            {this.props.gameList && this.props.gameList.map(game => {
               return (
                 <option key={game._id} value={game.game_id}>{game.game_id}</option>
               )

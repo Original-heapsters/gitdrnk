@@ -33,8 +33,12 @@ class App extends Component {
 
   componentDidMount(){
     getGames((err, gameList)=> {
-      var init_games = {
-        gameId: gameList[0].game_id,
+      let initialGame = "";
+      if (gameList && gameList.length > 0){
+        initialGame = gameList[0].game_id
+      }
+      let init_games = {
+        gameId: initialGame,
         username: this.state.session.username,
         email: this.state.session.email,
       };
@@ -96,8 +100,12 @@ class App extends Component {
     if (leave){
       leaveChat(gId, email);
       getGames((err, gameList)=> {
+        let initialGame = "";
+        if (gameList && gameList.length > 0){
+          initialGame = gameList[0].game_id
+        }
         var init_games = {
-          gameId: gameList[0].game_id,
+          gameId: initialGame,
           username: this.state.session.username,
           email: this.state.session.email,
         };

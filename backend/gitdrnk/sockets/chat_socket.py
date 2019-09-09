@@ -9,6 +9,7 @@ default_profile = "https://p7.hiclipart.com/preview/981/645/182/united-states-co
 
 def join_chat(data, db):
     print("Trying to join")
+    username = data.get("username", None)
     email = data['email']
     game = data['gameId']
 
@@ -16,6 +17,9 @@ def join_chat(data, db):
         join_room(game)
         print(email + " has entered the room: " + game)
         player = Helper.get_by_key(db.players, "email", email)
+        if not player:
+            player = populate_player(db, username, email)
+
         joinObj = {
             "_id": str(uuid.uuid4()),
             "username": player.get("username", email),
@@ -87,3 +91,22 @@ def notify_room(event_json, game_id):
 
     print("Sending " + str(event_json))
     emit('gitdrnk_chat', event_json, room=game_id)
+
+def populate_player(db, username, email):
+    import requests
+    player = {}
+    git_request = "https://api.github.com/search/users?q="+email+"+in:email"
+    r = requests.get(git_request)
+    if r and len(r.json()["items"]) > 0:
+        user_obj = r.json()["items"][0]
+        git_username = user_obj["login"]
+        git_profile_picture = user_obj["avatar_url"]
+        if not username:
+            player["username"] = git_username
+        player["git_username"] = git_username
+        player["profile_picture"] = git_profile_picture
+        player["email"] = email
+        print("\n\n\n\n\n\n\n\n\n")
+        print(player)
+        Helper.create(db.players, "email", email, player)
+        return player
