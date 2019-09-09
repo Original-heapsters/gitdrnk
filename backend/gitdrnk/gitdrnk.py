@@ -27,6 +27,7 @@ from flask_socketio import SocketIO, emit, leave_room
 app = Flask(__name__)
 dbPath = os.environ.get('DB')
 if dbPath is None or dbPath == "":
+    #export mongodb+srv://REDACTED_USER:REDACTED_PASSWORD@gitdrnk-sandbox-m3rwj.mongodb.net/test?retryWrites=true&w=majority
     dbPath = "mongodb://localhost:27017/gitdrnk"
 app.config['MONGO_URI'] = dbPath
 app.config['MONGO_CHAT_URI'] = dbPath
