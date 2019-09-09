@@ -123,7 +123,9 @@ seed_games = [
     {"game_id": "huuh",
       "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
       {"game_id": "gitdrnk",
-        "players": ["chuck", "420Kiilah69", "soCoolBoi"]}
+        "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
+         {"game_id": "tmp",
+           "players": ["chuck", "420Kiilah69", "soCoolBoi"]}
 ]
 
 seed_rules = [
@@ -422,6 +424,103 @@ seed_rules = [
     },
     {
         "game_id": "gitdrnk",
+        "definition": [
+            {
+                "key": "pre-commit",
+                "rule": "Take a sip"
+            },
+            {
+                "key": "post-commit",
+                "rule": "Take a shot"
+            },
+            {
+                "key": "applypatch-msg",
+                "rule": "Finish drink"
+            },
+            {
+                "key": "pre-applypatch",
+                "rule": "Take 2 shots"
+            },
+            {
+                "key": "post-applypatch",
+                "rule": "Take a sip"
+            },
+            {
+                "key": "prepare-commit-msg",
+                "rule": "TBD"
+            },
+            {
+                "key": "commit-msg",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-rebase",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-checkout",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-merge",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-push",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-receive",
+                "rule": "TBD"
+            },
+            {
+                "key": "update",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-receive",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-update",
+                "rule": "TBD"
+            },
+            {
+                "key": "push-to-checkout",
+                "rule": "TBD"
+            },
+            {
+                "key": "pre-auto-gc",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-rewrite",
+                "rule": "TBD"
+            },
+            {
+                "key": "rebase",
+                "rule": "TBD"
+            },
+            {
+                "key": "sendemail-validate",
+                "rule": "TBD"
+            },
+            {
+                "key": "fsmonitor-watchman",
+                "rule": "TBD"
+            },
+            {
+                "key": "p4-pre-submit",
+                "rule": "TBD"
+            },
+            {
+                "key": "post-index-change",
+                "rule": "TBD"
+            }
+        ]
+    },
+    {
+        "game_id": "tmp",
         "definition": [
             {
                 "key": "pre-commit",
