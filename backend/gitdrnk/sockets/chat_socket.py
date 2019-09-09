@@ -23,6 +23,8 @@ def join_chat(data, db):
         joinObj = {
             "_id": str(uuid.uuid4()),
             "username": player.get("username", email),
+            "git_username": player.get("git_username", email),
+            "email": player.get("email", email),
             "profile_picture": player.get("profile_picture", default_profile),
             "gameId": game,
             "type": "join",
@@ -44,6 +46,8 @@ def leave_chat(data, db):
         leaveObj = {
             "_id": str(uuid.uuid4()),
             "username": player.get("username", email),
+            "git_username": player.get("git_username", email),
+            "email": player.get("email", email),
             "profile_picture": player.get("profile_picture", default_profile),
             "gameId": game,
             "type": "leave",
@@ -64,6 +68,8 @@ def send_chat_message(data, db):
     chatObj = {
         "_id": str(uuid.uuid4()),
         "username": player.get("username", email),
+        "git_username": player.get("git_username", email),
+        "email": player.get("email", email),
         "profile_picture": player.get("profile_picture", default_profile),
         "gameId": game,
         "message": message,

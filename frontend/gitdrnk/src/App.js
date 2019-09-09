@@ -12,8 +12,7 @@ class App extends Component {
     super(props);
     var sessionInfo = {
       gameId: "",
-      username:"420Kiilah69",
-      email:"rebecca@email.com"
+      email:""
     }
     this.state = {
       server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
@@ -39,7 +38,6 @@ class App extends Component {
       }
       let init_games = {
         gameId: initialGame,
-        username: this.state.session.username,
         email: this.state.session.email,
       };
       this.setState({
@@ -50,6 +48,11 @@ class App extends Component {
   }
 
   handleNewChat(err, message) {
+    if (message.type === "join" && message.email === this.state.session.email){
+      getPlayers((err, playerList)=> {
+        this.setState({players: playerList})
+      });
+    }
     this.setState({ chat: this.state.chat.concat(message)});
   }
 
@@ -57,6 +60,7 @@ class App extends Component {
     if (action.game_id !== this.state.session.gameId){
       return;
     }
+
     this.setState({ actions: this.state.actions.concat(action)});
     var audio = new Audio(this.state.server + "/" + action.audio);
     audio.play();
@@ -65,7 +69,6 @@ class App extends Component {
   changeGame(gameSelected){
     var newSession = {
       gameId: gameSelected,
-      username:this.state.session.username,
       email:this.state.session.email
     }
     this.setState(
@@ -83,7 +86,6 @@ class App extends Component {
   updateSession(uName, email, gId, leave=false){
     var newSession = {
       gameId: gId,
-      username:uName,
       email:email
     }
     this.setState(
@@ -106,7 +108,6 @@ class App extends Component {
         }
         var init_games = {
           gameId: initialGame,
-          username: this.state.session.username,
           email: this.state.session.email,
         };
         this.setState({
@@ -116,9 +117,6 @@ class App extends Component {
       });
       return;
     }
-    getPlayers((err, playerList)=> {
-      this.setState({players: playerList})
-    });
 
     getRules(gId, (err, ruleset) => {
       this.setState({rules: ruleset});
@@ -136,7 +134,6 @@ class App extends Component {
       }
       joinChat(this.state.session.gameId, this.state.session.email, this.handleNewChat, this.handleNewAction);
     });
-
   }
 
   render() {

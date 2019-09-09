@@ -4,18 +4,11 @@ import React from 'react';
 class UserBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: this.props.username, email: this.props.email, gameId: this.props.gameId}
-    this.handleChange = this.handleChange.bind(this)
+    this.state = {email: this.props.email, gameId: this.props.gameId}
     this.handleGitEmailChange = this.handleGitEmailChange.bind(this)
     this.handleGameChange = this.handleGameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.leaveRoom = this.leaveRoom.bind(this);
-  }
-
-  handleChange(e) {
-    this.setState({
-      username: e.target.value
-    })
   }
 
   handleGitEmailChange(e) {
@@ -51,11 +44,6 @@ class UserBox extends React.Component {
         <form
           onSubmit={this.handleSubmit}
           className="LoginForm">
-          <input
-            onChange={this.handleChange}
-            value={this.state.username}
-            placeholder="Enter your username"
-            type="text" />
           <input
             onChange={this.handleGitEmailChange}
             value={this.state.email}
