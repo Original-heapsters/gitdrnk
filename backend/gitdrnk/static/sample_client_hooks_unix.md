@@ -1,47 +1,13 @@
-# Pre-Commit
+# General purpose hook
 ```shell
 #!/bin/sh
 SERVERLOCATION=localhost:5000/client_hook
-GITUNAME=$(git config --global user.name)
-GITACTION="pre-commit"
+GITUEMAIL=$(git config --global user.email)
+GITACTION=$(basename $0)
+GAME_ID=$(basename "$PWD")
 ACTIONTIME=$(date)
-JSON_FMT='{"username":"%s","action":"%s","date":"%s"}\n'
-PAYLOAD=$(printf "$JSON_FMT" "$GITUNAME" "$GITACTION" "$(date "+%Y-%m-%d %H:%M:%S")")
-curl $SERVERLOCATION -H "Content-Type: application/json" -d "$PAYLOAD"
-```
+JSON_FMT='{"email":"%s","action":"%s","date":"%s", "game_id":"%s"}\n'
+PAYLOAD=$(printf "$JSON_FMT" "$GITUEMAIL" "$GITACTION" "$(date "+%Y-%m-%d %H:%M:%S")" "$GAME_ID")
+curl $SERVERLOCATION -H "Content-Type: application/json" -s -d "$PAYLOAD" > /dev/null
 
-# Post-Commit
-```shell
-#!/bin/sh
-SERVERLOCATION=localhost:5000/client_hook
-GITUNAME=$(git config --global user.name)
-GITACTION="post-commit"
-ACTIONTIME=$(date)
-JSON_FMT='{"username":"%s","action":"%s","date":"%s"}\n'
-PAYLOAD=$(printf "$JSON_FMT" "$GITUNAME" "$GITACTION" "$(date "+%Y-%m-%d %H:%M:%S")")
-curl $SERVERLOCATION -H "Content-Type: application/json" -d "$PAYLOAD"
-```
-
-# Prepare-Commit-Msg
-```shell
-#!/bin/sh
-SERVERLOCATION=localhost:5000/client_hook
-GITUNAME=$(git config --global user.name)
-GITACTION="prepare-commit-msg"
-ACTIONTIME=$(date)
-JSON_FMT='{"username":"%s","action":"%s","date":"%s"}\n'
-PAYLOAD=$(printf "$JSON_FMT" "$GITUNAME" "$GITACTION" "$(date "+%Y-%m-%d %H:%M:%S")")
-curl $SERVERLOCATION -H "Content-Type: application/json" -d "$PAYLOAD"
-```
-
-# Commit-Msg
-```shell
-#!/bin/sh
-SERVERLOCATION=localhost:5000/client_hook
-GITUNAME=$(git config --global user.name)
-GITACTION="commit-msg"
-ACTIONTIME=$(date)
-JSON_FMT='{"username":"%s","action":"%s","date":"%s"}\n'
-PAYLOAD=$(printf "$JSON_FMT" "$GITUNAME" "$GITACTION" "$(date "+%Y-%m-%d %H:%M:%S")")
-curl $SERVERLOCATION -H "Content-Type: application/json" -d "$PAYLOAD"
 ```

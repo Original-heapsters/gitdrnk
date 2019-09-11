@@ -27,6 +27,7 @@ from flask_socketio import SocketIO, emit, leave_room
 app = Flask(__name__)
 dbPath = os.environ.get('DB')
 if dbPath is None or dbPath == "":
+    #export mongodb+srv://REDACTED_USER:REDACTED_PASSWORD@gitdrnk-sandbox-m3rwj.mongodb.net/test?retryWrites=true&w=majority
     dbPath = "mongodb://localhost:27017/gitdrnk"
 app.config['MONGO_URI'] = dbPath
 app.config['MONGO_CHAT_URI'] = dbPath
@@ -144,7 +145,7 @@ def actions_all():
 def client_payload_received():
     data = request.get_json()
     path_to_assets = app.config['AUDIO_DIR']
-    resp, code = handle_client_hook(mongo.players, mongo.rules, mongo.actions, data, path_to_assets)
+    resp, code = handle_client_hook(mongo, data, path_to_assets)
 
     return jsonify(resp), code
 
@@ -233,4 +234,5 @@ def notify_room(event_json, room_id):
 
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, host="0.0.0.0", port=port, debug=True)

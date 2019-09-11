@@ -4,23 +4,16 @@ import React from 'react';
 class UserBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {username: this.props.username, gitUsername: this.props.gitUsername, gameId: this.props.gameId}
-    this.handleChange = this.handleChange.bind(this)
-    this.handleGitUNameChange = this.handleGitUNameChange.bind(this)
+    this.state = {email: this.props.email, gameId: this.props.gameId}
+    this.handleGitEmailChange = this.handleGitEmailChange.bind(this)
     this.handleGameChange = this.handleGameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.leaveRoom = this.leaveRoom.bind(this);
   }
 
-  handleChange(e) {
+  handleGitEmailChange(e) {
     this.setState({
-      username: e.target.value
-    })
-  }
-
-  handleGitUNameChange(e) {
-    this.setState({
-      gitUsername: e.target.value
+      email: e.target.value
     })
   }
 
@@ -33,15 +26,15 @@ class UserBox extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     if(!this.state.gameId){
-      this.props.updateSession(this.state.username, this.state.gitUsername, this.props.gameId);
+      this.props.updateSession(this.state.username, this.state.email, this.props.gameId);
     } else{
-      this.props.updateSession(this.state.username, this.state.gitUsername, this.state.gameId);
+      this.props.updateSession(this.state.username, this.state.email, this.state.gameId);
     }
 
   }
 
   leaveRoom() {
-    this.props.updateSession(this.state.username, this.state.gitUsername, this.props.gameId, true);
+    this.props.updateSession(this.state.username, this.state.email, this.props.gameId, true);
     this.setState({gameId:null});
   }
 
@@ -52,17 +45,12 @@ class UserBox extends React.Component {
           onSubmit={this.handleSubmit}
           className="LoginForm">
           <input
-            onChange={this.handleChange}
-            value={this.state.username}
-            placeholder="Enter your username"
-            type="text" />
-          <input
-            onChange={this.handleGitUNameChange}
-            value={this.state.gitUsername}
-            placeholder="Enter your git username"
+            onChange={this.handleGitEmailChange}
+            value={this.state.email}
+            placeholder="Enter your git email"
             type="text" />
           <select onChange={this.handleGameChange}>
-            {this.props.gameList.map(game => {
+            {this.props.gameList && this.props.gameList.map(game => {
               return (
                 <option key={game._id} value={game.game_id}>{game.game_id}</option>
               )

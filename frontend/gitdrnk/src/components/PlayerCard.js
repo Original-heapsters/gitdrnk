@@ -7,7 +7,7 @@ const PlayerCard = ({player}) => {
             <img src={player.profile_picture} alt=""/>
             Usename:{player.username}
             <br/>
-            Git Username:{player.git_username}
+            Git email:{player.email}
           </li>
         );
 };

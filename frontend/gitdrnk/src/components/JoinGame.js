@@ -8,14 +8,14 @@ class JoinGame extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       gameId: '',
-      playerUsername: '',
+      email: '',
       playerCreateSuccess: ''
     }
   }
 
   handleSubmit(e) {
     const playerEndpoint = process.env.REACT_APP_GITDRNK_SVC + '/game/join';
-    const postObj = {'username': this.state.playerUsername}
+    const postObj = {'email': this.state.email}
     fetch(playerEndpoint,{
     method: 'POST',
     body: JSON.stringify(postObj),
@@ -26,7 +26,7 @@ class JoinGame extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({playerUsername: e.target.value});
+    this.setState({email: e.target.value});
   }
 
   render() {
@@ -35,7 +35,7 @@ class JoinGame extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Username:
-            <input type="text" value={ this.state.playerUsername } onChange={ this.handleChange }/>
+            <input type="text" value={ this.state.email } onChange={ this.handleChange }/>
           </label>
           <input type="submit" value="Join the party" />
         </form>
