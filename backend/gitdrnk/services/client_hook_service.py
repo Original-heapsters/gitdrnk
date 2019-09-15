@@ -59,7 +59,7 @@ def zipdir(path, ziph):
 def create_script_file(input_file, output_dir, output_hook, platform):
     with open(input_file) as f:
         if platform == "unix":
-            out_file = output_hook + ".sh"
+            out_file = output_hook
         elif platform == "windows":
             out_file = output_hook + ".bat"
         else:
