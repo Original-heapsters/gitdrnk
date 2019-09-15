@@ -2,10 +2,17 @@ import './Styles/Header.css';
 import UserBox from './UserBox.js';
 import React from 'react';
 
-const Header = ({sessionInfo, gameList, updateSession}) => {
+const Header = ({sessionInfo, gameList, updateSession, nuke, seed}) => {
+  let currEnv = process.env.REACT_APP_NODE_ENV || "development";
   return (
     <div className="Header">
       <a href="#default" className="logo">{sessionInfo.gameId}</a>
+        {currEnv === "development" &&
+          <div>
+            <button onClick={nuke}>Nuke</button>
+            <button onClick={seed}>Seed</button>
+          </div>
+        }
       <div className="Header-right">
         <UserBox
         email={sessionInfo.email}
