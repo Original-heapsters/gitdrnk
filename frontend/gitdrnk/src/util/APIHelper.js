@@ -40,4 +40,16 @@ function getRules(gameId, cb){
     .then(rules => cb( null, rules.rules.definition));
 }
 
-export { getPlayers, getChatLog, getRules, getGames, getActionLog }
+function nukeDB(){
+  const nukeEndpoint = apiEndpoint + '/nukeeverything';
+  fetch(nukeEndpoint)
+    .then(response => response.json())
+}
+
+function seedDB(){
+  const seedEndpoint = apiEndpoint + '/seed_db';
+  fetch(seedEndpoint)
+    .then(response => response.json())
+}
+
+export { getPlayers, getChatLog, getRules, getGames, getActionLog, nukeDB, seedDB }
