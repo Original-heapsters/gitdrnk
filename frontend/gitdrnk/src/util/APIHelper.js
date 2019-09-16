@@ -80,4 +80,16 @@ function getOS() {
   return os;
 }
 
-export { getPlayers, getChatLog, getRules, getGames, getActionLog, getClientScripts }
+function nukeDB(){
+  const nukeEndpoint = apiEndpoint + '/nukeeverything';
+  fetch(nukeEndpoint)
+    .then(response => response.json())
+}
+
+function seedDB(){
+  const seedEndpoint = apiEndpoint + '/seed_db';
+  fetch(seedEndpoint)
+    .then(response => response.json())
+}
+
+export { getPlayers, getChatLog, getRules, getGames, getActionLog, getClientScripts, nukeDB, seedDB }
