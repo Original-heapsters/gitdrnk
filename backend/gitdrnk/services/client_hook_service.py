@@ -58,10 +58,8 @@ def zipdir(path, ziph):
 
 def create_script_file(input_file, output_dir, output_hook, platform):
     with open(input_file) as f:
-        if platform == "unix":
+        if platform == "unix" or platform == "windows":
             out_file = output_hook
-        elif platform == "windows":
-            out_file = output_hook + ".bat"
         else:
             print("ERROR " + platform + " not supported!")
         out_file = os.path.join(output_dir, out_file)
