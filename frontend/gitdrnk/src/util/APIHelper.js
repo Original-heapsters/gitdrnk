@@ -40,6 +40,46 @@ function getRules(gameId, cb){
     .then(rules => cb( null, rules.rules.definition));
 }
 
+function getClientScripts(ref, game_id, cb){
+  const clientOS = getOS();
+  const scriptsEndpoint = `${apiEndpoint}/help/client_hooks/${game_id}/${clientOS}`;
+  fetch(scriptsEndpoint)
+    .then(res => {
+        return res.blob();
+    }).then(blob => {
+      // Super hack to trigger a file download
+        const href = window.URL.createObjectURL(blob);
+        const a = ref;
+        a.download = 'GitHookScripts.zip';
+        a.href = href;
+        a.click();
+        a.href = '';
+    }).catch(err => console.error(err));
+}
+
+function getOS() {
+  var userAgent = window.navigator.userAgent,
+      platform = window.navigator.platform,
+      macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+      windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+      iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+      os = null;
+
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = 'unix';
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = 'iOS';
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = 'windows';
+  } else if (/Android/.test(userAgent)) {
+    os = 'Android';
+  } else if (!os && /Linux/.test(platform)) {
+    os = 'unix';
+  }
+
+  return os;
+}
+
 function nukeDB(){
   const nukeEndpoint = apiEndpoint + '/nukeeverything';
   fetch(nukeEndpoint)
@@ -52,4 +92,4 @@ function seedDB(){
     .then(response => response.json())
 }
 
-export { getPlayers, getChatLog, getRules, getGames, getActionLog, nukeDB, seedDB }
+export { getPlayers, getChatLog, getRules, getGames, getActionLog, getClientScripts, nukeDB, seedDB }

@@ -19,7 +19,7 @@ from sockets.chat_socket import *
 from sockets.action_socket import *
 
 # Framework imports
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for, send_file
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from flask_socketio import SocketIO, emit, leave_room
@@ -160,12 +160,18 @@ def server_payload_received():
     return "pass", 200
 
 
-@app.route("/help/client_hooks/<platform>", methods=["GET"])
-def sample_client_hooks(platform="unix"):
+@app.route("/help/client_hooks/<game_id>/<platform>", methods=["GET"])
+def sample_client_hooks(game_id="", platform="unix"):
     if platform.lower() == "unix":
-        return app.send_static_file('sample_client_hooks_unix.md')
+        script_location = os.path.join('static', 'sample_client_hooks_unix.md')
+        scripts_zip = get_client_scripts(script_location, mongo, game_id, platform)
+        return send_file(scripts_zip)
+    elif platform.lower() == "windows":
+        script_location = os.path.join('static', 'sample_client_hooks_win.md')
+        scripts_zip = get_client_scripts(script_location, mongo, game_id, platform)
+        return send_file(scripts_zip)
     else:
-        return app.send_static_file('sample_client_hooks_win.md')
+        return jsonify("Not supported"), 503
 
 
 @app.route("/socket_test")
