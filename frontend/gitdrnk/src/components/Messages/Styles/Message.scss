@@ -1,26 +1,18 @@
 /* Chat containers */
-.ActionMessage {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
+.Message {
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
 }
 
-/* Darker chat container */
-.darker {
-  border-color: #ccc;
-  background-color: #ffe2e1;
-}
-
 /* Clear floats */
-.ActionMessage::after {
+.Message::after {
   content: "";
   clear: both;
   display: table;
 }
-
-.ActionMessage img {
+/* Style images */
+.Message img {
   float: left;
   max-width: 60px;
   width: 100%;
@@ -28,11 +20,11 @@
   border-radius: 50%;
 }
 
-/* Style the right image */
-.ActionMessage img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
+
+/* Darker chat container */
+.darker {
+  border-color: #ccc;
+  background-color: #ffe2e1;
 }
 
 /* Style time text */
@@ -43,6 +35,18 @@
 
 /* Style time text */
 .time-left {
+  float: left;
+  color: #999;
+}
+
+/* Style time text */
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.username-left {
   float: left;
   color: #999;
 }
