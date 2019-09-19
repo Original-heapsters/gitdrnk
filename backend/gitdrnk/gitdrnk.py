@@ -162,12 +162,16 @@ def server_payload_received():
 
 @app.route("/help/client_hooks/<game_id>/<platform>", methods=["GET"])
 def sample_client_hooks(game_id="", platform="unix"):
+    suffix = ".md"
+    if "localhost" not in app.config["MONGO_URI"]:
+        suffix = "_prod" + suffix
+
     if platform.lower() == "unix":
-        script_location = os.path.join('static', 'sample_client_hooks_unix.md')
+        script_location = os.path.join('static', 'sample_client_hooks_unix' + suffix)
         scripts_zip = get_client_scripts(script_location, mongo, game_id, platform)
         return send_file(scripts_zip)
     elif platform.lower() == "windows":
-        script_location = os.path.join('static', 'sample_client_hooks_win.md')
+        script_location = os.path.join('static', 'sample_client_hooks_win' + suffix)
         scripts_zip = get_client_scripts(script_location, mongo, game_id, platform)
         return send_file(scripts_zip)
     else:
