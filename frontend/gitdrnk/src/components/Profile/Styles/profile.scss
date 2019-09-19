@@ -1,8 +1,11 @@
 .Profile{
-  width: 10%;
-
+  display: block;
+  text-align: center;
+  width: 15%;
+  height: 10%;
 }
 
 .ProfilePicture{
   border-radius: 50%;
+  max-width: 80px;
 }
