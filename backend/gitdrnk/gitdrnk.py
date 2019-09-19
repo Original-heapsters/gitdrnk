@@ -224,16 +224,16 @@ def on_send_chat(data):
 def on_leave(data):
     username = data['username']
     game = data['game']
+    date = data['dateTime']
     leave_room(game)
     print(username + " has left the room: " + game)
     # send(username + ' has left the room.', room=game)
-    event = {"type": "leave", "user": username, "game": game}
+    event = {"type": "leave", "user": username, "game": game, "date": date}
     notify_room(event, game)
 
 
 def notify_room(event_json, room_id):
     event_json["id"] = str(uuid.uuid4())
-    event_json["date"] = str(datetime.now())
     emit('gitdrnkevent', event_json, room=room_id)
 
 ####### Socket functionality

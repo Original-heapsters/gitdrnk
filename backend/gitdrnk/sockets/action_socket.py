@@ -14,10 +14,9 @@ def notify_room(event_json, game_id):
     if not event_json or not game_id:
         print("Event json or game id was null")
         return
-
-    if "_id" not in event_json and "date" not in event_json:
+    print("About to send " + str(event_json))
+    if "_id" not in event_json:
         event_json["_id"] = str(uuid.uuid4())
-        event_json["date"] = str(datetime.now())
 
     print("Sending " + str(event_json))
 

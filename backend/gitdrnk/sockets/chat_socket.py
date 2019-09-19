@@ -12,6 +12,7 @@ def join_chat(data, db):
     username = data.get("username", None)
     email = data['email']
     game = data['gameId']
+    date = data['dateTime']
 
     if email and game:
         join_room(game)
@@ -29,7 +30,7 @@ def join_chat(data, db):
             "gameId": game,
             "type": "join",
             "action": "join",
-            "date": str(datetime.now())
+            "date": date
         }
         Helper.upsert_data(db.actions, "game_id", game, joinObj, "actions")
         notify_room(joinObj, game)
@@ -38,6 +39,7 @@ def leave_chat(data, db):
     print("Trying to leave")
     email = data['email']
     game = data['gameId']
+    date = data['dateTime']
 
     if email and game:
         leave_room(game)
@@ -52,7 +54,7 @@ def leave_chat(data, db):
             "gameId": game,
             "type": "leave",
             "action": "leave",
-            "date": str(datetime.now())
+            "date": date
         }
         Helper.upsert_data(db.actions, "game_id", game, leaveObj, "actions")
         notify_room(leaveObj, game)
@@ -63,6 +65,7 @@ def send_chat_message(data, db):
     email = data['email']
     game = data['gameId']
     message = data['message']
+    date = data['dateTime']
     player = Helper.get_by_key(db.players, "email", email)
 
     chatObj = {
@@ -73,7 +76,7 @@ def send_chat_message(data, db):
         "profile_picture": player.get("profile_picture", default_profile),
         "gameId": game,
         "message": message,
-        "date": str(datetime.now())
+        "date": date
     }
     Helper.upsert_data(db.chats, "game_id", game, chatObj, "chat")
 
@@ -82,7 +85,8 @@ def send_chat_message(data, db):
         "username": player.get("username", email),
         "profile_picture": player.get("profile_picture", default_profile),
         "gameId": game,
-        "message": message}
+        "message": message,
+        "date": date}
         notify_room(event, game)
 
 
@@ -91,9 +95,8 @@ def notify_room(event_json, game_id):
         print("Event json or game id was null")
         return
 
-    if "_id" not in event_json and "date" not in event_json:
+    if "_id" not in event_json:
         event_json["_id"] = str(uuid.uuid4())
-        event_json["date"] = str(datetime.now())
 
     print("Sending " + str(event_json))
     emit('gitdrnk_chat', event_json, room=game_id)
@@ -112,7 +115,5 @@ def populate_player(db, username, email):
         player["git_username"] = git_username
         player["profile_picture"] = git_profile_picture
         player["email"] = email
-        print("\n\n\n\n\n\n\n\n\n")
-        print(player)
         Helper.create(db.players, "email", email, player)
         return player
