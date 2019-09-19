@@ -162,12 +162,16 @@ def server_payload_received():
 
 @app.route("/help/client_hooks/<game_id>/<platform>", methods=["GET"])
 def sample_client_hooks(game_id="", platform="unix"):
+    suffix = ".md"
+    if "localhost" not in app.config["MONGO_URI"]:
+        suffix = "_prod" + suffix
+
     if platform.lower() == "unix":
-        script_location = os.path.join('static', 'sample_client_hooks_unix.md')
+        script_location = os.path.join('static', 'sample_client_hooks_unix' + suffix)
         scripts_zip = get_client_scripts(script_location, mongo, game_id, platform)
         return send_file(scripts_zip)
     elif platform.lower() == "windows":
-        script_location = os.path.join('static', 'sample_client_hooks_win.md')
+        script_location = os.path.join('static', 'sample_client_hooks_win' + suffix)
         scripts_zip = get_client_scripts(script_location, mongo, game_id, platform)
         return send_file(scripts_zip)
     else:
@@ -224,16 +228,16 @@ def on_send_chat(data):
 def on_leave(data):
     username = data['username']
     game = data['game']
+    date = data['dateTime']
     leave_room(game)
     print(username + " has left the room: " + game)
     # send(username + ' has left the room.', room=game)
-    event = {"type": "leave", "user": username, "game": game}
+    event = {"type": "leave", "user": username, "game": game, "date": date}
     notify_room(event, game)
 
 
 def notify_room(event_json, room_id):
     event_json["id"] = str(uuid.uuid4())
-    event_json["date"] = str(datetime.now())
     emit('gitdrnkevent', event_json, room=room_id)
 
 ####### Socket functionality
