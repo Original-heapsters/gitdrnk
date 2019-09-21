@@ -1,25 +1,33 @@
-.ChatMessage {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
+/* Chat containers */
+.Message {
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
 }
 
 /* Clear floats */
-.ChatMessage::after {
+.Message::after {
   content: "";
   clear: both;
   display: table;
 }
 
-/* Style images */
-.ChatMessage img {
+/* Darker chat container */
+.darker {
+  border-color: #ccc;
+  background-color: #ffe2e1;
+}
+
+/* Style time text */
+.username-right {
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
   float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
+  color: #999;
 }
 
 /* Style time text */

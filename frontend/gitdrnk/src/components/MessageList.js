@@ -1,7 +1,6 @@
 import './Styles/MessageList.css';
 import React,  { useEffect, useRef } from 'react';
-import ChatMessage from './ChatMessage.js';
-import ActionMessage from './ActionMessage.js';
+import Message from './Messages/Message.js';
 
 const MessageList = ({messages, actions}) => {
   const messagesEndRef = useRef(null);
@@ -21,13 +20,7 @@ const MessageList = ({messages, actions}) => {
             return left<right ? -1 : left>right ? 1 : 0;
           })
           .map(messageItem => {
-            var msgObj;
-             if (messageItem.message){
-              msgObj = <ChatMessage key={messageItem._id} messageObj={messageItem}/>;
-             } else {
-              msgObj = <ActionMessage key={messageItem._id} messageObj={messageItem}/>;
-             }
-             return msgObj
+            return <Message key={messageItem._id} messageObj={messageItem}/>;
            })
          }
          <div ref={messagesEndRef} />
