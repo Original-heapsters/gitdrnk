@@ -3,17 +3,19 @@ import React,  { useEffect, useRef } from 'react';
 import Message from './Messages/Message.js';
 
 const MessageList = ({messages, actions}) => {
+
+  const chatObjList = messages.concat(actions);
+
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [chatObjList]);
 
   return (
     <div className="MessageList">
       <ul className="message-list">
-        {messages
-          .concat(actions)
+        {chatObjList
           .sort((a,b) => {
             var left = new Date(a.date);
             var right = new Date(b.date);
