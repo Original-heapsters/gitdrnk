@@ -33,6 +33,7 @@ def join_chat(data, db):
             "date": date
         }
         Helper.upsert_data(db.actions, "game_id", game, joinObj, "actions")
+        Helper.upsert_data(db.games, "game_id", game,  player.get("email", email), "players")
         notify_room(joinObj, game)
 
 def leave_chat(data, db):

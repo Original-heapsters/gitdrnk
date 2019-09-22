@@ -110,412 +110,130 @@ seed_actions = [
 ]
 
 seed_games = [
-    {"game_id": "CleanGame",
-     "players": ["chuck", "InstaH0", "soCoolBoi"]},
-    {"game_id": "DrunkGame",
-     "players": ["Ants", "goodBoi", "PoopyFingers"]},
-    {"game_id": "DeathBall",
-     "players": ["420Kiilah69", "InstaH0", "soCoolBoi"]},
-    {"game_id": "the great equalizer",
-     "players": ["xxXxCryBabyxXxx", "InstaH0", "420Kiilah69"]},
-    {"game_id": "DB_Test",
-     "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
-    {"game_id": "huuh",
-      "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
-      {"game_id": "gitdrnk",
-        "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
-         {"game_id": "tmp",
-           "players": ["chuck", "420Kiilah69", "soCoolBoi"]}
+    {"game_id": "gitdrnk",
+    "players": ["chuck@email.com", "rebecca@email.com", "cool@email.com"]},
+    {"game_id": "tmp",
+    "players": ["chuck@email.com", "rebecca@email.com", "cool@email.com"]}
 ]
 
 seed_rules = [
-    {
-        "game_id": "DeathBall",
-        "definition": [
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "post-commit",
-                "rule": "Drink a lot"
-            }
-        ]
-    },
-    {
-        "game_id": "DrunkGame",
-        "definition": [
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "post-commit",
-                "rule": "Drink a lot"
-            }
-        ]
-    },
-    {
-        "game_id": "CleanGame",
-        "definition": [
-            {
-                "key": "pre-commit",
-                "rule": "Take a sip"
-            },
-            {
-                "key": "post-commit",
-                "rule": "Take a shot"
-            },
-            {
-                "key": "applypatch-msg",
-                "rule": "Finish drink"
-            },
-            {
-                "key": "pre-applypatch",
-                "rule": "Take 2 shots"
-            },
-            {
-                "key": "post-applypatch",
-                "rule": "Take a sip"
-            },
-            {
-                "key": "prepare-commit-msg",
-                "rule": "TBD"
-            },
-            {
-                "key": "commit-msg",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-rebase",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-checkout",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-merge",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-push",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-receive",
-                "rule": "TBD"
-            },
-            {
-                "key": "update",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-receive",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-update",
-                "rule": "TBD"
-            },
-            {
-                "key": "push-to-checkout",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-auto-gc",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-rewrite",
-                "rule": "TBD"
-            },
-            {
-                "key": "rebase",
-                "rule": "TBD"
-            },
-            {
-                "key": "sendemail-validate",
-                "rule": "TBD"
-            },
-            {
-                "key": "fsmonitor-watchman",
-                "rule": "TBD"
-            },
-            {
-                "key": "p4-pre-submit",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-index-change",
-                "rule": "TBD"
-            }
-        ]
-    },
-    {
-        "game_id": "the great equalizer",
-        "definition": [
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "post-commit",
-                "rule": "Drink a lot"
-            }
-        ]
-    },
-    {
-        "game_id": "huuh",
-        "definition": [
-            {
-                "key": "pre-commit",
-                "rule": "Take a sip"
-            },
-            {
-                "key": "post-commit",
-                "rule": "Take a shot"
-            },
-            {
-                "key": "applypatch-msg",
-                "rule": "Finish drink"
-            },
-            {
-                "key": "pre-applypatch",
-                "rule": "Take 2 shots"
-            },
-            {
-                "key": "post-applypatch",
-                "rule": "Take a sip"
-            },
-            {
-                "key": "prepare-commit-msg",
-                "rule": "TBD"
-            },
-            {
-                "key": "commit-msg",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-rebase",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-checkout",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-merge",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-push",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-receive",
-                "rule": "TBD"
-            },
-            {
-                "key": "update",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-receive",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-update",
-                "rule": "TBD"
-            },
-            {
-                "key": "push-to-checkout",
-                "rule": "TBD"
-            },
-            {
-                "key": "pre-auto-gc",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-rewrite",
-                "rule": "TBD"
-            },
-            {
-                "key": "rebase",
-                "rule": "TBD"
-            },
-            {
-                "key": "sendemail-validate",
-                "rule": "TBD"
-            },
-            {
-                "key": "fsmonitor-watchman",
-                "rule": "TBD"
-            },
-            {
-                "key": "p4-pre-submit",
-                "rule": "TBD"
-            },
-            {
-                "key": "post-index-change",
-                "rule": "TBD"
-            }
-        ]
-    },
     {
         "game_id": "gitdrnk",
         "definition": [
             {
                 "key": "pre-commit",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-commit",
-                "rule": "Take a shot"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "applypatch-msg",
-                "rule": "Finish drink"
+                "rule": "Take a regular drink",
+                "points": 1
             },
             {
                 "key": "pre-applypatch",
-                "rule": "Take 2 shots"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-applypatch",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 2
             },
             {
                 "key": "prepare-commit-msg",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "commit-msg",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 3
             },
             {
                 "key": "pre-rebase",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 5
             },
             {
                 "key": "post-checkout",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 5
             },
             {
                 "key": "post-merge",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 7
             },
             {
                 "key": "pre-push",
-                "rule": "TBD"
+                "rule": "Shot time!!!!",
+                "points": 10
             },
             {
                 "key": "pre-receive",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "update",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-receive",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-update",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "push-to-checkout",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 5
             },
             {
                 "key": "pre-auto-gc",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 8
             },
             {
                 "key": "post-rewrite",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 10
             },
             {
                 "key": "rebase",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 10
             },
             {
                 "key": "sendemail-validate",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "fsmonitor-watchman",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "p4-pre-submit",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-index-change",
-                "rule": "TBD"
+                "rule": "Take a sip",
+                "points": 1
             }
         ]
     },
@@ -613,19 +331,6 @@ seed_rules = [
             {
                 "key": "post-index-change",
                 "rule": "TBD"
-            }
-        ]
-    },
-    {
-        "game_id": "DB_Test",
-        "definition": [
-            {
-                "key": "pre-commit",
-                "rule": "Drink a little"
-            },
-            {
-                "key": "post-commit",
-                "rule": "Drink a lot"
             }
         ]
     }
