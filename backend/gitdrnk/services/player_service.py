@@ -54,6 +54,19 @@ def get_player(data, db):
 
     return resp, code
 
+def get_players_by_gameid(db, game_id):
+    resp = {"ok": False, "message": "Internal server error"}
+    game_obj = Helper.get_by_key(db.games, "game_id", game_id)
+    if game_obj:
+        players_list = game_obj["players"]
+        found_players = Helper.get_in_filter(db.players, players_list, "email")
+        if len(players_list) > 0:
+            code = 200
+            resp["ok"] = True
+            resp["message"] = "Success"
+            resp["players"] = found_players
+
+    return resp, code
 
 def get_all(db):
     resp = {"ok": False, "message": "Internal server error"}
