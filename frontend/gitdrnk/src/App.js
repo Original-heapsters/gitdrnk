@@ -65,8 +65,9 @@ class App extends Component {
     }
     let actionList = this.state.actions.concat(action)
                       .map(action => {
-                        const audioTarget = this.state.server + "/" + action.audio;
-                        if (!action.audio.startsWith(this.state.server)){
+                        const existingAudio = action.audio || ""
+                        const audioTarget = this.state.server + "/" + existingAudio;
+                        if (!existingAudio.startsWith(this.state.server)){
                           action.audio = audioTarget;
                         }
                         return action
@@ -78,8 +79,9 @@ class App extends Component {
   }
 
   handleActionUpdate(err, action){
-    const audioTarget = this.state.server + "/" + action.audio;
-    if (action.audio != audioTarget){
+    const existingAudio = action.audio || ""
+    const audioTarget = this.state.server + "/" + existingAudio;
+    if (!existingAudio.startsWith(this.state.server)){
       action.audio = audioTarget;
     }
     const gId = action.gameId || action.game_id;
