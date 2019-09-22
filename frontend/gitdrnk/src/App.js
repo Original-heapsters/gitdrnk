@@ -60,9 +60,14 @@ class App extends Component {
     if (action.game_id !== this.state.session.gameId){
       return;
     }
+    let actionList = this.state.actions.concat(action)
+                      .map(action => {
+                        action.audio = this.state.server + "/" + action.audio;
+                        return action
+                      });
 
-    this.setState({ actions: this.state.actions.concat(action)});
-    var audio = new Audio(this.state.server + "/" + action.audio);
+    this.setState({ actions: actionList});
+    var audio = new Audio(action.audio);
     audio.play();
   }
 
