@@ -150,6 +150,12 @@ def actions_all():
     resp, code = get_all(mongo)
     return jsonify(resp), code
 
+@app.route("/actions/complete", methods=["POST"])
+def actions_complete():
+    data = request.get_json()
+    resp, code = update_action(mongo, data)
+    return jsonify(resp), code
+
 @app.route("/client_hook", methods=["POST"])
 def client_payload_received():
     data = request.get_json()

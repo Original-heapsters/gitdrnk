@@ -3,9 +3,9 @@ import zipfile
 import tempfile
 import shutil
 
+import sockets
 from Database.Client import Helper
 from HookProcessing import Client as cHook
-from sockets.action_socket import *
 
 
 def handle_client_hook(db, data, audio_dir):
@@ -28,7 +28,7 @@ def handle_client_hook(db, data, audio_dir):
             resp["message"] = "Success"
             resp["action"] = action
 
-            send_action_message(action)
+            sockets.action_socket.send_action_message(action)
 
     return resp, code
 

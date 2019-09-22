@@ -46,6 +46,24 @@ function getActionLog(gameId, cb){
     .then(actions => cb( null, actions.action_log));
 }
 
+function updateAction(gameId, actionId){
+  const actionLogEndpoint = apiEndpoint + '/actions/complete';
+  const params = {
+    game_id: gameId,
+    action_id: actionId
+  };
+  console.log(params);
+  fetch(actionLogEndpoint,{
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)})
+      .catch(err => console.error(err));
+
+}
+
 function getRules(gameId, cb){
   const ruleEndpoint = apiEndpoint + '/game/rules?game_id=' + gameId;
   fetch(ruleEndpoint)
@@ -105,4 +123,4 @@ function seedDB(){
     .then(response => response.json())
 }
 
-export { getPlayers,getPlayersByGame, getChatLog, getRules, getGames, getActionLog, getClientScripts, nukeDB, seedDB }
+export { getPlayers, getPlayersByGame, getChatLog, getRules, getGames, getActionLog, updateAction, getClientScripts, nukeDB, seedDB }

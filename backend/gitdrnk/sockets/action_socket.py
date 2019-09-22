@@ -9,6 +9,18 @@ def send_action_message(data):
     game = data['game_id']
     notify_room(data, game)
 
+def send_action_complete(data, game_id):
+    print("action being processed")
+    notify_action_update(data, game_id)
+
+def notify_action_update(event_json, game_id):
+    if not event_json or not game_id:
+        print("Event json or game id was null")
+        return
+    print("Sending " + str(event_json))
+
+    socketio.emit('gitdrnk_action_update', event_json)
+
 
 def notify_room(event_json, game_id):
     if not event_json or not game_id:
