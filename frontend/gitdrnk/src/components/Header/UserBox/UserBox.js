@@ -1,4 +1,4 @@
-import './Styles/UserBox.css';
+import './Styles/UserBox.scss';
 import React from 'react';
 
 class UserBox extends React.Component {

@@ -1,5 +1,5 @@
-import './Styles/Header.css';
-import UserBox from './UserBox.js';
+import './Styles/Header.scss';
+import UserBox from './UserBox/UserBox.js';
 import React from 'react';
 
 const Header = ({sessionInfo, gameList, updateSession, nuke, seed}) => {

@@ -3,9 +3,9 @@ import update from 'immutability-helper';
 import './App.css';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
-import Header from './components/Header';
+import Header from './components/Header/Header.js';
 import PlayerList from './components/PlayerList';
-import {getPlayers, getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
+import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
 import { joinChat, leaveChat } from './SocketAPI.js';
 
 class App extends Component {
