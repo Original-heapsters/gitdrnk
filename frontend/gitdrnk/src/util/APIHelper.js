@@ -7,6 +7,16 @@ function getPlayers(cb){
     .then(players => cb(null, players.players));
 }
 
+function getPlayersByGame(gameId,cb){
+  var playersByGameIdEndpoint = new URL(apiEndpoint + '/players'),
+      params = {game_id:gameId}
+  console.log(playersByGameIdEndpoint)
+  Object.keys(params).forEach(key => playersByGameIdEndpoint.searchParams.append(key, params[key]))
+  fetch(playersByGameIdEndpoint)
+    .then(response => response.json())
+    .then(players => cb(null, players.players));
+}
+
 function getGames(cb){
   const allGamesEndpoint = apiEndpoint + '/games/all';
   fetch(allGamesEndpoint)
@@ -16,7 +26,10 @@ function getGames(cb){
 
 function getChatLog(gameId, cb){
   // Get previous messages
-  const chatLogEndpoint = apiEndpoint + '/game/chat?game_id=' + gameId;
+  var chatLogEndpoint = new URL(apiEndpoint + '/game/chat'),
+      params = {game_id:gameId}
+  console.log(chatLogEndpoint)
+  Object.keys(params).forEach(key => chatLogEndpoint.searchParams.append(key, params[key]))
   fetch(chatLogEndpoint)
     .then(response => response.json())
     .then(chat => cb( null, chat.transcript));
