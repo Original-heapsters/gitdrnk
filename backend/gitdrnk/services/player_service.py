@@ -59,12 +59,18 @@ def get_players_by_gameid(db, game_id):
     game_obj = Helper.get_by_key(db.games, "game_id", game_id)
     if game_obj:
         players_list = game_obj["players"]
-        print(players_list)
+        found_players = Helper.get_in_filter(db.players,players_list, "email")
+        print(found_players)
+        ##for player in players_list:
+        ##    print(player)
+            #get_player(player, db.players)
+
+        #print(players_list)
         if len(players_list) > 0:
             code = 200
             resp["ok"] = True
             resp["message"] = "Success"
-            resp["players"] = players_list
+            resp["players"] = found_players
 
     return resp, code
 

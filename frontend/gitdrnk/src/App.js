@@ -4,7 +4,7 @@ import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header';
 import PlayerList from './components/PlayerList';
-import {getPlayers, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
+import {getPlayers, getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
 import { joinChat, leaveChat } from './SocketAPI.js';
 
 class App extends Component {
@@ -48,8 +48,9 @@ class App extends Component {
   }
 
   handleNewChat(err, message) {
+    console.log(message)
     if (message.type === "join" && message.email === this.state.session.email){
-      getPlayers((err, playerList)=> {
+      getPlayersByGame(message.gameId, (err, playerList)=> {
         this.setState({players: playerList})
       });
     }

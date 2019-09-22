@@ -360,6 +360,12 @@ def get_by_key(db, key_name, key):
     else:
         return {}
 
+def get_in_filter(db, key_list,key):
+    items = db.find({key : {"$in": key_list}})
+    for item in items:
+        print(item)
+        return list(items)
+
 # Update
 def upsert_data(db,key_name, key_id, obj, dest, upsert=True):
     key = {key_name: key_id}
