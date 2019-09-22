@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 import './App.css';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
@@ -26,6 +27,7 @@ class App extends Component {
     this.updateSession = this.updateSession.bind(this);
     this.handleNewChat = this.handleNewChat.bind(this);
     this.handleNewAction = this.handleNewAction.bind(this);
+    this.handleActionUpdate = this.handleActionUpdate.bind(this);
     this.changeGame = this.changeGame.bind(this);
 
   }
@@ -69,6 +71,18 @@ class App extends Component {
     this.setState({ actions: actionList});
     var audio = new Audio(action.audio);
     audio.play();
+  }
+
+  handleActionUpdate(err, action){
+    if(this.state.session.gameId === action.gameId){
+      const actionidx = this.state.actions.findIndex( x => x._id === action._id);
+      let actionList = this.state.actions;
+      this.setState({
+        actions: update(this.state.actions,
+          { $splice: [[actionidx, 1, action]] }
+        )
+      });
+    }
   }
 
   changeGame(gameSelected){
@@ -137,7 +151,7 @@ class App extends Component {
       if (chatLog && chatLog.length > 0){
         this.setState({chat: chatLog});
       }
-      joinChat(this.state.session.gameId, this.state.session.email, this.handleNewChat, this.handleNewAction);
+      joinChat(this.state.session.gameId, this.state.session.email, this.handleNewChat, this.handleNewAction, this.handleActionUpdate);
     });
   }
 
