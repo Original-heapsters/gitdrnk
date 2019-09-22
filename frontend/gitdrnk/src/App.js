@@ -65,7 +65,10 @@ class App extends Component {
     }
     let actionList = this.state.actions.concat(action)
                       .map(action => {
-                        action.audio = this.state.server + "/" + action.audio;
+                        const audioTarget = this.state.server + "/" + action.audio;
+                        if (!action.audio.startsWith(this.state.server)){
+                          action.audio = audioTarget;
+                        }
                         return action
                       });
 
@@ -75,6 +78,10 @@ class App extends Component {
   }
 
   handleActionUpdate(err, action){
+    const audioTarget = this.state.server + "/" + action.audio;
+    if (action.audio != audioTarget){
+      action.audio = audioTarget;
+    }
     const gId = action.gameId || action.game_id;
     if(this.state.session.gameId === gId){
       const actionidx = this.state.actions.findIndex( x => x._id === action._id);
