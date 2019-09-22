@@ -17,12 +17,18 @@ const ActionMessage = ({action}) => {
     consequence = `-> ${action.consequence}`;
   }
 
+  let completed = <input type="checkbox" value="Completed"/>;
+  if (action.complete){
+      completed = <input type="checkbox" value="Completed" checked/>;
+  }
+
 
   return (
           <li className="Message ActionMessage"
               onClick={playAudio}>
             <Profile imgLink={action.profile_picture} username={action.username}/>
             <p>{action.action}{consequence} | {points}</p>
+            {completed}
             <span className="time-left">{action.date}</span>
           </li>
         );
