@@ -110,22 +110,10 @@ seed_actions = [
 ]
 
 seed_games = [
-    {"game_id": "CleanGame",
-     "players": ["chuck", "InstaH0", "soCoolBoi"]},
-    {"game_id": "DrunkGame",
-     "players": ["Ants", "goodBoi", "PoopyFingers"]},
-    {"game_id": "DeathBall",
-     "players": ["420Kiilah69", "InstaH0", "soCoolBoi"]},
-    {"game_id": "the great equalizer",
-     "players": ["xxXxCryBabyxXxx", "InstaH0", "420Kiilah69"]},
-    {"game_id": "DB_Test",
-     "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
-    {"game_id": "huuh",
-      "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
-      {"game_id": "gitdrnk",
-        "players": ["chuck", "420Kiilah69", "soCoolBoi"]},
-         {"game_id": "tmp",
-           "players": ["chuck", "420Kiilah69", "soCoolBoi"]}
+    {"game_id": "gitdrnk",
+    "players": ["chuck@email.com", "rebecca@email.com", "cool@email.com"]},
+    {"game_id": "tmp",
+    "players": ["chuck@email.com", "rebecca@email.com", "cool@email.com"]}
 ]
 
 seed_rules = [
