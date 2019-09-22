@@ -74,9 +74,9 @@ class App extends Component {
   }
 
   handleActionUpdate(err, action){
-    if(this.state.session.gameId === action.gameId){
+    const gId = action.gameId || action.game_id;
+    if(this.state.session.gameId === gId){
       const actionidx = this.state.actions.findIndex( x => x._id === action._id);
-      let actionList = this.state.actions;
       this.setState({
         actions: update(this.state.actions,
           { $splice: [[actionidx, 1, action]] }
