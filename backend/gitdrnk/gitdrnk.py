@@ -125,6 +125,15 @@ def players_all():
     resp, code = get_all(mongo)
     return jsonify(resp), code
 
+@app.route("/players", methods=["GET"])
+def players_by_game_id():
+    global code, resp
+    if request.method == "GET":
+        game_id = request.args.get("game_id", None)
+        if game_id:
+            resp, code = get_players_by_gameid(mongo, game_id)
+        return jsonify(resp), code
+    return jsonify({"ok": False, "message": "Internal server error"}), 503
 
 @app.route("/actions/action_log", methods=["GET"])
 def game_actions():

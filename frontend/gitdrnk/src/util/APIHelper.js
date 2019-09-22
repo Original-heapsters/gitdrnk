@@ -7,6 +7,16 @@ function getPlayers(cb){
     .then(players => cb(null, players.players));
 }
 
+function getPlayersByGame(gameId,cb){
+  var playersByGameIdEndpoint = new URL(apiEndpoint + '/players'),
+      params = {game_id:gameId}
+  console.log(playersByGameIdEndpoint)
+  Object.keys(params).forEach(key => playersByGameIdEndpoint.searchParams.append(key, params[key]))
+  fetch(playersByGameIdEndpoint)
+    .then(response => response.json())
+    .then(players => cb(null, players.players));
+}
+
 function getGames(cb){
   const allGamesEndpoint = apiEndpoint + '/games/all';
   fetch(allGamesEndpoint)
