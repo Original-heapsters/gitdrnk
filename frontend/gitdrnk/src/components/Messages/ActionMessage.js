@@ -11,15 +11,18 @@ const ActionMessage = ({action}) => {
   };
 
   let consequence = "";
+  let points = ` +${action.points}`;
+
   if (action.consequence){
-    consequence = "-> " + action.consequence;
+    consequence = `-> ${action.consequence}`;
   }
-  
+
+
   return (
           <li className="Message ActionMessage"
               onClick={playAudio}>
             <Profile imgLink={action.profile_picture} username={action.username}/>
-            <p>{action.action}{consequence}</p>
+            <p>{action.action}{consequence} | {points}</p>
             <span className="time-left">{action.date}</span>
           </li>
         );

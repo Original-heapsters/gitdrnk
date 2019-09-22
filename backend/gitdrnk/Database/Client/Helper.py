@@ -134,95 +134,118 @@ seed_rules = [
         "definition": [
             {
                 "key": "pre-commit",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-commit",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "applypatch-msg",
-                "rule": "Take a regular drink"
+                "rule": "Take a regular drink",
+                "points": 1
             },
             {
                 "key": "pre-applypatch",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-applypatch",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 2
             },
             {
                 "key": "prepare-commit-msg",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "commit-msg",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 3
             },
             {
                 "key": "pre-rebase",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 5
             },
             {
                 "key": "post-checkout",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 5
             },
             {
                 "key": "post-merge",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 7
             },
             {
                 "key": "pre-push",
-                "rule": "Shot time!!!!"
+                "rule": "Shot time!!!!",
+                "points": 10
             },
             {
                 "key": "pre-receive",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "update",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-receive",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-update",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "push-to-checkout",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 5
             },
             {
                 "key": "pre-auto-gc",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 8
             },
             {
                 "key": "post-rewrite",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 10
             },
             {
                 "key": "rebase",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 10
             },
             {
                 "key": "sendemail-validate",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "fsmonitor-watchman",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "p4-pre-submit",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             },
             {
                 "key": "post-index-change",
-                "rule": "Take a sip"
+                "rule": "Take a sip",
+                "points": 1
             }
         ]
     },

@@ -11,6 +11,7 @@ class Client(object):
         self.game_id = game
         self.action = None
         self.consequence = None
+        self.points = 0
         self._id = None
         self.date = None
         print("Client hook")
@@ -22,14 +23,16 @@ class Client(object):
         #print(self.player["git_username"])
         print("processing")
         self.action = payload["action"]
-        self.consequence = self.get_consequence(payload["action"], rule_def["definition"])
+        action_result = self.get_action_result(payload["action"], rule_def["definition"])
+        self.consequence = action_result.get("rule", "")
+        self.points = action_result.get("points", 0)
         self.date = payload["date"]
         print("\n\n_________________\n\n")
         return self.get_action()
 
-    def get_consequence(self, action, rule_list):
+    def get_action_result(self, action, rule_list):
         rule = next(filter(lambda x:x["key"]==action, rule_list), None)
-        return rule["rule"]
+        return rule
 
     def get_action(self):
         audio_file = get_random_audio_path(self.audio_path)
@@ -44,7 +47,8 @@ class Client(object):
             "git_username": self.player.get("git_username",self.player["email"]),
             "profile_picture": self.player.get("profile_picture",""),
             "date": self.date,
-            "audio": audio_path[1:]
+            "audio": audio_path[1:],
+            "points": self.points
         }
 
         return action_obj
