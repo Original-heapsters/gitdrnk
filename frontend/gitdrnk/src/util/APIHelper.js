@@ -16,7 +16,10 @@ function getGames(cb){
 
 function getChatLog(gameId, cb){
   // Get previous messages
-  const chatLogEndpoint = apiEndpoint + '/game/chat?game_id=' + gameId;
+  var chatLogEndpoint = new URL(apiEndpoint + '/game/chat'),
+      params = {game_id:gameId}
+  console.log(chatLogEndpoint)
+  Object.keys(params).forEach(key => chatLogEndpoint.searchParams.append(key, params[key]))
   fetch(chatLogEndpoint)
     .then(response => response.json())
     .then(chat => cb( null, chat.transcript));
