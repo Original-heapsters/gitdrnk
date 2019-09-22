@@ -17,6 +17,7 @@ const Header = ({sessionInfo, gameList, updateSession, nuke, seed}) => {
         <UserBox
         email={sessionInfo.email}
         gameId={sessionInfo.gameId}
+        signedIn={sessionInfo.signedIn}
         gameList={gameList}
         updateSession={updateSession}/>
       </div>
