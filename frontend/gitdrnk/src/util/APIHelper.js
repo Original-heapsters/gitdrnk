@@ -105,4 +105,4 @@ function seedDB(){
     .then(response => response.json())
 }
 
-export { getPlayers, getChatLog, getRules, getGames, getActionLog, getClientScripts, nukeDB, seedDB }
+export { getPlayers,getPlayersByGame, getChatLog, getRules, getGames, getActionLog, getClientScripts, nukeDB, seedDB }
