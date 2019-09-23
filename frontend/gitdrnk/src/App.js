@@ -3,9 +3,9 @@ import update from 'immutability-helper';
 import './App.css';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
-import Header from './components/Header';
+import Header from './components/Header/Header.js';
 import PlayerList from './components/PlayerList';
-import {getPlayers, getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
+import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
 import { joinChat, leaveChat } from './SocketAPI.js';
 
 class App extends Component {
@@ -13,7 +13,8 @@ class App extends Component {
     super(props);
     var sessionInfo = {
       gameId: "",
-      email:""
+      email:"",
+      signedIn: false
     }
     this.state = {
       server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
@@ -41,6 +42,7 @@ class App extends Component {
       let init_games = {
         gameId: initialGame,
         email: this.state.session.email,
+        signedIn: false
       };
       this.setState({
         session: init_games,
@@ -98,7 +100,8 @@ class App extends Component {
   changeGame(gameSelected){
     var newSession = {
       gameId: gameSelected,
-      email:this.state.session.email
+      email:this.state.session.email,
+      signedIn: false
     }
     this.setState(
       {
@@ -115,7 +118,8 @@ class App extends Component {
   updateSession(uName, email, gId, leave=false){
     var newSession = {
       gameId: gId,
-      email:email
+      email:email,
+      signedIn: true
     }
     this.setState(
       {
@@ -138,6 +142,7 @@ class App extends Component {
         var init_games = {
           gameId: initialGame,
           email: this.state.session.email,
+          signedIn: false
         };
         this.setState({
           session: init_games,

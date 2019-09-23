@@ -1,6 +1,6 @@
 import './Styles/Chat.css';
 import { sendChatMessage } from '../SocketAPI.js';
-import Title from './Title'
+import Title from './Title/Title'
 import MessageList from './MessageList';
 import SendMessageForm from './SendMessageForm';
 import React from 'react';

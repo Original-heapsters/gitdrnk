@@ -1,10 +1,10 @@
-import './Styles/UserBox.css';
+import './Styles/UserBox.scss';
 import React from 'react';
 
 class UserBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: this.props.email, gameId: this.props.gameId}
+    this.state = {email: this.props.email, gameId: this.props.gameId, signedIn: this.props.signedIn}
     this.handleGitEmailChange = this.handleGitEmailChange.bind(this)
     this.handleGameChange = this.handleGameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -41,6 +41,7 @@ class UserBox extends React.Component {
   render() {
     return (
       <div className="UserBox">
+      {!this.props.signedIn &&
         <form
           onSubmit={this.handleSubmit}
           className="LoginForm">
@@ -58,10 +59,12 @@ class UserBox extends React.Component {
           </select>
           <input type="submit" value="Join Room"/>
         </form>
+      }
+      {this.props.signedIn &&
         <button onClick={this.leaveRoom}>
           Leave Room
         </button>
-
+      }
       </div>
     );
   }
