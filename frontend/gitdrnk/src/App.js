@@ -14,6 +14,8 @@ class App extends Component {
     var sessionInfo = {
       gameId: "",
       email:"",
+      edittingRuleKey:"",
+      edittingRule:false,
       signedIn: false
     }
     this.state = {
@@ -29,6 +31,7 @@ class App extends Component {
     this.handleNewChat = this.handleNewChat.bind(this);
     this.handleNewAction = this.handleNewAction.bind(this);
     this.handleActionUpdate = this.handleActionUpdate.bind(this);
+    this.handleRuleUpdated = this.handleRuleUpdated.bind(this);
     this.changeGame = this.changeGame.bind(this);
 
   }
@@ -42,7 +45,9 @@ class App extends Component {
       let init_games = {
         gameId: initialGame,
         email: this.state.session.email,
-        signedIn: false
+        signedIn: false,
+        edittingRuleKey:"",
+        edittingRule:false,
       };
       this.setState({
         session: init_games,
@@ -97,11 +102,30 @@ class App extends Component {
     }
   }
 
+  handleRuleUpdated(key, rule, points){
+    console.log(`rule updated ${key} ${rule} ${points}`);
+    var newSession = {
+      gameId: this.state.session.gameId,
+      email:this.state.session.email,
+      signedIn: this.state.session.signedIn,
+      edittingRuleKey:key,
+      edittingRule:true
+    }
+    this.setState(
+      {
+          session: newSession
+      });
+  }
+
+
+
   changeGame(gameSelected){
     var newSession = {
       gameId: gameSelected,
       email:this.state.session.email,
-      signedIn: false
+      signedIn: false,
+      edittingRuleKey:"",
+      edittingRule:false
     }
     this.setState(
       {
@@ -119,7 +143,9 @@ class App extends Component {
     var newSession = {
       gameId: gId,
       email:email,
-      signedIn: true
+      signedIn: true,
+      edittingRuleKey:"",
+      edittingRule:false
     }
     this.setState(
       {
@@ -142,7 +168,9 @@ class App extends Component {
         var init_games = {
           gameId: initialGame,
           email: this.state.session.email,
-          signedIn: false
+          signedIn: false,
+          edittingRuleKey:"",
+          edittingRule:false,
         };
         this.setState({
           session: init_games,
@@ -176,7 +204,7 @@ class App extends Component {
       <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame} nuke={nukeDB} seed={seedDB}/>
       <PlayerList playerList={this.state.players}/>
       <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
-      <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
+      <Rules sessionInfo={this.state.session} ruleSet={this.state.rules} edittingRule={this.state.session.edittingRule} edittingRuleKey={this.state.session.edittingRuleKey} ruleUpdated={this.handleRuleUpdated}/>
       </div>
     );
   }

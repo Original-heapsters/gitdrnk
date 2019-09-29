@@ -1,22 +1,13 @@
 import './Styles/Rules.css';
 import React from 'react';
 import Help from './Help.js'
+import RuleList from './RuleList/RuleList.js'
 
-const Rules = ({sessionInfo, ruleSet}) => {
+const Rules = ({sessionInfo, ruleSet, edittingRule, edittingRuleKey, ruleUpdated}) => {
   return (
     <div className="Rules">
-      <ul>
-        {ruleSet.map(ruleObj => {
-          return (
-           <li key={ruleObj.key}>
-             <div>
-               {ruleObj.key} | {ruleObj.rule}
-             </div>
-           </li>
-         )
-       })}
-     </ul>
-     <Help sessionInfo={sessionInfo} />
+      <RuleList ruleSet={ruleSet} edittingRule={edittingRule} edittingRuleKey={edittingRuleKey} ruleUpdated={ruleUpdated}/>
+      <Help sessionInfo={sessionInfo} />
     </div>
   );
 }

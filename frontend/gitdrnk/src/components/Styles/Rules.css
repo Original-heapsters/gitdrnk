@@ -1,7 +1,15 @@
-.Rules {
+.Rules-list {
   float: left;
   width: 20vw;
   height: 90vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  list-style-type: none;
+  padding: 0pt;
 
   background: #FE38;
+}
+
+.Rules-list::-webkit-scrollbar{
+    width: 0;
 }
