@@ -1,6 +1,7 @@
 # gitdrnk [![Build Status](https://travis-ci.org/Original-heapsters/gitdrnk.svg?branch=master)](https://travis-ci.org/Original-heapsters/gitdrnk)
-[Website](https://gitdrnk-frontend.herokuapp.com/)
-[Proposed UI and architecture overview](https://marvelapp.com/4dadagd)
+[Website](https://gitdrnk-frontend.herokuapp.com/)  
+[Proposed UI and architecture overview](https://marvelapp.com/4dadagd)  
+
 
 # Vocabulary
 | Term   | Defition                                 | Notes                                                                                                                                                |
