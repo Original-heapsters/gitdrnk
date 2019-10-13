@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import update from 'immutability-helper';
 
 import Logo from './components/Logo/Logo';
+import InteractionButton from './components/InteractionButton/InteractionButton';
+import TabButton from './components/TabButton/TabButton';
+import BaseActionAcknowledgement from './components/ActionAcknowledgements/BaseActionAcknowledgement';
+import EmptyActionAcknowledgement from './components/ActionAcknowledgements/EmptyActionAcknowledgement';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header/Header.js';
@@ -174,7 +178,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <Logo/>
+      <EmptyActionAcknowledgement/>
       </div>
     );
   }

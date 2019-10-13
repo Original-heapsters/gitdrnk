@@ -1,0 +1,6 @@
+@import './BaseActionAcknowledgement';
+
+.EmptyActionAcknowledgement{
+    @extend %BaseActionAcknowledgement;
+    border: 2px solid $color-primary-1;
+}
