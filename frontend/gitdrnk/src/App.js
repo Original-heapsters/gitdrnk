@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
-import './App.css';
+
+import Logo from './components/Logo/Logo';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header/Header.js';
 import PlayerList from './components/PlayerList';
 import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
-import { joinChat, leaveChat } from './SocketAPI.js';
+import { joinChat, leaveChat } from './util/SocketHelper.js';
 
 class App extends Component {
   constructor(props) {
@@ -173,13 +174,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame} nuke={nukeDB} seed={seedDB}/>
-      <PlayerList playerList={this.state.players}/>
-      <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
-      <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
+      <Logo/>
       </div>
     );
   }
 }
+
+// <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame} nuke={nukeDB} seed={seedDB}/>
+// <PlayerList playerList={this.state.players}/>
+// <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
+// <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
 
 export default App;
