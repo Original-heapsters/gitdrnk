@@ -9,6 +9,7 @@ import EmptyActionAcknowledgement from './components/ActionAcknowledgements/Empt
 import ActionAcknowledgement from './components/ActionAcknowledgements/ActionAcknowledgement';
 import AvailableActionAcknowledgement from './components/ActionAcknowledgements/AvailableActionAcknowledgement';
 import SmallProfile from './components/SmallProfile/SmallProfile';
+import MainProfile from './components/MainProfile/MainProfile';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header/Header.js';
@@ -181,7 +182,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <SmallProfile/>
+      <MainProfile/>
       </div>
     );
   }
