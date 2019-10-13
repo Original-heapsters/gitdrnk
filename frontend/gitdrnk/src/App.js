@@ -6,6 +6,9 @@ import InteractionButton from './components/InteractionButton/InteractionButton'
 import TabButton from './components/TabButton/TabButton';
 import BaseActionAcknowledgement from './components/ActionAcknowledgements/BaseActionAcknowledgement';
 import EmptyActionAcknowledgement from './components/ActionAcknowledgements/EmptyActionAcknowledgement';
+import ActionAcknowledgement from './components/ActionAcknowledgements/ActionAcknowledgement';
+import AvailableActionAcknowledgement from './components/ActionAcknowledgements/AvailableActionAcknowledgement';
+import SmallProfile from './components/SmallProfile/SmallProfile';
 import Rules from './components/Rules';
 import Chat from './components/Chat';
 import Header from './components/Header/Header.js';
@@ -178,7 +181,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <EmptyActionAcknowledgement/>
+      <SmallProfile/>
       </div>
     );
   }
