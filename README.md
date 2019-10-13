@@ -2,6 +2,8 @@
 [Website](https://gitdrnk-frontend.herokuapp.com/)  
 [Proposed UI and architecture overview](https://marvelapp.com/4dadagd)  
 
+[Better proposed UI](https://www.figma.com/file/Zr6V4K8coj1AhIZwXjvV15?embed_host=share&node-id=5%3A14&viewer=1)
+
 
 # Vocabulary
 | Term   | Defition                                 | Notes                                                                                                                                                |
