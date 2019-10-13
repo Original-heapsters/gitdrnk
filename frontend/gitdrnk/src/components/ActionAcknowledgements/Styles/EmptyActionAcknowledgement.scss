@@ -3,4 +3,7 @@
 .EmptyActionAcknowledgement{
     @extend %BaseActionAcknowledgement;
     border: 2px solid $color-primary-1;
+    text-align: center;
+    display:table-cell;
+    vertical-align:middle;
 }

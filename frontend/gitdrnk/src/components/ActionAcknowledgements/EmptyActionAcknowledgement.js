@@ -2,10 +2,10 @@ import React from 'react'
 import './Styles/EmptyActionAcknowledgement.scss'
 
 const EmptyActionAcknowledgement = ({pointValue}) => {
-  const pointText = pointValue || '5 Pts'
+  const pointText = pointValue || '5'
   return (
     <div className='EmptyActionAcknowledgement'>
-      <p className='ActionAcknowledgementsText'>{pointText}</p>
+      <p>+{pointText} Pts</p>
     </div>
   )
 }
