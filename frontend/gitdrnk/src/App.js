@@ -188,6 +188,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <OpenRule/>
       <Logo/>
       <InteractionButton/>
       <TabButton/>
@@ -202,7 +203,6 @@ class App extends Component {
       <GameListItem/>
       <CurrentGameListItem/>
       <CollapsedRule/>
-      <OpenRule/>
       </div>
     );
   }
