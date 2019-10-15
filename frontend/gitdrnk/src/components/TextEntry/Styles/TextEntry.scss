@@ -1,0 +1,15 @@
+@import '../../../global_style';
+
+.TextEntryContainer{
+  width: 1080px;
+  height: 100px;
+}
+.TextEntryInput{
+  width: inherit;
+  height: inherit;
+  border-radius: 0px 50px 50px 0px;
+  border-style: none;
+  background: $color-primary-1;
+  font-size: 40px;
+  font-style: normal;
+}

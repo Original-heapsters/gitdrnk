@@ -4,6 +4,18 @@
     @extend %BaseActionAcknowledgement;
     border: 2px solid $color-primary-1;
     text-align: center;
-    display:table-cell;
     vertical-align:middle;
+    line-height: 40px;
+    zoom: 0.53;
+    -moz-transform: scale(0.53);
+}
+
+.InvertedEmptyActionAcknowledgement{
+    @extend %BaseActionAcknowledgement;
+    border: 2px solid $color-primary-2;
+    text-align: center;
+    line-height: 40px;
+    vertical-align:middle;
+    zoom: 0.53;
+    -moz-transform: scale(0.53);
 }

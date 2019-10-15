@@ -10,10 +10,16 @@ import ActionAcknowledgement from './components/ActionAcknowledgements/ActionAck
 import AvailableActionAcknowledgement from './components/ActionAcknowledgements/AvailableActionAcknowledgement';
 import SmallProfile from './components/SmallProfile/SmallProfile';
 import MainProfile from './components/MainProfile/MainProfile';
-import Rules from './components/Rules';
-import Chat from './components/Chat';
-import Header from './components/Header/Header.js';
-import PlayerList from './components/PlayerList';
+import TextEntry from './components/TextEntry/TextEntry';
+import Header from './components/Header/Header';
+import GameListItem from './components/ListItems/GameListItem/GameListItem';
+import CurrentGameListItem from './components/ListItems/CurrentGameListItem/CurrentGameListItem';
+import CollapsedRule from './components/ListItems/CollapsedRule/CollapsedRule';
+import OpenRule from './components/ListItems/OpenRule/OpenRule';
+// import Rules from './components/Rules';
+// import Chat from './components/Chat';
+// import Header from './components/Header/Header.js';
+// import PlayerList from './components/PlayerList';
 import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
 import { joinChat, leaveChat } from './util/SocketHelper.js';
 
@@ -182,7 +188,21 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <Logo/>
+      <InteractionButton/>
+      <TabButton/>
+      <BaseActionAcknowledgement/>
+      <EmptyActionAcknowledgement/>
+      <ActionAcknowledgement/>
+      <AvailableActionAcknowledgement/>
+      <SmallProfile/>
       <MainProfile/>
+      <TextEntry/>
+      <Header/>
+      <GameListItem/>
+      <CurrentGameListItem/>
+      <CollapsedRule/>
+      <OpenRule/>
       </div>
     );
   }
