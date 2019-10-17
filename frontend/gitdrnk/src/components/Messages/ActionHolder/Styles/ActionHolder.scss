@@ -1,45 +1,42 @@
 @import '../../../../global_style';
 
-.ActionHolder{
-  width: 1080px;
-  height: 150px;
+.ActionHolder {
+  width: 100%;
+  height: 15%;
   background: $color-primary-2;
-  border-radius: 90px 50px 0px 90px;
+  border-radius: 90px 50px 0 90px;
 }
 
-.ActionHolder-User{
-padding-top: 25px;
-float: left;
+.ActionHolder-User {
+  width: 20%;
+  height: 80%;
+  float: left;
 }
 
-.ActionHolder-Rule{
-  width: 300px;
-  height: 150px;
+.ActionHolder-Rule {
+  width: 12.5%;
+  height: 80%;
   float: left;
   text-align: center;
-  line-height: 112.5px;
 }
 
-
-.ActionHolder-Consequence{
-  width: 580px;
-  height: 100px;
+.ActionHolder-Consequence {
+  width: 50%;
+  height: 80%;
   float: left;
-  line-height: 75px;
+  line-height: 100%;
   text-align: center;
 }
 
-.ActionHolder-Indicator{
-  width: 75px;
-  height: 75px;
+.ActionHolder-Indicator {
+  width: 15%;
+  height: 100%;
   float: left;
-  margin-left: 25px;
-  margin-top: 12.5px;
+  margin-left: 2.5%;
 }
 
-.ActionHolder-Timestamp{
-  width: 1080px;
-  height: 50px;
-  padding-top: 100px;
+.ActionHolder-Timestamp {
+  width: 100%;
+  height: 20%;
   text-align: center;
 }
