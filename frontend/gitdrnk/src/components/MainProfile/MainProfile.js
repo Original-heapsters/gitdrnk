@@ -7,11 +7,11 @@ const MainProfile = ({profilePicLink, username, userEmail}) => {
   const uEmail = userEmail || 'testUser69@gmail.com'
   return (
     <div className='MainProfile'>
-    <img className='MainProfileAvatar' src={profilePic} alt="Avatar"/>
-    <div className='MainProfileUserInfo'>
-      <p>{uName}</p>
-      <p>{uEmail}</p>
-    </div>
+      <img className='MainProfileAvatar' src={profilePic} alt="Avatar"/>
+      <div className='MainProfileUserInfo'>
+        <p>{uName}</p>
+        <p>{uEmail}</p>
+      </div>
     </div>
   )
 }

@@ -5,7 +5,7 @@ const Header = ({gameTitle}) => {
   const gameName = gameTitle || 'testGame'
   return (
     <div className='Header'>
-    <p className='HeaderGameName'>{gameName}</p>
+    <p>{gameName}</p>
     </div>
   )
 }

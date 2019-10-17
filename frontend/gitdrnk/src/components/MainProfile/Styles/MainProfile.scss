@@ -1,17 +1,20 @@
-.MainProfile{
-  width: 360px;
-  height: 140px;
-
+.MainProfile {
+  width: 100%;
+  height: 100%;
 }
-.MainProfileAvatar{
-  width: 140px;
-  height: 140px;
+
+.MainProfileAvatar {
+  width: 50%;
+  height: 100%;
   border-radius: 50%;
   float: left;
+  object-fit: fill;
 }
-.MainProfileUserInfo{
-  height: 70px;
+
+.MainProfileUserInfo {
+  width: 50%;
+  height: 100%;
   float: left;
   text-align: center;
-  padding-top: 35px;
+  padding-top: 7.5%;
 }

@@ -19,6 +19,9 @@ import OpenRule from './components/ListItems/OpenRule/OpenRule';
 import PlayerListItem from './components/ListItems/PlayerListItem/PlayerListItem';
 import MessageHolder from './components/Messages/MessageHolder/MessageHolder';
 import ActionHolder from './components/Messages/ActionHolder/ActionHolder';
+import TopBar from './Containers/TopBar'
+import SideBar from './Containers/SideBar'
+import MainChat from './Containers/MainChat'
 // import Rules from './components/Rules';
 // import Chat from './components/Chat';
 // import Header from './components/Header/Header.js';
@@ -191,24 +194,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <ActionHolder/>
-      <MessageHolder/>
-      <PlayerListItem/>
-      <OpenRule/>
-      <Logo/>
-      <InteractionButton/>
-      <TabButton/>
-      <BaseActionAcknowledgement/>
-      <EmptyActionAcknowledgement/>
-      <ActionAcknowledgement/>
-      <AvailableActionAcknowledgement/>
-      <SmallProfile/>
-      <MainProfile/>
-      <TextEntry/>
-      <Header/>
-      <GameListItem/>
-      <CurrentGameListItem/>
-      <CollapsedRule/>
+      <TopBar/>
+      <SideBar/>
+      <MainChat/>
       </div>
     );
   }

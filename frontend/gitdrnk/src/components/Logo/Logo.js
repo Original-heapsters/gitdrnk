@@ -3,7 +3,7 @@ import './Styles/Logo.scss'
 
 const Logo = () => {
   return (
-    <div>
+    <div className="Logo">
       <img className="Logo" src="gitdrnk_logo.png" alt="Logo"/>
     </div>
   )
