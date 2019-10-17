@@ -16,6 +16,9 @@ import GameListItem from './components/ListItems/GameListItem/GameListItem';
 import CurrentGameListItem from './components/ListItems/CurrentGameListItem/CurrentGameListItem';
 import CollapsedRule from './components/ListItems/CollapsedRule/CollapsedRule';
 import OpenRule from './components/ListItems/OpenRule/OpenRule';
+import PlayerListItem from './components/ListItems/PlayerListItem/PlayerListItem';
+import MessageHolder from './components/Messages/MessageHolder/MessageHolder';
+import ActionHolder from './components/Messages/ActionHolder/ActionHolder';
 // import Rules from './components/Rules';
 // import Chat from './components/Chat';
 // import Header from './components/Header/Header.js';
@@ -188,6 +191,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <ActionHolder/>
+      <MessageHolder/>
+      <PlayerListItem/>
       <OpenRule/>
       <Logo/>
       <InteractionButton/>
