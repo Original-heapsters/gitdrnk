@@ -16,12 +16,12 @@ const OpenRule = ({ruleTitle, ruleDescription, ruleConsequence, pointValue}) =>{
         <div className='OpenRulePointContainer'>
           <EmptyActionAcknowledgement pointValue={pointValue} inverted={true}/>
         </div>
-      </div>
-      <div className='OpenRuleBody'>
+        <div className='OpenRuleBody'>
         <p>{ruleDesc}</p>
         <p>{ruleConseq}</p>
         <div className='OpenRuleBodyButtonContainer'>
           <InteractionButton text='Edit'/>
+        </div>
         </div>
       </div>
     </div>
