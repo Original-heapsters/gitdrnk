@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import TopBar from './Containers/TopBar'
 import SideBar from './Containers/SideBar'
 import MainChat from './Containers/MainChat'
-import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
+import { getGitInfo, getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
 import { joinChat, leaveChat } from './util/SocketHelper.js';
 
 class App extends Component {
@@ -39,6 +39,7 @@ class App extends Component {
       // rules: [],
       // games: []
     }
+    this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     // this.updateSession = this.updateSession.bind(this);
     // this.handleNewChat = this.handleNewChat.bind(this);
@@ -47,15 +48,27 @@ class App extends Component {
     // this.changeGame = this.changeGame.bind(this);
 
   }
+
+  handleLogout(){
+    this.setState({
+      profilePicLink:null,
+      username:null,
+      email:null,
+    })
+  }
+
   handleLogin(gitEmail){
     console.log(gitEmail)
 
     // TODO: Send api call to login
     //       get git username+profile and populate the following
-    this.setState({
-      profilePicLink:'gitdrnk_logo.png',
-      username:gitEmail,
-      email:gitEmail,
+    getGitInfo(gitEmail, player => {
+      console.log(player)
+      this.setState({
+        profilePicLink:player.profile_picture,
+        username:player.username,
+        email:player.email,
+      })
     })
   }
 
@@ -206,6 +219,7 @@ class App extends Component {
           uName={this.state.username}
           uEmail={this.state.email}
           title={this.state.gameTitle}
+          onLogout={this.handleLogout}
           onLogin={this.handleLogin}/>
         <SideBar
           currentGame={this.state.gameTitle}

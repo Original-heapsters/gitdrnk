@@ -56,6 +56,11 @@ def version():
     resp = {"ok": True, "version": app.config["VERSION"]}
     return jsonify(resp), code
 
+@app.route("/login", methods=["POST"])
+def user_login():
+    data = request.get_json()
+    resp = login(data, mongo)
+    return jsonify(resp)
 
 @app.route("/game/new", methods=["POST"])
 def game_new():

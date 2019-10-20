@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './Styles/MainProfile.scss'
 import InteractionButton from '../InteractionButton/InteractionButton'
 
-const MainProfile = ({profilePicLink, username, userEmail, loginCB}) => {
+const MainProfile = ({profilePicLink, username, userEmail, logoutCB, loginCB}) => {
   const [name, setEmail] = useState("");
 
   const getProfile = (profile, userName, userEmail) => {
@@ -13,6 +13,7 @@ const MainProfile = ({profilePicLink, username, userEmail, loginCB}) => {
             <div className='MainProfileUserInfo'>
             <p>{userName}</p>
             <p>{userEmail}</p>
+            <InteractionButton text='Sign Out' clickCB={logoutCB}/>
             </div>
           </>
         );

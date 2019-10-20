@@ -1,5 +1,22 @@
 const apiEndpoint = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000";
 
+function getGitInfo(gitEmail, cb){
+  const loginEndpoint = apiEndpoint + '/login';
+  const params = {
+    email: gitEmail
+  };
+  fetch(loginEndpoint,{
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)})
+      .then(response => response.json())
+      .then(player => cb(player))
+      .catch(err => console.error(err));
+}
+
 function getPlayers(cb){
   const playerEndpoint = apiEndpoint + '/players/all';
   fetch(playerEndpoint)
@@ -123,4 +140,4 @@ function seedDB(){
     .then(response => response.json())
 }
 
-export { getPlayers, getPlayersByGame, getChatLog, getRules, getGames, getActionLog, updateAction, getClientScripts, nukeDB, seedDB }
+export {getGitInfo, getPlayers, getPlayersByGame, getChatLog, getRules, getGames, getActionLog, updateAction, getClientScripts, nukeDB, seedDB }

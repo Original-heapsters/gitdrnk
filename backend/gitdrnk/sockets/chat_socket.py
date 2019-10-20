@@ -7,6 +7,14 @@ from Database.Client import Helper
 
 default_profile = "https://p7.hiclipart.com/preview/981/645/182/united-states-computer-icons-desktop-wallpaper-clip-art-free-high-quality-person-icon.jpg"
 
+def login(data, db):
+    print("Trying to join")
+    email = data['email']
+    player = Helper.get_by_key(db.players, "email", email)
+    if not player:
+        player = populate_player(db, None, email)
+    return player
+
 def join_chat(data, db):
     print("Trying to join")
     username = data.get("username", None)
