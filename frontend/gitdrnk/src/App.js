@@ -1,31 +1,8 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
-
-import Logo from './components/Logo/Logo';
-import InteractionButton from './components/InteractionButton/InteractionButton';
-import TabButton from './components/TabButton/TabButton';
-import BaseActionAcknowledgement from './components/ActionAcknowledgements/BaseActionAcknowledgement';
-import EmptyActionAcknowledgement from './components/ActionAcknowledgements/EmptyActionAcknowledgement';
-import ActionAcknowledgement from './components/ActionAcknowledgements/ActionAcknowledgement';
-import AvailableActionAcknowledgement from './components/ActionAcknowledgements/AvailableActionAcknowledgement';
-import SmallProfile from './components/SmallProfile/SmallProfile';
-import MainProfile from './components/MainProfile/MainProfile';
-import TextEntry from './components/TextEntry/TextEntry';
-import Header from './components/Header/Header';
-import GameListItem from './components/ListItems/GameListItem/GameListItem';
-import CurrentGameListItem from './components/ListItems/CurrentGameListItem/CurrentGameListItem';
-import CollapsedRule from './components/ListItems/CollapsedRule/CollapsedRule';
-import OpenRule from './components/ListItems/OpenRule/OpenRule';
-import PlayerListItem from './components/ListItems/PlayerListItem/PlayerListItem';
-import MessageHolder from './components/Messages/MessageHolder/MessageHolder';
-import ActionHolder from './components/Messages/ActionHolder/ActionHolder';
 import TopBar from './Containers/TopBar'
 import SideBar from './Containers/SideBar'
 import MainChat from './Containers/MainChat'
-// import Rules from './components/Rules';
-// import Chat from './components/Chat';
-// import Header from './components/Header/Header.js';
-// import PlayerList from './components/PlayerList';
 import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
 import { joinChat, leaveChat } from './util/SocketHelper.js';
 
@@ -39,6 +16,22 @@ class App extends Component {
     }
     this.state = {
       server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
+      profilePicLink:null,
+      username:null,
+      email:null,
+      gameTitle:null,
+      gameList:null,
+      playerList:null,
+      actionList:null,
+      messageList:null,
+
+
+
+
+
+
+
+
       session: sessionInfo,
       players: [],
       chat: [],
@@ -46,6 +39,7 @@ class App extends Component {
       rules: [],
       games: []
     }
+    this.handleLogin = this.handleLogin.bind(this);
     this.updateSession = this.updateSession.bind(this);
     this.handleNewChat = this.handleNewChat.bind(this);
     this.handleNewAction = this.handleNewAction.bind(this);
@@ -70,6 +64,10 @@ class App extends Component {
         games: gameList
       });
     });
+  }
+
+  handleLogin(gitEmail){
+    console.log(gitEmail)
   }
 
   handleNewChat(err, message) {
@@ -194,17 +192,22 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <TopBar/>
-      <SideBar/>
-      <MainChat/>
+        <TopBar
+          profilePicture={this.state.profilePicLink}
+          uName={this.state.username}
+          uEmail={this.state.email}
+          title={this.state.gameTitle}
+          onLogin={this.handleLogin}/>
+        <SideBar
+          currentGame={this.state.gameTitle}
+          games={this.state.gameList}
+          players={this.state.playerList}/>
+        <MainChat
+          actions={this.state.actionList}
+          messages={this.state.messageList}/>
       </div>
     );
   }
 }
-
-// <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame} nuke={nukeDB} seed={seedDB}/>
-// <PlayerList playerList={this.state.players}/>
-// <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
-// <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
 
 export default App;

@@ -5,7 +5,7 @@ import CurrentGameListItem from '../components/ListItems/CurrentGameListItem/Cur
 import GameListItem from '../components/ListItems/GameListItem/GameListItem'
 
 
-const SideBar = ({games, players}) => {
+const SideBar = ({currentGame, games, players}) => {
   const gameList = games || [
     {id: "1", gameTitle:"test_game"},
     {id: "2", gameTitle:"test_game"},
@@ -46,17 +46,17 @@ const SideBar = ({games, players}) => {
         {playerList.map(player => {
           return <li key={player.id}>
                    <PlayerListItem
-                    isActive={player.isActive}
-                    userName={player.userName}
-                    points={player.points}
-                    profilePicLink={player.profilePicLink}
+                      isActive={player.isActive}
+                      userName={player.userName}
+                      points={player.points}
+                      profilePicLink={player.profilePicLink}
                     />
                   </li>
         })}
         </ul>
       </div>
       <p>GAMES</p>
-      {<CurrentGameListItem />}
+      {<CurrentGameListItem gameTitle={currentGame}/>}
       <div className='SideBar-GameSection'>
         <ul className='SideBar-GameList'>
           {gameList.map(game => {
