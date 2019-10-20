@@ -12,30 +12,30 @@ const SideBar = ({currentGame, games, players}) => {
     {id: "3", gameTitle:"test_game"},
     {id: "4", gameTitle:"test_game"},
     {id: "5", gameTitle:"test_game"},
-    {id: "51", gameTitle:"test_game"},
-    {id: "52", gameTitle:"test_game"},
-    {id: "53", gameTitle:"test_game"},
-    {id: "54", gameTitle:"test_game"},
-    {id: "55", gameTitle:"test_game"},
-    {id: "56", gameTitle:"test_game"},
+    {id: "6", gameTitle:"test_game"},
+    {id: "7", gameTitle:"test_game"},
+    {id: "8", gameTitle:"test_game"},
+    {id: "9", gameTitle:"test_game"},
+    {id: "10", gameTitle:"test_game"},
+    {id: "11", gameTitle:"test_game"},
   ]
 
   // isActive, userName, points, profilePicLink
   const playerList = players || [
-    {id:"6", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"7", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"8", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"9", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"10", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"11", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"a11", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"s11", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"s11", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"1fd1", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"1df1", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"11fd", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"1fd1", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"12", isActive:false, userName:"testUser69", points:"10",profilePicLink:null}
+    {id:"12", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"13", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"14", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"15", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"16", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"17", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"18", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"19", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"20", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"21", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"22", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"23", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"24", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
+    {id:"25", isActive:false, userName:"testUser69", points:"10",profilePicLink:null}
   ]
 
   return (
