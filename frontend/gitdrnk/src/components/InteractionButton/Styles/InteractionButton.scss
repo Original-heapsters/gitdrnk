@@ -1,8 +1,9 @@
 @import '../../../global_style';
 
 .InteractionButton{
-  width: 100px;
+  width: 100%;
   height: 50px;
+  line-height: 50px;
   background-color: $color-interaction;
   border-radius: 25px;
   border: none;

@@ -9,7 +9,9 @@ const GameListItem = ({gameTitle}) => {
       <div className='GameListItem'>
         <p>{gameName}</p>
       </div>
-      <InteractionButton style='float: right' text='Join'/>
+      <div className='GameListItem-JoinButton'>
+          <InteractionButton text='Join'/>
+      </div>
     </div>
   )
 }

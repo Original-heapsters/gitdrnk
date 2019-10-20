@@ -56,8 +56,8 @@ const SideBar = ({games, players}) => {
         </ul>
       </div>
       <p>GAMES</p>
+      {<CurrentGameListItem />}
       <div className='SideBar-GameSection'>
-        {<CurrentGameListItem />}
         <ul className='SideBar-GameList'>
           {gameList.map(game => {
             return <li key={game.id}>
