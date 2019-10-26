@@ -74,8 +74,11 @@ class App extends Component {
   }
 
   handleGameJoin(gameId){
-    this.setState({
-      gameTitle:gameId
+    getPlayersByGame(gameId, (err,players) => {
+      this.setState({
+        gameTitle:gameId,
+        playerList:players
+      })
     })
   }
 

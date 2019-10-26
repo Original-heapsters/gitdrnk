@@ -23,20 +23,20 @@ const SideBar = ({currentGame, games, players, onGameJoin}) => {
 
   // isActive, userName, points, profilePicLink
   const playerList = players || [
-    {id:"12", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"13", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"14", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"15", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"16", isActive:true, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"17", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"18", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"19", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"20", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"21", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"22", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"23", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"24", isActive:false, userName:"testUser69", points:"10",profilePicLink:null},
-    {id:"25", isActive:false, userName:"testUser69", points:"10",profilePicLink:null}
+    {_id:"12", isActive:true, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"13", isActive:true, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"14", isActive:true, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"15", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"16", isActive:true, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"17", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"18", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"19", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"20", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"21", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"22", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"23", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"24", isActive:false, username:"testUser69", points:"10",profile_picture:null},
+    {_id:"25", isActive:false, username:"testUser69", points:"10",profile_picture:null}
   ]
 
   return (
@@ -45,12 +45,12 @@ const SideBar = ({currentGame, games, players, onGameJoin}) => {
       <div className='SideBar-PlayerSection'>
         <ul className='SideBar-PlayerList'>
         {playerList.map(player => {
-          return <li key={player.id}>
+          return <li key={player._id}>
                    <PlayerListItem
                       isActive={player.isActive}
-                      userName={player.userName}
+                      userName={player.username}
                       points={player.points}
-                      profilePicLink={player.profilePicLink}
+                      profilePicLink={player.profile_picture}
                     />
                   </li>
         })}
