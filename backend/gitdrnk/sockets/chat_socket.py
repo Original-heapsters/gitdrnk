@@ -32,6 +32,7 @@ def join_chat(data, db):
         joinObj = {
             "_id": str(uuid.uuid4()),
             "username": player.get("username", email),
+            "message": player.get("username", email) + " Joined",
             "git_username": player.get("git_username", email),
             "email": player.get("email", email),
             "profile_picture": player.get("profile_picture", default_profile),

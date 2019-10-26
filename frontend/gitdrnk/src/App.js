@@ -20,10 +20,10 @@ class App extends Component {
       username:null,
       email:null,
       gameTitle:'',
-      gameList:null,
-      playerList:null,
-      actionList:null,
-      messageList:null,
+      gameList:[],
+      playerList:[],
+      actionList:[],
+      messageList:[],
 
 
 
@@ -43,8 +43,8 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleGameJoin = this.handleGameJoin.bind(this);
     // this.updateSession = this.updateSession.bind(this);
-    // this.handleNewChat = this.handleNewChat.bind(this);
-    // this.handleNewAction = this.handleNewAction.bind(this);
+    this.handleNewChat = this.handleNewChat.bind(this);
+    this.handleNewAction = this.handleNewAction.bind(this);
     // this.handleActionUpdate = this.handleActionUpdate.bind(this);
     // this.changeGame = this.changeGame.bind(this);
 
@@ -55,6 +55,9 @@ class App extends Component {
       profilePicLink:null,
       username:null,
       email:null,
+      playerList:[],
+      actionList:[],
+      messageList:[],
     })
   }
 
@@ -74,6 +77,13 @@ class App extends Component {
   }
 
   handleGameJoin(gameId){
+    this.setState({
+      gameTitle:'',
+      playerList:[],
+      actionList:[],
+      messageList:[],
+    });
+    joinChat(gameId, this.state.email, this.handleNewChat, this.handleNewAction, ()=>{})
     getPlayersByGame(gameId, (err,players) => {
       this.setState({
         gameTitle:gameId,
@@ -108,34 +118,34 @@ class App extends Component {
 
 
   //
-  // handleNewChat(err, message) {
-  //   console.log(message)
-  //   if (message.type === "join" && message.email === this.state.session.email){
-  //     getPlayersByGame(message.gameId, (err, playerList)=> {
-  //       this.setState({players: playerList})
-  //     });
-  //   }
-  //   this.setState({ chat: this.state.chat.concat(message)});
-  // }
-  //
-  // handleNewAction(err, action) {
-  //   if (action.game_id !== this.state.session.gameId){
-  //     return;
-  //   }
-  //   let actionList = this.state.actions.concat(action)
-  //                     .map(action => {
-  //                       const existingAudio = action.audio || ""
-  //                       const audioTarget = this.state.server + "/" + existingAudio;
-  //                       if (!existingAudio.startsWith(this.state.server)){
-  //                         action.audio = audioTarget;
-  //                       }
-  //                       return action
-  //                     });
-  //
-  //   this.setState({ actions: actionList});
-  //   var audio = new Audio(action.audio);
-  //   audio.play();
-  // }
+  handleNewChat(err, message) {
+    console.log(message)
+    this.setState({ messageList: this.state.messageList.concat(message)});
+  }
+
+  handleNewAction(err, action) {
+    console.log(action)
+    if (action.gameId !== this.state.gameTitle){
+      return;
+    }
+    let actionList = this.state.actionList.concat(action)
+
+      actionList.map(action => {
+        if (action.audio){
+          const existingAudio = action.audio || ""
+          const audioTarget = this.state.server + "/" + existingAudio;
+          if (!existingAudio.startsWith(this.state.server)){
+            action.audio = audioTarget;
+          }
+        }
+        return action
+      });
+      if (action.audio){
+        var audio = new Audio(action.audio);
+        audio.play();
+      }
+    this.setState({ actionList: actionList});
+  }
   //
   // handleActionUpdate(err, action){
   //   const existingAudio = action.audio || ""

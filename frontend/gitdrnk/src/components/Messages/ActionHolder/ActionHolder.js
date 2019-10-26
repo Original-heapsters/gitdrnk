@@ -4,7 +4,7 @@ import SmallProfile from '../../SmallProfile/SmallProfile'
 import ActionAcknowledgement from '../../ActionAcknowledgements/ActionAcknowledgement'
 import AvailableActionAcknowledgement from '../../ActionAcknowledgements/AvailableActionAcknowledgement'
 
-const ActionHolder = ({claimed, rule, consequence, timestamp}) => {
+const ActionHolder = ({profilePic, user, claimed, rule, consequence, timestamp}) => {
   const time = timestamp || '2019-4-20 04:20:69'
   const title = rule || 'Post Merge'
   const conseq = consequence || 'Take a sip!'
@@ -24,7 +24,7 @@ const ActionHolder = ({claimed, rule, consequence, timestamp}) => {
         <p>{conseq}</p>
       </div>
       <div className='ActionHolder-User'>
-        <SmallProfile />
+        <SmallProfile profilePicLink={profilePic} username={user} />
       </div>
       <div className='ActionHolder-Timestamp'>
       <p>{time}</p>

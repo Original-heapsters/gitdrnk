@@ -18,13 +18,13 @@ const MainChat = ({actions, messages}) => {
 
 
   const messageList = messages || [
-    {id:"9",message:"Cool", timestamp:"2019-4-21 04:20:50.0"},
-    {id:"10",message:"Cool1", timestamp:"2019-4-23 04:30:19.0"},
-    {id:"11",message:"Cool11", timestamp:"2019-4-26 04:31:19.0"},
-    {id:"12",message:"Cool111", timestamp:"2019-4-29 04:50:19.0"},
-    {id:"13",message:"Cool111", timestamp:"2019-4-31 04:59:19.0"},
-    {id:"14",message:"Cool1111", timestamp:"2019-5-01 04:35:19.0"},
-    {id:"15",message:"Cool11111", timestamp:"2019-5-03 04:36:19.0"}
+    {_id:"9",message:"Cool", timestamp:"2019-4-21 04:20:50.0"},
+    {_id:"10",message:"Cool1", timestamp:"2019-4-23 04:30:19.0"},
+    {_id:"11",message:"Cool11", timestamp:"2019-4-26 04:31:19.0"},
+    {_id:"12",message:"Cool111", timestamp:"2019-4-29 04:50:19.0"},
+    {_id:"13",message:"Cool111", timestamp:"2019-4-31 04:59:19.0"},
+    {_id:"14",message:"Cool1111", timestamp:"2019-5-01 04:35:19.0"},
+    {_id:"15",message:"Cool11111", timestamp:"2019-5-03 04:36:19.0"}
   ]
 
   const mergeLists = (actions, messages) => {
@@ -35,18 +35,22 @@ const MainChat = ({actions, messages}) => {
     })
     .map(messageEntry => {
       if ("rule" in messageEntry){
-        return <li key={messageEntry.id}>
+        return <li key={messageEntry._id}>
                  <ActionHolder
+                   profilePic={messageEntry.profile_picture}
+                   user={messageEntry.username}
                    claimed={messageEntry.claimed}
                    rule={messageEntry.rule}
                    consequence={messageEntry.consequence}
-                   timestamp={messageEntry.timestamp}/>
+                   timestamp={messageEntry.date}/>
                </li>
       } else{
-        return <li key={messageEntry.id}>
+        return <li key={messageEntry._id}>
                  <MessageHolder
+                   profilePic={messageEntry.profile_picture}
+                   user={messageEntry.username}
                    message={messageEntry.message}
-                   timestamp={messageEntry.timestamp}/>
+                   timestamp={messageEntry.date}/>
                </li>
       }
     })

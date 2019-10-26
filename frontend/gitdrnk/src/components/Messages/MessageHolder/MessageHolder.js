@@ -2,19 +2,17 @@ import React from 'react'
 import './Styles/MessageHolder.scss'
 import SmallProfile from '../../SmallProfile/SmallProfile'
 
-const MessageHolder = ({message, timestamp}) => {
-  const time = timestamp || '2019-4-20 04:20:69'
-  const msg = message || 'yooooooo sick'
+const MessageHolder = ({profilePic, user, message, timestamp}) => {
   return (
     <div className='MessageHolder'>
       <div className='MessageHolder-User'>
-        <SmallProfile />
+        <SmallProfile profilePicLink={profilePic} username={user}/>
       </div>
       <div className='MessageHolder-Text'>
-        <p>{msg}</p>
+        <p>{message}</p>
       </div>
       <div className='MessageHolder-Timestamp'>
-        <p>{time}</p>
+        <p>{timestamp}</p>
       </div>
     </div>
   )
