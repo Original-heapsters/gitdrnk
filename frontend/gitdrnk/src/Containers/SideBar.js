@@ -5,19 +5,20 @@ import CurrentGameListItem from '../components/ListItems/CurrentGameListItem/Cur
 import GameListItem from '../components/ListItems/GameListItem/GameListItem'
 
 
-const SideBar = ({currentGame, games, players}) => {
+const SideBar = ({currentGame, games, players, onGameJoin}) => {
+  console.log(`test${currentGame}`);
   const gameList = games || [
-    {id: "1", gameTitle:"test_game"},
-    {id: "2", gameTitle:"test_game"},
-    {id: "3", gameTitle:"test_game"},
-    {id: "4", gameTitle:"test_game"},
-    {id: "5", gameTitle:"test_game"},
-    {id: "6", gameTitle:"test_game"},
-    {id: "7", gameTitle:"test_game"},
-    {id: "8", gameTitle:"test_game"},
-    {id: "9", gameTitle:"test_game"},
-    {id: "10", gameTitle:"test_game"},
-    {id: "11", gameTitle:"test_game"},
+    {_id: "1", game_id:"test_game"},
+    {_id: "2", game_id:"test_game"},
+    {_id: "3", game_id:"testCurrentGame"},
+    {_id: "4", game_id:"test_game"},
+    {_id: "5", game_id:"test_game"},
+    {_id: "6", game_id:"test_game"},
+    {_id: "7", game_id:"test_game"},
+    {_id: "8", game_id:"test_game"},
+    {_id: "9", game_id:"test_game"},
+    {_id: "10",game_id:"test_game"},
+    {_id: "11",game_id:"test_game"},
   ]
 
   // isActive, userName, points, profilePicLink
@@ -56,12 +57,13 @@ const SideBar = ({currentGame, games, players}) => {
         </ul>
       </div>
       <p>GAMES</p>
-      {<CurrentGameListItem gameTitle={currentGame}/>}
+      {currentGame != ''
+        && <CurrentGameListItem gameTitle={currentGame}/>}
       <div className='SideBar-GameSection'>
         <ul className='SideBar-GameList'>
           {gameList.map(game => {
-            return <li key={game.id}>
-                     <GameListItem gameTitle={game.gameTitle}/>
+            return <li key={game._id}>
+                     <GameListItem gameTitle={game.game_id} joinCallback={onGameJoin}/>
                    </li>
           })}
         </ul>

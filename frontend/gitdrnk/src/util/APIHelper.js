@@ -3,7 +3,7 @@ const apiEndpoint = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000"
 function getGitInfo(gitEmail, cb){
   const loginEndpoint = apiEndpoint + '/login';
   const params = {
-    email: gitEmail
+    email: gitEmail.toLowerCase()
   };
   fetch(loginEndpoint,{
       method: 'POST',

@@ -19,7 +19,7 @@ class App extends Component {
       profilePicLink:null,
       username:null,
       email:null,
-      gameTitle:null,
+      gameTitle:'',
       gameList:null,
       playerList:null,
       actionList:null,
@@ -41,6 +41,7 @@ class App extends Component {
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleGameJoin = this.handleGameJoin.bind(this);
     // this.updateSession = this.updateSession.bind(this);
     // this.handleNewChat = this.handleNewChat.bind(this);
     // this.handleNewAction = this.handleNewAction.bind(this);
@@ -69,6 +70,18 @@ class App extends Component {
         username:player.username,
         email:player.email,
       })
+    })
+  }
+
+  handleGameJoin(gameId){
+    this.setState({
+      gameTitle:gameId
+    })
+  }
+
+  componentWillMount(){
+    getGames((err, games) => {
+      this.setState({gameList : games});
     })
   }
 
@@ -224,7 +237,8 @@ class App extends Component {
         <SideBar
           currentGame={this.state.gameTitle}
           games={this.state.gameList}
-          players={this.state.playerList}/>
+          players={this.state.playerList}
+          onGameJoin={this.handleGameJoin}/>
         <MainChat
           actions={this.state.actionList}
           messages={this.state.messageList}/>

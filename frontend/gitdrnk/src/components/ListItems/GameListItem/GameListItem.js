@@ -2,7 +2,7 @@ import React from 'react'
 import './Styles/GameListItem.scss'
 import InteractionButton from '../../InteractionButton/InteractionButton'
 
-const GameListItem = ({gameTitle}) => {
+const GameListItem = ({gameTitle, joinCallback}) => {
   const gameName = gameTitle || 'testGame'
   return (
     <div className='GameListItemContainer'>
@@ -10,7 +10,7 @@ const GameListItem = ({gameTitle}) => {
         <p>{gameName}</p>
       </div>
       <div className='GameListItem-JoinButton'>
-          <InteractionButton text='Join'/>
+          <InteractionButton text='Join' clickCB={() => joinCallback(gameName)}/>
       </div>
     </div>
   )
