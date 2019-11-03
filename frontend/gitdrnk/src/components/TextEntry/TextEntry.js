@@ -9,7 +9,7 @@ const TextEntry = ({message, onChange, onMessage}) => {
 
   return (
     <div className='TextEntryContainer'>
-      <form onSubmit={onMessage}>
+      <form onSubmit={onMessage} className='TextEntryContainer'>
         <input className='TextEntryInput'
                type='text'
                name='entryArea'

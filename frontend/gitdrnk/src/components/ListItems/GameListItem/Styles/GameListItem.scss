@@ -1,16 +1,18 @@
 @import '../../../../global_style';
 
 .GameListItem{
-  width: 70%;
+  width: 60%;
   height: 100%;
   border-radius: 25px 25px 0px 0px;
   float: left;
   background: $color-primary-2;
   text-align: center;
+  margin-bottom: 8px;
 }
  .GameListItem-JoinButton{
-   width: 30%;
+   width: 35%;
    height: 100%;
    float: right;
-   // margin-top: 12.5%;
+   margin-left: 4px;
+   margin-right: 4px;
  }

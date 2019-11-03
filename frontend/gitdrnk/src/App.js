@@ -54,6 +54,7 @@ class App extends Component {
   }
 
   handleLogout(){
+    leaveChat(this.state.gameTitle, this.state.email)
     this.setState({
       profilePicLink:null,
       username:null,
@@ -86,13 +87,24 @@ class App extends Component {
       actionList:[],
       messageList:[],
     });
-    joinChat(gameId, this.state.email, this.handleNewChat, this.handleNewAction, ()=>{})
-    getPlayersByGame(gameId, (err,players) => {
-      this.setState({
-        gameTitle:gameId,
-        playerList:players
+      getActionLog(gameId, (err, actionLog) => {
+        if (actionLog && actionLog.length > 0){
+          this.setState({actionList: actionLog});
+        }
       })
-    })
+
+      getPlayersByGame(gameId, (err,players) => {
+        this.setState({
+          gameTitle:gameId,
+          playerList:players
+        })
+      })
+      getChatLog(gameId, (err, chatLog) => {
+        if (chatLog && chatLog.length > 0){
+          this.setState({messageList: chatLog});
+        }
+        joinChat(gameId, this.state.email, this.handleNewChat, this.handleNewAction, ()=>{})
+      })
   }
 
 
