@@ -3,6 +3,7 @@
 .PlayerListItem{
   width: 100%;
   height: 50px;
+  margin-bottom: 8px;
 }
 
 .PlayerListItem-Indicator-active {
@@ -18,7 +19,6 @@
 .PlayerListItem-Indicator{
   width: 6.94%;
   height: 50%;
-  margin-left: 6.94%;
   margin-top: 12.5px;
   border-radius: 50%;
   float: left;
@@ -33,9 +33,8 @@
 }
 
 .PlayerListItem-Pic{
-  width: 10%;
+  width: 20%;
   height: 100%;
-  margin-left: 5%;
   float: left;
   border-radius: 50%;
 }
