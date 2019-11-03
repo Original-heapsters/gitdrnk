@@ -6,7 +6,6 @@ import GameListItem from '../components/ListItems/GameListItem/GameListItem'
 
 
 const SideBar = ({currentGame, games, players, onGameJoin}) => {
-  console.log(`test${currentGame}`);
   const gameList = games || [
     {_id: "1", game_id:"test_game"},
     {_id: "2", game_id:"test_game"},
@@ -57,7 +56,7 @@ const SideBar = ({currentGame, games, players, onGameJoin}) => {
         </ul>
       </div>
       <p>GAMES</p>
-      {currentGame != ''
+      {currentGame !== ''
         && <CurrentGameListItem gameTitle={currentGame}/>}
       <div className='SideBar-GameSection'>
         <ul className='SideBar-GameList'>

@@ -19,7 +19,6 @@ const MainChat = ({gameId, email, actions, messages}) => {
     {id:"8",claimed:true, rule:"Post Merge", consequence:"Take a sip!", timestamp:"2019-5-10 04:29:19.0"}
   ]
 
-
   const messageList = messages || [
     {_id:"9",message:"Cool", timestamp:"2019-4-21 04:20:50.0"},
     {_id:"10",message:"Cool1", timestamp:"2019-4-23 04:30:19.0"},
@@ -33,17 +32,16 @@ const MainChat = ({gameId, email, actions, messages}) => {
   const mergeLists = (actions, messages) => {
     return actions
     .concat(messages)
+    // .sort((l, r) => {
+    //   return Date.parse(l.timestamp) - Date.parse(r.timestamp)
+    // })
     .sort((a,b) => {
       var left = new Date(a.timestamp);
       var right = new Date(b.timestamp);
       return left<right ? -1 : left>right ? 1 : 0;
     })
-    // .sort((l, r) => {
-    //   return Date.parse(l.timestamp) - Date.parse(r.timestamp)
-    // })
     .map(messageEntry => {
-      if ("action" in messageEntry && messageEntry.action != "join"){
-        console.log(messageEntry)
+      if ("action" in messageEntry && messageEntry.action !== "join" && messageEntry.action !== "leave"){
         return <li key={messageEntry._id}>
                  <ActionHolder
                    profilePic={messageEntry.profile_picture}
@@ -69,9 +67,7 @@ const MainChat = ({gameId, email, actions, messages}) => {
   const messageSent = e => {
     e.preventDefault()
     sendChatMessage(gameId, email, message);
-    console.log(message)
     setMessage('')
-
   }
 
   return (

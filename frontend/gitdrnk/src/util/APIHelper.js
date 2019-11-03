@@ -27,7 +27,6 @@ function getPlayers(cb){
 function getPlayersByGame(gameId,cb){
   var playersByGameIdEndpoint = new URL(apiEndpoint + '/players'),
       params = {game_id:gameId}
-  console.log(playersByGameIdEndpoint)
   Object.keys(params).forEach(key => playersByGameIdEndpoint.searchParams.append(key, params[key]))
   fetch(playersByGameIdEndpoint)
     .then(response => response.json())
@@ -45,7 +44,6 @@ function getChatLog(gameId, cb){
   // Get previous messages
   var chatLogEndpoint = new URL(apiEndpoint + '/game/chat'),
       params = {game_id:gameId}
-  console.log(chatLogEndpoint)
   Object.keys(params).forEach(key => chatLogEndpoint.searchParams.append(key, params[key]))
   fetch(chatLogEndpoint)
     .then(response => response.json())
@@ -69,7 +67,6 @@ function updateAction(gameId, actionId){
     game_id: gameId,
     action_id: actionId
   };
-  console.log(params);
   fetch(actionLogEndpoint,{
       method: 'POST',
       headers: {
