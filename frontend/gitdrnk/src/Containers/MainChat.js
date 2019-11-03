@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Styles/MainChat.scss'
 import TextEntry from '../components/TextEntry/TextEntry'
 import ActionHolder from '../components/Messages/ActionHolder/ActionHolder'
 import MessageHolder from '../components/Messages/MessageHolder/MessageHolder'
+import {sendChatMessage} from '../util/SocketHelper.js'
 
-const MainChat = ({actions, messages}) => {
+const MainChat = ({gameId, email, actions, messages}) => {
+  const [message, setMessage] = useState('')
+
   const actionList = actions || [
     {id:"1",claimed:true, rule:"Post Merge", consequence:"Take a sip!", timestamp:"2019-4-20 04:20:19.0"},
     {id:"2",claimed:true, rule:"Post Merge", consequence:"Take a sip!", timestamp:"2019-4-20 04:20:19.0"},
@@ -30,19 +33,26 @@ const MainChat = ({actions, messages}) => {
   const mergeLists = (actions, messages) => {
     return actions
     .concat(messages)
-    .sort((l, r) => {
-      return Date.parse(l.timestamp) - Date.parse(r.timestamp)
+    .sort((a,b) => {
+      var left = new Date(a.timestamp);
+      var right = new Date(b.timestamp);
+      return left<right ? -1 : left>right ? 1 : 0;
     })
+    // .sort((l, r) => {
+    //   return Date.parse(l.timestamp) - Date.parse(r.timestamp)
+    // })
     .map(messageEntry => {
-      if ("rule" in messageEntry){
+      if ("action" in messageEntry && messageEntry.action != "join"){
+        console.log(messageEntry)
         return <li key={messageEntry._id}>
                  <ActionHolder
                    profilePic={messageEntry.profile_picture}
                    user={messageEntry.username}
                    claimed={messageEntry.claimed}
-                   rule={messageEntry.rule}
+                   rule={messageEntry.action}
                    consequence={messageEntry.consequence}
-                   timestamp={messageEntry.date}/>
+                   timestamp={messageEntry.date}
+                   points={messageEntry.points}/>
                </li>
       } else{
         return <li key={messageEntry._id}>
@@ -56,6 +66,14 @@ const MainChat = ({actions, messages}) => {
     })
   }
 
+  const messageSent = e => {
+    e.preventDefault()
+    sendChatMessage(gameId, email, message);
+    console.log(message)
+    setMessage('')
+
+  }
+
   return (
     <div className='MainChat'>
       <div className='ChatWindow'>
@@ -64,7 +82,7 @@ const MainChat = ({actions, messages}) => {
         </ul>
       </div>
       <div className='EntryArea'>
-        <TextEntry/>
+        <TextEntry message={message} onChange={setMessage} onMessage={messageSent}/>
       </div>
     </div>
   )

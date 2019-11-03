@@ -4,7 +4,8 @@ import SmallProfile from '../../SmallProfile/SmallProfile'
 import ActionAcknowledgement from '../../ActionAcknowledgements/ActionAcknowledgement'
 import AvailableActionAcknowledgement from '../../ActionAcknowledgements/AvailableActionAcknowledgement'
 
-const ActionHolder = ({profilePic, user, claimed, rule, consequence, timestamp}) => {
+const ActionHolder = ({points, profilePic, user, claimed, rule, consequence, timestamp}) => {
+  const pointVal = points || 5
   const time = timestamp || '2019-4-20 04:20:69'
   const title = rule || 'Post Merge'
   const conseq = consequence || 'Take a sip!'
@@ -13,8 +14,8 @@ const ActionHolder = ({profilePic, user, claimed, rule, consequence, timestamp})
     <div className='ActionHolder'>
       <div className='ActionHolder-Indicator'>
         {isClaimed ?
-          <ActionAcknowledgement/> :
-          <AvailableActionAcknowledgement/>
+          <ActionAcknowledgement pointValue={pointVal}/> :
+          <AvailableActionAcknowledgement pointValue={pointVal}/>
         }
       </div>
       <div className='ActionHolder-Rule'>

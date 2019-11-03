@@ -48,6 +48,9 @@ class App extends Component {
     // this.handleActionUpdate = this.handleActionUpdate.bind(this);
     // this.changeGame = this.changeGame.bind(this);
 
+    getGames((err, games) => {
+      this.setState({gameList : games});
+    })
   }
 
   handleLogout(){
@@ -92,13 +95,9 @@ class App extends Component {
     })
   }
 
-  componentWillMount(){
-    getGames((err, games) => {
-      this.setState({gameList : games});
-    })
-  }
 
-  componentDidMount(){
+
+  // componentDidMount(){
     // getGames((err, gameList)=> {
     //   let initialGame = "";
     //   if (gameList && gameList.length > 0){
@@ -114,7 +113,7 @@ class App extends Component {
     //     games: gameList
     //   });
     // });
-  }
+  // }
 
 
   //
@@ -125,7 +124,7 @@ class App extends Component {
 
   handleNewAction(err, action) {
     console.log(action)
-    if (action.gameId !== this.state.gameTitle){
+    if (action.game_id !== this.state.gameTitle){
       return;
     }
     let actionList = this.state.actionList.concat(action)
@@ -144,6 +143,7 @@ class App extends Component {
         var audio = new Audio(action.audio);
         audio.play();
       }
+      console.log(`Number of actions is ${actionList.length}`)
     this.setState({ actionList: actionList});
   }
   //
@@ -253,6 +253,8 @@ class App extends Component {
           players={this.state.playerList}
           onGameJoin={this.handleGameJoin}/>
         <MainChat
+          gameId={this.state.gameTitle}
+          email={this.state.email}
           actions={this.state.actionList}
           messages={this.state.messageList}/>
       </div>
