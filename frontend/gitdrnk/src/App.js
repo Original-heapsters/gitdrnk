@@ -36,6 +36,7 @@ class App extends Component {
       profilePicLink:null,
       username:null,
       email:null,
+      gameList:[],
       playerList:[],
       actionList:[],
       messageList:[],
