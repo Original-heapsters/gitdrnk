@@ -1,0 +1,30 @@
+@import '../../../../global_style';
+
+.MessageHolder {
+  width: 100%;
+  height: 100px;
+  background: $color-primary-1;
+  border-radius: 0 50px 50px 50px;
+}
+
+.MessageHolder-User {
+  width: 100px;
+  height: 100%;
+  float: left;
+  // margin-left: 10px;
+
+}
+
+.MessageHolder-Text {
+  width: 90%;
+  height: 80%;
+  float: left;
+  text-align: left;
+  line-height: 100%;
+}
+
+.MessageHolder-Timestamp {
+  width: 100%;
+  height: 20%;
+  text-align: center;
+}

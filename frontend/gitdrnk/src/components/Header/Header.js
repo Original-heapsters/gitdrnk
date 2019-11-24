@@ -1,28 +1,13 @@
-import './Styles/Header.scss';
-import UserBox from './UserBox/UserBox.js';
-import React from 'react';
+import React from 'react'
+import './Styles/Header.scss'
 
-const Header = ({sessionInfo, gameList, updateSession, nuke, seed}) => {
-  let currEnv = process.env.REACT_APP_NODE_ENV || "development";
+const Header = ({gameTitle}) => {
+  const gameName = gameTitle || 'testGame'
   return (
-    <div className="Header">
-      <a href="#default" className="logo">{sessionInfo.gameId}</a>
-        {currEnv === "development" &&
-          <div>
-            <button onClick={nuke}>Nuke</button>
-            <button onClick={seed}>Seed</button>
-          </div>
-        }
-      <div className="Header-right">
-        <UserBox
-        email={sessionInfo.email}
-        gameId={sessionInfo.gameId}
-        signedIn={sessionInfo.signedIn}
-        gameList={gameList}
-        updateSession={updateSession}/>
-      </div>
+    <div className='Header'>
+    <p>{gameName}</p>
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header

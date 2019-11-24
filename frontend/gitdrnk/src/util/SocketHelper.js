@@ -23,9 +23,16 @@ function sendChatMessage(gameId, email, message){
 
 function getDateTime(){
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
+  var dateString = today.getFullYear() + '-'
+                   + ('0' + (today.getMonth()+1)).slice(-2) + '-'
+                   + ('0' + today.getDate()).slice(-2)
+
+  var timeString = ('0' + today.getHours()).slice(-2) + ':'
+             + ('0' + (today.getMinutes())).slice(-2) + ':'
+             + ('0' + (today.getSeconds())).slice(-2);
+  // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = dateString + 'T' + timeString;
   return dateTime;
 }
 

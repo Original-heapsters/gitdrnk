@@ -1,0 +1,15 @@
+// Base values
+$color-primary-1: #02A4B3;
+$color-primary-2: #FFAE00;
+$color-accent-1: #C35451;
+$color-accent-2: #4A9E71;
+$color-interaction: #54A9E7;
+$interaction-shadow: 0px 2px rgba(0,0,0,0.25);
+
+// Variants
+$color-primary-1-transparent: rgba(2, 164, 179, 0.5);
+$color-primary-2-transparent: rgba(255, 174, 0, 0.5);
+
+::-webkit-scrollbar {
+display: none;
+}

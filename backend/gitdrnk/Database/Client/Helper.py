@@ -21,7 +21,7 @@ seed_players = [
     "username": "420Kiilah69",
     "git_username": "RebeccaGit",
     "email": "rebecca@email.com",
-    "profile_picture":"http://www.guitarknowledgenet.com/media_files/8c17f3ba82b594a652996209a07ccf47ac9d64e2_6.jpg"
+    "profile_picture":"https://cdn6.f-cdn.com/contestentries/1376995/30494909/5b566bc71d308_thumbCard.jpg"
     },
     {
     "username": "PoopyFingers",
@@ -111,9 +111,9 @@ seed_actions = [
 
 seed_games = [
     {"game_id": "gitdrnk",
-    "players": ["chuck@email.com", "rebecca@email.com", "cool@email.com"]},
+    "players": ["swag@email.com", "chuck@email.com", "rebecca@email.com", "cool@email.com"]},
     {"game_id": "tmp",
-    "players": ["chuck@email.com", "rebecca@email.com", "cool@email.com"]}
+    "players": ["chuck@email.com", "rebecca@email.com", "sammy@email.com", "cool@email.com", "snake@email.com"]}
 ]
 
 seed_rules = [

@@ -1,0 +1,28 @@
+.SideBar{
+  height: 63.7vh;
+  width: 20vw;
+  float: left;
+  text-align: center;
+}
+
+.SideBar-PlayerSection{
+  height: 50%;
+  text-align: center;
+  overflow: scroll;
+}
+
+.SideBar-PlayerList{
+  list-style: none;
+  padding-left: 0px;
+}
+
+.SideBar-GameSection{
+  height: 50%;
+  text-align: center;
+  overflow: scroll;
+}
+
+.SideBar-GameList{
+  list-style: none;
+  padding-left: 0px;
+}

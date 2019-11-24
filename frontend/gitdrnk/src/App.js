@@ -1,182 +1,165 @@
 import React, { Component } from 'react';
-import update from 'immutability-helper';
-import './App.css';
-import Rules from './components/Rules';
-import Chat from './components/Chat';
-import Header from './components/Header/Header.js';
-import PlayerList from './components/PlayerList';
-import { getPlayersByGame, getGames, getChatLog, getActionLog, getRules, nukeDB, seedDB} from './util/APIHelper';
-import { joinChat, leaveChat } from './SocketAPI.js';
+// import update from 'immutability-helper';
+import TopBar from './Containers/TopBar'
+import SideBar from './Containers/SideBar'
+import MainChat from './Containers/MainChat'
+import { getGitInfo, getPlayersByGame, getGames, getChatLog, getActionLog} from './util/APIHelper';
+import { joinChat, leaveChat } from './util/SocketHelper.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    var sessionInfo = {
-      gameId: "",
-      email:"",
-      signedIn: false
-    }
+
     this.state = {
       server: process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000",
-      session: sessionInfo,
-      players: [],
-      chat: [],
-      actions:[],
-      rules: [],
-      games: []
+      profilePicLink:null,
+      username:null,
+      email:null,
+      gameTitle:'',
+      gameList:[],
+      playerList:[],
+      actionList:[],
+      messageList:[]
     }
-    this.updateSession = this.updateSession.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleGameJoin = this.handleGameJoin.bind(this);
     this.handleNewChat = this.handleNewChat.bind(this);
     this.handleNewAction = this.handleNewAction.bind(this);
-    this.handleActionUpdate = this.handleActionUpdate.bind(this);
-    this.changeGame = this.changeGame.bind(this);
-
+    // this.handleActionUpdate = this.handleActionUpdate.bind(this);
   }
 
-  componentDidMount(){
-    getGames((err, gameList)=> {
-      let initialGame = "";
-      if (gameList && gameList.length > 0){
-        initialGame = gameList[0].game_id
-      }
-      let init_games = {
-        gameId: initialGame,
-        email: this.state.session.email,
-        signedIn: false
-      };
+  handleLogout(){
+    leaveChat(this.state.gameTitle, this.state.email)
+    this.setState({
+      gameTitle:'',
+      profilePicLink:null,
+      username:null,
+      email:null,
+      gameList:[],
+      playerList:[],
+      actionList:[],
+      messageList:[],
+    })
+  }
+
+  handleLogin(gitEmail){
+    // TODO: Send api call to login
+    //       get git username+profile and populate the following
+    getGitInfo(gitEmail, player => {
       this.setState({
-        session: init_games,
-        games: gameList
-      });
+        profilePicLink:player.profile_picture,
+        username:player.username,
+        email:player.email,
+      })
+    })
+
+    getGames((err, games) => {
+      this.setState({gameList : games});
+    })
+  }
+
+  handleGameJoin(gameId){
+    getGames((err, games) => {
+      let gameListing = games.filter(function(value, index, arr){
+        return value.game_id !== gameId;
+      })
+      this.setState({gameList : gameListing});
+    })
+
+    this.setState({
+      gameTitle:'',
+      playerList:[],
+      actionList:[],
+      messageList:[],
     });
+
+    getActionLog(gameId, (err, actionLog) => {
+      if (actionLog && actionLog.length > 0){
+        this.setState({actionList: actionLog});
+      }
+    })
+
+    getPlayersByGame(gameId, (err,players) => {
+      this.setState({
+        gameTitle:gameId,
+        playerList:players
+      })
+    })
+
+    getChatLog(gameId, (err, chatLog) => {
+      if (chatLog && chatLog.length > 0){
+        this.setState({messageList: chatLog});
+      }
+      joinChat(gameId, this.state.email, this.handleNewChat, this.handleNewAction, ()=>{})
+    })
   }
 
   handleNewChat(err, message) {
-    console.log(message)
-    if (message.type === "join" && message.email === this.state.session.email){
-      getPlayersByGame(message.gameId, (err, playerList)=> {
-        this.setState({players: playerList})
-      });
-    }
-    this.setState({ chat: this.state.chat.concat(message)});
+    this.setState({ messageList: this.state.messageList.concat(message)});
   }
 
   handleNewAction(err, action) {
-    if (action.game_id !== this.state.session.gameId){
+    if (action.game_id !== this.state.gameTitle){
       return;
     }
-    let actionList = this.state.actions.concat(action)
-                      .map(action => {
-                        const existingAudio = action.audio || ""
-                        const audioTarget = this.state.server + "/" + existingAudio;
-                        if (!existingAudio.startsWith(this.state.server)){
-                          action.audio = audioTarget;
-                        }
-                        return action
-                      });
+    let actionList = this.state.actionList.concat(action)
 
-    this.setState({ actions: actionList});
-    var audio = new Audio(action.audio);
-    audio.play();
-  }
-
-  handleActionUpdate(err, action){
-    const existingAudio = action.audio || ""
-    const audioTarget = this.state.server + "/" + existingAudio;
-    if (!existingAudio.startsWith(this.state.server)){
-      action.audio = audioTarget;
-    }
-    const gId = action.gameId || action.game_id;
-    if(this.state.session.gameId === gId){
-      const actionidx = this.state.actions.findIndex( x => x._id === action._id);
-      this.setState({
-        actions: update(this.state.actions,
-          { $splice: [[actionidx, 1, action]] }
-        )
-      });
-    }
-  }
-
-  changeGame(gameSelected){
-    var newSession = {
-      gameId: gameSelected,
-      email:this.state.session.email,
-      signedIn: false
-    }
-    this.setState(
-      {
-        session: newSession,
-        games: [],
-        players: [],
-        chat: [],
-        actions:[],
-        rules: []
-      }
-    );
-  }
-
-  updateSession(uName, email, gId, leave=false){
-    var newSession = {
-      gameId: gId,
-      email:email,
-      signedIn: true
-    }
-    this.setState(
-      {
-        session: newSession,
-        games: [],
-        players: [],
-        chat: [],
-        actions:[],
-        rules: []
-      }
-    );
-
-    if (leave){
-      leaveChat(gId, email);
-      getGames((err, gameList)=> {
-        let initialGame = "";
-        if (gameList && gameList.length > 0){
-          initialGame = gameList[0].game_id
+    actionList.map(action => {
+      if (action.audio){
+        const existingAudio = action.audio || ""
+        const audioTarget = this.state.server + "/" + existingAudio;
+        if (!existingAudio.startsWith(this.state.server)){
+          action.audio = audioTarget;
         }
-        var init_games = {
-          gameId: initialGame,
-          email: this.state.session.email,
-          signedIn: false
-        };
-        this.setState({
-          session: init_games,
-          games: gameList
-        });
-      });
-      return;
+      }
+      return action
+    });
+    if (action.audio){
+      var audio = new Audio(action.audio);
+      audio.play();
     }
-
-    getRules(gId, (err, ruleset) => {
-      this.setState({rules: ruleset});
-    });
-
-    getActionLog(gId, (err, actionLog) => {
-      if (actionLog && actionLog.length > 0){
-        this.setState({actions: actionLog});
-      }
-    });
-
-    getChatLog(gId, (err, chatLog) => {
-      if (chatLog && chatLog.length > 0){
-        this.setState({chat: chatLog});
-      }
-      joinChat(this.state.session.gameId, this.state.session.email, this.handleNewChat, this.handleNewAction, this.handleActionUpdate);
-    });
+    this.setState({ actionList: actionList});
   }
+  //
+  // handleActionUpdate(err, action){
+  //   const existingAudio = action.audio || ""
+  //   const audioTarget = this.state.server + "/" + existingAudio;
+  //   if (!existingAudio.startsWith(this.state.server)){
+  //     action.audio = audioTarget;
+  //   }
+  //   const gId = action.gameId || action.game_id;
+  //   if(this.state.session.gameId === gId){
+  //     const actionidx = this.state.actions.findIndex( x => x._id === action._id);
+  //     this.setState({
+  //       actions: update(this.state.actions,
+  //         { $splice: [[actionidx, 1, action]] }
+  //       )
+  //     });
+  //   }
+  // }
+  //
 
   render() {
     return (
       <div className="App">
-      <Header sessionInfo={this.state.session} updateSession={this.updateSession} gameList={this.state.games} updateSelectedGame={this.changeGame} nuke={nukeDB} seed={seedDB}/>
-      <PlayerList playerList={this.state.players}/>
-      <Chat sessionInfo={this.state.session} chat={this.state.chat} actions={this.state.actions}/>
-      <Rules sessionInfo={this.state.session} ruleSet={this.state.rules}/>
+        <TopBar
+          profilePicture={this.state.profilePicLink}
+          uName={this.state.username}
+          uEmail={this.state.email}
+          title={this.state.gameTitle}
+          onLogout={this.handleLogout}
+          onLogin={this.handleLogin}/>
+        <SideBar
+          currentGame={this.state.gameTitle}
+          games={this.state.gameList}
+          players={this.state.playerList}
+          onGameJoin={this.handleGameJoin}/>
+        <MainChat
+          gameId={this.state.gameTitle}
+          email={this.state.email}
+          actions={this.state.actionList}
+          messages={this.state.messageList}/>
       </div>
     );
   }

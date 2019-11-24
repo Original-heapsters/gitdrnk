@@ -1,5 +1,22 @@
 const apiEndpoint = process.env.REACT_APP_GITDRNK_SVC || "http://localhost:5000";
 
+function getGitInfo(gitEmail, cb){
+  const loginEndpoint = apiEndpoint + '/login';
+  const params = {
+    email: gitEmail.toLowerCase()
+  };
+  fetch(loginEndpoint,{
+      method: 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)})
+      .then(response => response.json())
+      .then(player => cb(player))
+      .catch(err => console.error(err));
+}
+
 function getPlayers(cb){
   const playerEndpoint = apiEndpoint + '/players/all';
   fetch(playerEndpoint)
@@ -10,7 +27,6 @@ function getPlayers(cb){
 function getPlayersByGame(gameId,cb){
   var playersByGameIdEndpoint = new URL(apiEndpoint + '/players'),
       params = {game_id:gameId}
-  console.log(playersByGameIdEndpoint)
   Object.keys(params).forEach(key => playersByGameIdEndpoint.searchParams.append(key, params[key]))
   fetch(playersByGameIdEndpoint)
     .then(response => response.json())
@@ -28,7 +44,6 @@ function getChatLog(gameId, cb){
   // Get previous messages
   var chatLogEndpoint = new URL(apiEndpoint + '/game/chat'),
       params = {game_id:gameId}
-  console.log(chatLogEndpoint)
   Object.keys(params).forEach(key => chatLogEndpoint.searchParams.append(key, params[key]))
   fetch(chatLogEndpoint)
     .then(response => response.json())
@@ -52,7 +67,6 @@ function updateAction(gameId, actionId){
     game_id: gameId,
     action_id: actionId
   };
-  console.log(params);
   fetch(actionLogEndpoint,{
       method: 'POST',
       headers: {
@@ -123,4 +137,4 @@ function seedDB(){
     .then(response => response.json())
 }
 
-export { getPlayers, getPlayersByGame, getChatLog, getRules, getGames, getActionLog, updateAction, getClientScripts, nukeDB, seedDB }
+export {getGitInfo, getPlayers, getPlayersByGame, getChatLog, getRules, getGames, getActionLog, updateAction, getClientScripts, nukeDB, seedDB }
