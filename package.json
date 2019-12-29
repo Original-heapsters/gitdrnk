@@ -1,0 +1,30 @@
+{
+  "name": "gitdrnk",
+  "version": "1.0.0",
+  "description": "Gitdrnk backend server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Original-heapsters/gitdrnk.git"
+  },
+  "keywords": [
+    "github",
+    "webhooks",
+    "drinking_game",
+    "graphql",
+    "node"
+  ],
+  "author": "Russell Tan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Original-heapsters/gitdrnk/issues"
+  },
+  "homepage": "https://github.com/Original-heapsters/gitdrnk#readme",
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  }
+}

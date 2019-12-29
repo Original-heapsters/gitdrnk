@@ -1,0 +1,52 @@
+type Query {
+  info: String!
+  feed: [Link!]!
+}
+
+type Mutation {
+  post(url: String!, description: String!): Link!
+}
+
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  lastLogin: Float!
+}
+
+type Action {
+  id: ID!
+  name: String!
+  description: String
+  author: User!
+  timestamp: Float!
+}
+
+type Game {
+  id: ID!
+  title: String!
+  messages: [Message!]!
+  actions: [Action!]!
+  players: [User!]!
+  rules: [Rule!]!
+}
+
+type Message {
+  id: ID!
+  body: String!
+  parent: ID
+  author: User!
+  room: Game!
+}
+
+type Rule {
+  id: ID!
+  name: String!
+  consequence: String!
+}
