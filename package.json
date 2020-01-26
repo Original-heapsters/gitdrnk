@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "ava",
-    "lint": "eslint"
+    "test-coverage": "nyc ava",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/Original-heapsters/gitdrnk#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "express": "^4.17.1",
     "socket.io": "^2.3.0",
     "winston": "^3.2.1"
@@ -30,10 +32,8 @@
   "devDependencies": {
     "ava": "^3.1.0",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.20.0",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.0",
+    "nyc": "^15.0.0",
     "sinon": "^8.1.1"
   }
 }
