@@ -1,0 +1,28 @@
+name: Dev_CD
+on:
+  push:
+    branches:
+      master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 11.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Packages
+      run: npm install
+    - name: Lint project
+      run: npm run lint
+    - name: Run Tests
+      run: npm run test
+    - name: Check test coverage
+      run: npm run test-coverage
+    - name: Build docker image
+      run: docker build .
