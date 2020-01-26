@@ -1,0 +1,39 @@
+{
+  "name": "gitdrnk",
+  "version": "1.0.0",
+  "description": "gitdrnk backend service and connector to persistence layer",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "ava",
+    "test-coverage": "nyc ava",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Original-heapsters/gitdrnk.git"
+  },
+  "author": "Russell Tan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Original-heapsters/gitdrnk/issues"
+  },
+  "homepage": "https://github.com/Original-heapsters/gitdrnk#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "ava": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.0",
+    "nyc": "^15.0.0",
+    "sinon": "^8.1.1"
+  }
+}

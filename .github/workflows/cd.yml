@@ -1,5 +1,8 @@
-name: Dev_CI
-on: [push, pull_request]
+name: Dev_CD
+on:
+  push:
+    branches:
+      master
 
 jobs:
   build:
