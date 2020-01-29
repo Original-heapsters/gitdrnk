@@ -6,6 +6,7 @@ const { logger } = require('./common/Logger');
 
 // Rest routes
 const { home } = require('./rest/index');
+const { authenticate, authCallback } = require('./rest/auth');
 
 // Socket routes
 const { connect } = require('./socket/connections/connect');
@@ -15,6 +16,8 @@ const server = http.Server(app);
 const io = socketio(server);
 
 app.get('/', home);
+app.get('/auth/github', authenticate);
+app.get('/auth/github/callback', authCallback);
 
 io.on('connection', connect);
 
