@@ -1,38 +1,31 @@
-const githubOAuth = require('github-oauth');
+const request = require('superagent');
 const { logger } = require('../common/Logger');
 
 const {
   GITHUB_KEY,
   GITHUB_SECRET,
-  HOST,
-  PORT,
+  // HOST,
+  // PORT,
 } = process.env;
-const auth = githubOAuth(
-  {
-    githubClient: GITHUB_KEY,
-    githubSecret: GITHUB_SECRET,
-    baseURL: `http://${HOST}:${PORT}`,
-    loginURI: '/auth/github',
-    callbackURI: '/auth/github/callback',
-  },
-);
-
-auth.on('error', (err) => {
-  logger.error('Error during auth', { err });
-});
-
-auth.on('token', (token, extResponse) => {
-  extResponse.end(JSON.stringify(token));
-});
 
 async function authenticate(req, res) {
-  logger.debug('Started oauth');
-  return auth.login(req, res);
+  logger.debug('Starting authentication flow');
+  res.redirect(`https://github.com/login/oauth/authorize?client_id=${GITHUB_KEY}`);
 }
 
 async function authCallback(req, res) {
-  logger.debug('Received callback');
-  return auth.callback(req, res);
+  const requestToken = req.query.code;
+  const tokenConfig = `client_id=${GITHUB_KEY}`
+  + `&client_secret=${GITHUB_SECRET}`
+  + `&code=${requestToken}`;
+
+  logger.debug('Requesting oauth token from github');
+  const { text } = await request
+    .post(`https://github.com/login/oauth/access_token?${tokenConfig}`)
+    .set('Accept', 'application/json');
+
+  logger.debug(`OAuth token request succeeded ${text}`);
+  res.redirect('http://localhost:8080');
 }
 
 exports.authenticate = authenticate;
